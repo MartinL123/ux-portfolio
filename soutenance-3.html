@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S03 — Cabanes de France · UX Portfolio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">UX <span>Portfolio</span></a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-link">Accueil</a>
+    <a href="soutenance-1.html" class="topbar-link">S01</a>
+    <a href="soutenance-2.html" class="topbar-link">S02</a>
+    <a href="soutenance-3.html" class="topbar-link active">S03</a>
+    <a href="soutenance-4.html" class="topbar-link">S04</a>
+    <a href="soutenance-5.html" class="topbar-link">S05</a>
+    <a href="soutenance-6.html" class="topbar-link">S06</a>
+    <a href="soutenance-7.html" class="topbar-link">S07</a>
+    <a href="soutenance-8.html" class="topbar-link">S08</a>
+    <a href="soutenance-9.html" class="topbar-link">S09</a>
+    <a href="soutenance-10.html" class="topbar-link">S10</a>
+    <a href="soutenance-11.html" class="topbar-link">S11</a>
+  </div>
+</nav>
+
+<div class="page">
+  <a href="index.html" class="back">← Retour à l'accueil</a>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Soutenance 03 · Ergonomie web</div>
+    <h1 class="hero-title">Améliorer l'ergonomie<br>d'un <span class="grad">site touristique</span></h1>
+    <p class="hero-sub">Réaliser un audit ergonomique complet du site Cabanes de France et produire des recommandations fondées sur les heuristiques de Nielsen.</p>
+    <div class="hero-meta">
+      <span class="badge" style="background:rgba(0,206,201,0.12);border-color:rgba(0,206,201,0.3);color:#00cec9">🏕️ Cabanes de France</span>
+      <span class="badge" style="background:var(--bg3);border-color:var(--border2);color:var(--text2)">2 livrables</span>
+    </div>
+  </div>
+
+  <div class="callout" style="background:rgba(0,206,201,0.08);border-color:#00cec9;color:var(--text2)">
+    <strong style="color:#00cec9">Contexte projet</strong>
+    Cabanes de France est une plateforme de location d'hébergements touristiques insolites (cabanes, bulles, treehouses…). La mission consiste à évaluer l'utilisabilité du site existant via un audit heuristique systématique, puis à produire un rapport de recommandations priorisées pour améliorer l'expérience de réservation.
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Problèmes identifiés lors de l'audit</div>
+  <div class="section-title">Friction dans le parcours utilisateur</div>
+
+  <ul class="insight-list">
+    <li data-icon="🔍">
+      <div><strong style="color:var(--text)">Barre de recherche non opérationnelle.</strong> Les champs "Région", "Type d'hébergement" et "Date d'arrivée" ne permettent pas de saisir du texte librement — problème critique pour le SEO et l'accessibilité.</div>
+    </li>
+    <li data-icon="📋">
+      <div><strong style="color:var(--text)">Dropdowns obstructifs dans la navbar.</strong> Les menus déroulants bloquent l'accès visuel à la barre de recherche principale, créant une concurrence entre deux éléments de navigation.</div>
+    </li>
+    <li data-icon="♿">
+      <div><strong style="color:var(--text)">Accessibilité insuffisante.</strong> Contrastes de couleurs ne respectant pas les normes WCAG, liens sans descriptions explicites (aria-labels manquants), illisibilité sur certains fonds.</div>
+    </li>
+    <li data-icon="📊">
+      <div><strong style="color:var(--text)">Hiérarchie visuelle confuse.</strong> Les fonctionnalités secondaires (blog, articles) sont difficiles à distinguer des fonctionnalités principales (réservation), nuisant à la clarté du parcours.</div>
+    </li>
+    <li data-icon="💬">
+      <div><strong style="color:var(--text)">Messages d'erreur inexplicites.</strong> En cas de recherche sans résultat, le site n'offre ni message clair, ni alternative, ni suggestion — le parcours s'arrête sans aide.</div>
+    </li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Livrables produits</div>
+  <div class="section-title">Audit + Recommandations</div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <div class="card-title">Audit ergonomique</div>
+      <div class="card-body">Évaluation systématique du site selon les 10 heuristiques de Jakob Nielsen. Chaque problème est documenté, illustré et noté en sévérité de 1 (cosmétique) à 4 (bloquant).</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💡</div>
+      <div class="card-title">Rapport de recommandations</div>
+      <div class="card-body">Pour chaque problème identifié, une recommandation concrète et priorisée : ajouter l'auto-complétion, renforcer les contrastes, simplifier la navbar, etc.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Méthodologie</div>
+  <div class="section-title">Les 10 heuristiques de Nielsen</div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon">👁️</div>
+      <div class="card-title">Visibilité du statut</div>
+      <div class="card-body">Le système informe-t-il toujours l'utilisateur de ce qui se passe ? (chargement, confirmation, erreur)</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌍</div>
+      <div class="card-title">Correspondance avec le monde réel</div>
+      <div class="card-body">Le langage utilisé correspond-il aux mots et concepts familiers de l'utilisateur ?</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">Liberté et contrôle</div>
+      <div class="card-body">L'utilisateur peut-il facilement annuler une action ou revenir en arrière ?</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚫</div>
+      <div class="card-title">Prévention des erreurs</div>
+      <div class="card-body">Le design empêche-t-il les erreurs avant qu'elles se produisent, plutôt que de les gérer après ?</div>
+    </div>
+  </div>
+
+  <div class="tags" style="margin-top:14px">
+    <span class="tag" style="background:rgba(0,206,201,0.12);color:#00cec9;border-color:rgba(0,206,201,0.2)">Audit heuristique</span>
+    <span class="tag" style="background:rgba(0,206,201,0.12);color:#00cec9;border-color:rgba(0,206,201,0.2)">10 heuristiques Nielsen</span>
+    <span class="tag" style="background:rgba(0,206,201,0.12);color:#00cec9;border-color:rgba(0,206,201,0.2)">Utilisabilité</span>
+    <span class="tag" style="background:rgba(0,206,201,0.12);color:#00cec9;border-color:rgba(0,206,201,0.2)">Accessibilité WCAG</span>
+    <span class="tag" style="background:rgba(0,206,201,0.12);color:#00cec9;border-color:rgba(0,206,201,0.2)">Priorisation sévérité</span>
+    <span class="tag" style="background:rgba(0,206,201,0.12);color:#00cec9;border-color:rgba(0,206,201,0.2)">Tourisme</span>
+  </div>
+
+  <div class="files">
+    <div class="files-head">📄 Fichiers de la soutenance</div>
+    <a href="Soutenance%203/Cours.docx" class="file">
+      <span class="fext fext-docx">DOCX</span>
+      <span class="fname">Cours — Ergonomie et audit de site</span>
+      <span class="fsize">717 KB</span>
+    </a>
+    <a href="Soutenance%203/Soutenance%203%20-%20Cabanes%20de%20France.docx" class="file">
+      <span class="fext fext-docx">DOCX</span>
+      <span class="fname">Soutenance 3 — Cabanes de France (présentation)</span>
+      <span class="fsize">257 KB</span>
+    </a>
+    <a href="Soutenance%203/Template+d_audit+de+site+-+MONDODO.xlsx" class="file">
+      <span class="fext fext-xlsx">XLSX</span>
+      <span class="fname">Template d'audit de site MONDODO</span>
+      <span class="fsize">16 KB</span>
+    </a>
+  </div>
+
+  <div class="files">
+    <div class="files-head">📦 Livrables du projet (ZIP)</div>
+    <a href="Soutenance%203/ML_P3_ameliorez-lergonomie-du-site-internet-dun-hebergement-touristique_2025-03-19T104541.zip" class="file">
+      <span class="fext fext-zip">ZIP</span>
+      <span class="fname">Livrable P3 — Audit ergonomique + Recommandations (Cabanes de France)</span>
+      <span class="fsize">8.3 MB</span>
+    </a>
+  </div>
+
+  <div class="page-nav">
+    <a href="soutenance-2.html">
+      <span class="nav-hint">← Précédent</span>
+      <span class="nav-title">S02 — Étude utilisateurs · SNCF Connect</span>
+    </a>
+    <a href="soutenance-4.html" class="next">
+      <span class="nav-hint">Suivant →</span>
+      <span class="nav-title">S04 — Atelier co-conception</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

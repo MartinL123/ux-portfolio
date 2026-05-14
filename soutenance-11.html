@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S11 — Portfolio final · UX Portfolio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.final-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.skill-pill {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 12.5px;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.skill-icon { font-size: 18px; flex-shrink: 0; }
+@media (max-width: 600px) { .final-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">UX <span>Portfolio</span></a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-link">Accueil</a>
+    <a href="soutenance-1.html" class="topbar-link">S01</a>
+    <a href="soutenance-2.html" class="topbar-link">S02</a>
+    <a href="soutenance-3.html" class="topbar-link">S03</a>
+    <a href="soutenance-4.html" class="topbar-link">S04</a>
+    <a href="soutenance-5.html" class="topbar-link">S05</a>
+    <a href="soutenance-6.html" class="topbar-link">S06</a>
+    <a href="soutenance-7.html" class="topbar-link">S07</a>
+    <a href="soutenance-8.html" class="topbar-link">S08</a>
+    <a href="soutenance-9.html" class="topbar-link">S09</a>
+    <a href="soutenance-10.html" class="topbar-link">S10</a>
+    <a href="soutenance-11.html" class="topbar-link active">S11</a>
+  </div>
+</nav>
+
+<div class="page">
+  <a href="index.html" class="back">← Retour à l'accueil</a>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Soutenance 11 · Finale · 🏆 Certification</div>
+    <h1 class="hero-title">Concevoir son<br><span class="grad">portfolio UX Designer</span></h1>
+    <p class="hero-sub">Soutenance finale du Master UX Designer OpenClassroom : présenter l'ensemble du parcours, ses études de cas et sa vision professionnelle devant un jury.</p>
+    <div class="hero-meta">
+      <span class="badge" style="background:rgba(255,234,167,0.15);border-color:rgba(255,234,167,0.3);color:#b8a000">🏆 Certification finale</span>
+      <span class="badge" style="background:rgba(0,184,148,0.12);border-color:rgba(0,184,148,0.3);color:#00b894">Master UX Designer</span>
+    </div>
+  </div>
+
+  <div class="callout" style="background:rgba(255,234,167,0.06);border-color:#fdcb6e;color:var(--text2)">
+    <strong style="color:#b8a000">Contexte</strong>
+    Le projet final consiste à concevoir un portfolio professionnel d'UX Designer — le document le plus important pour entrer sur le marché du travail. Il doit présenter les projets les plus significatifs du parcours, démontrer la progression, argumenter les choix de design et projeter une vision professionnelle cohérente.
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Structure du portfolio</div>
+  <div class="section-title">Les 4 éléments clés</div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon">🙋</div>
+      <div class="card-title">Présentation personnelle</div>
+      <div class="card-body">Prénom, nom, poste actuel, parcours de formation, outils maîtrisés (Figma, Adobe XD…), expériences UX, aspirations professionnelles et Ikigai pour les recruteurs.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📁</div>
+      <div class="card-title">Études de cas (min. 3)</div>
+      <div class="card-body">Pour chaque projet : aperçu (lien/vidéo), contexte et problématique client, démarche UX étape par étape, livrables produits, résultats et apprentissages.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔭</div>
+      <div class="card-title">Veille informationnelle</div>
+      <div class="card-body">Système de veille UX mis en place : sources suivies (newsletters, podcasts, Dribbble, UX Collective…), réflexions, articles partagés, engagement dans la communauté.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚀</div>
+      <div class="card-title">Vision professionnelle</div>
+      <div class="card-body">Direction souhaitée : UX Research, Product Design, Service Design, UX Writing ? Secteur cible ? Comment les compétences acquises s'articulent avec les ambitions futures.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Compétences acquises sur l'ensemble du parcours</div>
+  <div class="section-title">11 soutenances, 11 expertises</div>
+
+  <div class="final-grid">
+    <div class="skill-pill"><span class="skill-icon">🔍</span>Recherche utilisateur</div>
+    <div class="skill-pill"><span class="skill-icon">👥</span>Création de personas</div>
+    <div class="skill-pill"><span class="skill-icon">🎙️</span>Conduite d'entretiens</div>
+    <div class="skill-pill"><span class="skill-icon">📋</span>Audit heuristique</div>
+    <div class="skill-pill"><span class="skill-icon">♿</span>Accessibilité (WCAG)</div>
+    <div class="skill-pill"><span class="skill-icon">🎭</span>Facilitation d'ateliers</div>
+    <div class="skill-pill"><span class="skill-icon">📊</span>Service Blueprint</div>
+    <div class="skill-pill"><span class="skill-icon">💡</span>Proposition de valeur</div>
+    <div class="skill-pill"><span class="skill-icon">🧪</span>Tests utilisateurs</div>
+    <div class="skill-pill"><span class="skill-icon">🖥️</span>HTML/CSS</div>
+    <div class="skill-pill"><span class="skill-icon">🗺️</span>Parcours utilisateur</div>
+    <div class="skill-pill"><span class="skill-icon">🃏</span>Tri de cartes</div>
+    <div class="skill-pill"><span class="skill-icon">📐</span>Wireframing</div>
+    <div class="skill-pill"><span class="skill-icon">🎨</span>Prototypage Hi-Fi</div>
+    <div class="skill-pill"><span class="skill-icon">📈</span>Data visualisation</div>
+    <div class="skill-pill"><span class="skill-icon">🤝</span>Gestion parties prenantes</div>
+    <div class="skill-pill"><span class="skill-icon">🗂️</span>Architecture d'info</div>
+    <div class="skill-pill"><span class="skill-icon">🌱</span>Design system</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Projets à présenter en portfolio</div>
+  <div class="section-title">Les études de cas recommandées</div>
+
+  <ul class="insight-list">
+    <li data-icon="🚂">
+      <div><strong style="color:var(--text)">SNCF Connect (S02).</strong> Étude de recherche utilisateur complète sur un cas réel et médiatisé. Démontre les compétences en recherche qualitative, protocole et synthèse en personas.</div>
+    </li>
+    <li data-icon="🎭">
+      <div><strong style="color:var(--text)">Atelier co-conception (S04) ou Les Cordons Bleus (S05).</strong> Démontrent la capacité à faciliter, cadrer un projet et produire des artefacts de service design (canevas, blueprint).</div>
+    </li>
+    <li data-icon="🌐">
+      <div><strong style="color:var(--text)">Bambinets HTML (S09).</strong> Prototype interactif HTML — le livrable le plus impressionnant techniquement. Montre la maîtrise du prototypage fidèle et la communication avec les développeurs.</div>
+    </li>
+    <li data-icon="📊">
+      <div><strong style="color:var(--text)">Seconde Peau (S10).</strong> Analyse de données UX avec visualisations — compétence très demandée pour les postes en entreprise avec une culture data.</div>
+    </li>
+  </ul>
+
+  <div class="tags">
+    <span class="tag" style="background:rgba(255,234,167,0.12);color:#b8a000;border-color:rgba(255,234,167,0.2)">Portfolio</span>
+    <span class="tag" style="background:rgba(255,234,167,0.12);color:#b8a000;border-color:rgba(255,234,167,0.2)">Études de cas</span>
+    <span class="tag" style="background:rgba(255,234,167,0.12);color:#b8a000;border-color:rgba(255,234,167,0.2)">Certification</span>
+    <span class="tag" style="background:rgba(255,234,167,0.12);color:#b8a000;border-color:rgba(255,234,167,0.2)">Ikigai</span>
+    <span class="tag" style="background:rgba(255,234,167,0.12);color:#b8a000;border-color:rgba(255,234,167,0.2)">Veille UX</span>
+    <span class="tag" style="background:rgba(255,234,167,0.12);color:#b8a000;border-color:rgba(255,234,167,0.2)">Storytelling</span>
+  </div>
+
+  <div class="files">
+    <div class="files-head">📄 Document de la soutenance</div>
+    <a href="Soutenance%2011/Soutenance%2011.docx" class="file">
+      <span class="fext fext-docx">DOCX</span>
+      <span class="fname">Soutenance 11 — Portfolio final (consigne complète)</span>
+      <span class="fsize">446 KB</span>
+    </a>
+  </div>
+
+  <div class="page-nav">
+    <a href="soutenance-10.html">
+      <span class="nav-hint">← Précédent</span>
+      <span class="nav-title">S10 — Data & Analyse · Seconde Peau</span>
+    </a>
+    <a href="index.html" class="next">
+      <span class="nav-hint">Retour →</span>
+      <span class="nav-title">Accueil — Toutes les soutenances</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S08 — Equi-libre · UX Portfolio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">UX <span>Portfolio</span></a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-link">Accueil</a>
+    <a href="soutenance-1.html" class="topbar-link">S01</a>
+    <a href="soutenance-2.html" class="topbar-link">S02</a>
+    <a href="soutenance-3.html" class="topbar-link">S03</a>
+    <a href="soutenance-4.html" class="topbar-link">S04</a>
+    <a href="soutenance-5.html" class="topbar-link">S05</a>
+    <a href="soutenance-6.html" class="topbar-link">S06</a>
+    <a href="soutenance-7.html" class="topbar-link">S07</a>
+    <a href="soutenance-8.html" class="topbar-link active">S08</a>
+    <a href="soutenance-9.html" class="topbar-link">S09</a>
+    <a href="soutenance-10.html" class="topbar-link">S10</a>
+    <a href="soutenance-11.html" class="topbar-link">S11</a>
+  </div>
+</nav>
+
+<div class="page">
+  <a href="index.html" class="back">← Retour à l'accueil</a>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Soutenance 08 · Architecture de l'information</div>
+    <h1 class="hero-title">Parcours utilisateurs<br>&amp; <span class="grad">tri de cartes</span></h1>
+    <p class="hero-sub">Concevoir l'architecture de l'information d'une application bien-être en révélant les modèles mentaux des utilisateurs par le tri de cartes.</p>
+    <div class="hero-meta">
+      <span class="badge" style="background:rgba(232,67,147,0.12);border-color:rgba(232,67,147,0.3);color:#e84393">🧘 Equi-libre</span>
+      <span class="badge" style="background:var(--bg3);border-color:var(--border2);color:var(--text2)">Institut de santé mentale</span>
+    </div>
+  </div>
+
+  <div class="callout" style="background:rgba(232,67,147,0.08);border-color:#e84393;color:var(--text2)">
+    <strong style="color:#e84393">Contexte projet</strong>
+    Equi-libre est un institut de recherche spécialisé dans la santé mentale. Son site actuel contient de nombreuses ressources, mais la quantité d'informations rend la navigation complexe — 75 % des répondants ressentent une charge mentale excessive au moins une fois par semaine. La mission : concevoir l'architecture d'information de leur future application mobile.
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Analyse concurrentielle réalisée</div>
+  <div class="section-title">Headspace vs MindDoc</div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon">🧘</div>
+      <div class="card-title">Headspace — Orienté contenu</div>
+      <div class="card-body">Navigation bottom bar en 4 sections (Méditer, Sommeil, Focus, Profil). Point d'entrée : session recommandée. Catégorisation par besoins utilisateurs. Force : navigation claire et accès rapide. Faiblesse : certains contenus dupliqués entre catégories.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <div class="card-title">MindDoc — Orienté utilisateur</div>
+      <div class="card-body">Structure centrée sur le suivi personnel (Check-in, Journal, Insights, Ressources). Point d'entrée : enregistrement émotionnel. Force : forte personnalisation. Faiblesse : ressources moins accessibles sans données renseignées.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Recommandations pour Equi-libre</div>
+  <div class="section-title">Architecture proposée</div>
+
+  <ul class="insight-list">
+    <li data-icon="🗂️">
+      <div><strong style="color:var(--text)">4 à 5 sections maximum.</strong> Pour limiter la charge cognitive : Accueil · Exercices · Journal · Ressources · Organisation. Une bottom nav claire, comme les meilleures apps bien-être.</div>
+    </li>
+    <li data-icon="🎯">
+      <div><strong style="color:var(--text)">Organisation par besoins, pas par fonctionnalités.</strong> Les catégories structurées autour des problématiques réelles : stress, sommeil, émotions, organisation du temps — pas autour de la logique technique du service.</div>
+    </li>
+    <li data-icon="🌈">
+      <div><strong style="color:var(--text)">Approche holistique du bien-être.</strong> Contrairement à Headspace (méditation seule) ou MindDoc (suivi émotionnel seul), Equi-libre peut combiner exercices de respiration, articles, tests d'auto-évaluation, journal et outils d'organisation.</div>
+    </li>
+    <li data-icon="💬">
+      <div><strong style="color:var(--text)">Vocabulaire simple et accessible.</strong> Éviter le jargon psychologique. Un wording clair (pas "mindfulness" mais "exercices de respiration") réduit la friction d'entrée pour les nouveaux utilisateurs.</div>
+    </li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Méthode du tri de cartes</div>
+  <div class="section-title">Révéler les modèles mentaux</div>
+
+  <div class="prose">
+    <p>Le <strong>tri de cartes</strong> est une méthode de recherche UX où les utilisateurs regroupent eux-mêmes des éléments de contenu en catégories logiques pour eux. Elle révèle leur modèle mental de navigation — la façon dont <em>ils</em> organisent l'information, pas la façon dont <em>on</em> pense qu'ils devraient.</p>
+    <p>Il existe deux variantes : le <strong>tri ouvert</strong> (les utilisateurs créent eux-mêmes les catégories) et le <strong>tri fermé</strong> (les catégories sont prédéfinies, les utilisateurs classent les cartes dedans). L'analyse des résultats permet de valider ou réorienter l'architecture de navigation proposée.</p>
+  </div>
+
+  <div class="tags">
+    <span class="tag" style="background:rgba(232,67,147,0.12);color:#e84393;border-color:rgba(232,67,147,0.2)">Tri de cartes</span>
+    <span class="tag" style="background:rgba(232,67,147,0.12);color:#e84393;border-color:rgba(232,67,147,0.2)">Architecture de l'information</span>
+    <span class="tag" style="background:rgba(232,67,147,0.12);color:#e84393;border-color:rgba(232,67,147,0.2)">Parcours utilisateur</span>
+    <span class="tag" style="background:rgba(232,67,147,0.12);color:#e84393;border-color:rgba(232,67,147,0.2)">Analyse concurrentielle</span>
+    <span class="tag" style="background:rgba(232,67,147,0.12);color:#e84393;border-color:rgba(232,67,147,0.2)">Santé mentale</span>
+    <span class="tag" style="background:rgba(232,67,147,0.12);color:#e84393;border-color:rgba(232,67,147,0.2)">Navigation mobile</span>
+  </div>
+
+  <div class="files">
+    <div class="files-head">📄 Fichiers de la soutenance</div>
+    <a href="Soutenance%208/Cours.docx" class="file">
+      <span class="fext fext-docx">DOCX</span>
+      <span class="fname">Cours — Parcours utilisateurs et tri de cartes</span>
+      <span class="fsize">260 KB</span>
+    </a>
+    <a href="Soutenance%208/Note%20de%20synthèse%20Equi-libre.docx" class="file">
+      <span class="fext fext-docx">DOCX</span>
+      <span class="fname">Note de synthèse — Analyse architecture Equi-libre</span>
+      <span class="fsize">12 KB</span>
+    </a>
+    <a href="Soutenance%208/Methode-du-tri-de-cartes-P8-UX-Designer.pdf" class="file">
+      <span class="fext fext-pdf">PDF</span>
+      <span class="fname">Guide — Méthode du tri de cartes (P8 UX Designer)</span>
+      <span class="fsize">323 KB</span>
+    </a>
+    <a href="Soutenance%208/Modele-Parcours+Utilisateurs...odt" class="file">
+      <span class="fext fext-odt">ODT</span>
+      <span class="fname">Modèle — Carte de parcours utilisateur</span>
+      <span class="fsize">10 KB</span>
+    </a>
+    <a href="Soutenance%208/Resultat-des-enquetes-preliminaires...pdf" class="file">
+      <span class="fext fext-pdf">PDF</span>
+      <span class="fname">Résultats des enquêtes préliminaires</span>
+      <span class="fsize">1.4 MB</span>
+    </a>
+  </div>
+
+  <div class="page-nav">
+    <a href="soutenance-7.html">
+      <span class="nav-hint">← Précédent</span>
+      <span class="nav-title">S07 — Développeur · Association Avenirs</span>
+    </a>
+    <a href="soutenance-9.html" class="next">
+      <span class="nav-hint">Suivant →</span>
+      <span class="nav-title">S09 — Prototypes HTML · Les Bambinets</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

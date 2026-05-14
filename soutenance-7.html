@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S07 — Association Avenirs · UX Portfolio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">UX <span>Portfolio</span></a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-link">Accueil</a>
+    <a href="soutenance-1.html" class="topbar-link">S01</a>
+    <a href="soutenance-2.html" class="topbar-link">S02</a>
+    <a href="soutenance-3.html" class="topbar-link">S03</a>
+    <a href="soutenance-4.html" class="topbar-link">S04</a>
+    <a href="soutenance-5.html" class="topbar-link">S05</a>
+    <a href="soutenance-6.html" class="topbar-link">S06</a>
+    <a href="soutenance-7.html" class="topbar-link active">S07</a>
+    <a href="soutenance-8.html" class="topbar-link">S08</a>
+    <a href="soutenance-9.html" class="topbar-link">S09</a>
+    <a href="soutenance-10.html" class="topbar-link">S10</a>
+    <a href="soutenance-11.html" class="topbar-link">S11</a>
+  </div>
+</nav>
+
+<div class="page">
+  <a href="index.html" class="back">← Retour à l'accueil</a>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Soutenance 07 · Design + Développement</div>
+    <h1 class="hero-title">Se mettre dans<br>la peau d'un <span class="grad">développeur</span></h1>
+    <p class="hero-sub">Concevoir et intégrer une landing page et une application web pour l'association Avenirs, en respectant leur charte graphique.</p>
+    <div class="hero-meta">
+      <span class="badge" style="background:rgba(9,132,227,0.12);border-color:rgba(9,132,227,0.3);color:#0984e3">🏫 Association Avenirs</span>
+      <span class="badge" style="background:var(--bg3);border-color:var(--border2);color:var(--text2)">Mars 2026</span>
+      <span class="badge" style="background:var(--bg3);border-color:var(--border2);color:var(--text2)">3 livrables</span>
+    </div>
+  </div>
+
+  <div class="callout" style="background:rgba(9,132,227,0.08);border-color:#0984e3;color:var(--text2)">
+    <strong style="color:#0984e3">Contexte projet</strong>
+    L'Association Avenirs accompagne les enfants dans leur développement par des activités éducatives (livres, événements, compétences). La mission : concevoir deux interfaces numériques (landing page publique + application de gestion interne) en collaborant avec les équipes techniques, après analyse de la charte graphique de l'association.
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">L'application — Données réelles</div>
+  <div class="section-title">Gestion des enfants et activités</div>
+
+  <div class="prose">
+    <p>L'application interne permet de gérer le suivi personnalisé de chaque enfant : livres en cours de lecture, compétences acquises, compétences en développement, allergies, événements auxquels ils participent.</p>
+    <p>Les données de l'application révèlent le niveau de granularité attendu : chaque enfant (Louis, Agathe, Solveig…) a un profil avec ses allergies, ses lectures du moment (<em>Bonne nuit gorille</em>, <em>Le Petit Chaperon Rouge</em>…) et ses compétences tracées (<em>"Je sais compter jusqu'à 10"</em>, <em>"Je sais faire des phrases complexes"</em>…).</p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon">📚</div>
+      <div class="card-title">Gestion des livres</div>
+      <div class="card-body">Catalogue des livres disponibles, suivi du livre en cours pour chaque enfant. Littérature jeunesse : Peggy Rathmann, Barroux…</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌱</div>
+      <div class="card-title">Suivi des compétences</div>
+      <div class="card-body">Compétences acquises vs en cours d'apprentissage pour chaque enfant — langage, musique, numération, attention. Traçabilité complète du développement.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚠️</div>
+      <div class="card-title">Gestion des allergies</div>
+      <div class="card-body">Profil médical de chaque enfant avec ses allergies référencées (cacahuètes, lait…) pour les événements et activités.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎉</div>
+      <div class="card-title">Événements</div>
+      <div class="card-body">Gestion des événements de l'association et des participations par enfant. Lien entre compétences travaillées et activités proposées.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Livrables produits</div>
+  <div class="section-title">Design + Intégration</div>
+
+  <ul class="insight-list">
+    <li data-icon="🖥️">
+      <div><strong style="color:var(--text)">Landing Page (Julia).</strong> Page publique de l'association présentant ses services aux familles et partenaires. Intègre les données réelles : carte des antennes, texte de présentation, maquette responsive.</div>
+    </li>
+    <li data-icon="📱">
+      <div><strong style="color:var(--text)">Application web (Sabri).</strong> Interface de gestion interne : tableau de bord des enfants, suivi des livres, compétences et événements. Maquettes + données CSV réelles.</div>
+    </li>
+    <li data-icon="🗺️">
+      <div><strong style="color:var(--text)">Flowchart.</strong> Schéma des flux de navigation et de données de l'application, permettant à l'équipe de développement de comprendre la logique sans ambiguïté.</div>
+    </li>
+  </ul>
+
+  <div class="tags">
+    <span class="tag" style="background:rgba(9,132,227,0.12);color:#0984e3;border-color:rgba(9,132,227,0.2)">HTML/CSS</span>
+    <span class="tag" style="background:rgba(9,132,227,0.12);color:#0984e3;border-color:rgba(9,132,227,0.2)">Charte graphique</span>
+    <span class="tag" style="background:rgba(9,132,227,0.12);color:#0984e3;border-color:rgba(9,132,227,0.2)">Landing page</span>
+    <span class="tag" style="background:rgba(9,132,227,0.12);color:#0984e3;border-color:rgba(9,132,227,0.2)">Application web</span>
+    <span class="tag" style="background:rgba(9,132,227,0.12);color:#0984e3;border-color:rgba(9,132,227,0.2)">Flowchart</span>
+    <span class="tag" style="background:rgba(9,132,227,0.12);color:#0984e3;border-color:rgba(9,132,227,0.2)">Collaboration dev</span>
+    <span class="tag" style="background:rgba(9,132,227,0.12);color:#0984e3;border-color:rgba(9,132,227,0.2)">CSV / données</span>
+  </div>
+
+  <div class="files">
+    <div class="files-head">📄 Fichiers de la soutenance</div>
+    <a href="Soutenance%207/Cours.docx" class="file">
+      <span class="fext fext-docx">DOCX</span>
+      <span class="fname">Cours — Se mettre dans la peau d'un développeur</span>
+      <span class="fsize">377 KB</span>
+    </a>
+    <a href="Soutenance%207/Charte-graphique-Avenirs.pdf" class="file">
+      <span class="fext fext-pdf">PDF</span>
+      <span class="fname">Charte graphique — Association Avenirs</span>
+      <span class="fsize">1.1 MB</span>
+    </a>
+    <a href="Soutenance%207/Copie+de+Présentation+de+l_association.pdf" class="file">
+      <span class="fext fext-pdf">PDF</span>
+      <span class="fname">Présentation de l'association Avenirs</span>
+      <span class="fsize">1.6 MB</span>
+    </a>
+    <a href="Soutenance%207/Points+importants+pour+la+présentation+pour+Sabri%20(1).pptx" class="file">
+      <span class="fext fext-pptx">PPTX</span>
+      <span class="fname">Points importants — Présentation Sabri (application)</span>
+      <span class="fsize">253 KB</span>
+    </a>
+  </div>
+
+  <div class="files">
+    <div class="files-head">📦 Livrables du projet (ZIP)</div>
+    <a href="Soutenance%207/Landing+Page.zip" class="file">
+      <span class="fext fext-zip">ZIP</span>
+      <span class="fname">Landing Page — Antennes CSV + maquette + texte (Julia)</span>
+      <span class="fsize">1.4 MB</span>
+    </a>
+    <a href="Soutenance%207/App.zip" class="file">
+      <span class="fext fext-zip">ZIP</span>
+      <span class="fname">Application — CSV enfants, livres, événements, compétences + maquette (Sabri)</span>
+      <span class="fsize">423 KB</span>
+    </a>
+    <a href="Soutenance%207/ML_P7_mettez-vous-dans-la-peau-dun-developpeur_2026-03-03T191603.zip" class="file">
+      <span class="fext fext-zip">ZIP</span>
+      <span class="fname">Livrable P7 complet — Présentations Julia & Sabri + Flowchart</span>
+      <span class="fsize">15.5 MB</span>
+    </a>
+  </div>
+
+  <div class="page-nav">
+    <a href="soutenance-6.html">
+      <span class="nav-hint">← Précédent</span>
+      <span class="nav-title">S06 — Faire évoluer un service</span>
+    </a>
+    <a href="soutenance-8.html" class="next">
+      <span class="nav-hint">Suivant →</span>
+      <span class="nav-title">S08 — Parcours utilisateurs · Equi-libre</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>
