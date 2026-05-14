@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Wireframes v2 — Les Bambinets</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #D0D0D0;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    padding: 56px 40px;
+  }
+
+  .page-title {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #666;
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    justify-content: center;
+  }
+
+  .frame-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .frame-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #555;
+  }
+
+  /* ── FRAME iPhone 14 : 390 × 844 ── */
+  .frame {
+    width: 390px;
+    height: 844px;
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #111;
+    overflow: hidden;
+  }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    height: 44px;
+    background: #fff;
+    border-bottom: 1px solid #111;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 24px 8px;
+    flex-shrink: 0;
+  }
+  .status-bar .time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+  }
+  .status-bar .icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .signal { display: flex; align-items: flex-end; gap: 2px; }
+  .signal span {
+    background: #111;
+    width: 3px;
+    display: block;
+    border-radius: 1px;
+  }
+  .signal span:nth-child(1) { height: 4px; }
+  .signal span:nth-child(2) { height: 6px; }
+  .signal span:nth-child(3) { height: 9px; }
+  .signal span:nth-child(4) { height: 12px; }
+  .wifi-icon { font-size: 11px; color: #111; font-weight: 600; }
+  .battery {
+    width: 22px; height: 11px;
+    border: 1.5px solid #111;
+    border-radius: 2px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1.5px;
+  }
+  .battery::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px; height: 5px;
+    background: #111;
+    border-radius: 0 1px 1px 0;
+  }
+  .battery-fill { height: 100%; width: 70%; background: #111; border-radius: 1px; }
+
+  /* ── NAV BAR ── */
+  .nav-bar {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #111;
+    flex-shrink: 0;
+  }
+  .nav-bar .nav-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -.01em;
+  }
+  .nav-bar .nav-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #111;
+  }
+  .nav-bar .nav-back {
+    font-size: 14px;
+    color: #111;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .nav-bar .nav-back svg { width: 8px; }
+  .nav-bar .nav-spacer { width: 28px; }
+
+  /* ── CONTENU ── */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  /* ── BOTTOM TAB BAR ── */
+  .tab-bar {
+    height: 83px;
+    border-top: 1.5px solid #111;
+    display: flex;
+    flex-shrink: 0;
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    gap: 4px;
+    border-right: 1px solid #E0E0E0;
+  }
+  .tab-item:last-child { border-right: none; }
+  .tab-icon-box {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tab-icon-box svg { width: 22px; height: 22px; stroke: #C0C0C0; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tab-icon-box.active svg { stroke: #111; }
+  .tab-label-text {
+    font-size: 10px;
+    color: #C0C0C0;
+    letter-spacing: .02em;
+  }
+  .tab-label-text.active { color: #111; font-weight: 600; }
+  .tab-item.active .tab-label-text { color: #111; font-weight: 600; }
+
+  /* ── COMPOSANTS WIRE ── */
+
+  /* Barre de recherche */
+  .search-bar {
+    height: 40px;
+    border: 1.5px solid #111;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+  .search-bar svg { width: 16px; height: 16px; stroke: #888; fill: none; stroke-width: 1.5; stroke-linecap: round; flex-shrink: 0; }
+  .search-bar span { font-size: 14px; color: #AAA; }
+
+  /* Pills / filtres */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .pill {
+    border: 1.5px solid #111;
+    border-radius: 99px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: #111;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .pill.on { background: #111; color: #fff; }
+
+  /* Séparateur lettre */
+  .alpha-sep {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: .08em;
+    padding: 10px 0 4px;
+    border-bottom: 1px solid #E8E8E8;
+  }
+
+  /* Ligne de liste */
+  .list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #E8E8E8;
+    flex-shrink: 0;
+  }
+  .list-word { font-size: 15px; color: #111; font-weight: 500; }
+  .list-cat { font-size: 11px; color: #888; margin-top: 2px; }
+  .list-right { display: flex; align-items: center; gap: 12px; }
+  .icon-heart { width: 20px; height: 20px; }
+  .icon-heart svg { width: 20px; height: 20px; stroke: #C0C0C0; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-heart.filled svg { stroke: #111; fill: #111; }
+  .icon-chevron svg { width: 14px; height: 14px; stroke: #C0C0C0; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Placeholder vidéo */
+  .ph-video {
+    background: #F2F2F2;
+    border: 1.5px dashed #999;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .ph-video svg { width: 32px; height: 32px; stroke: #AAA; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .ph-video-label { font-size: 11px; color: #AAA; letter-spacing: .04em; }
+
+  /* Placeholder image */
+  .ph-img {
+    background: #F2F2F2;
+    border: 1.5px dashed #999;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ph-img span { font-size: 11px; color: #AAA; letter-spacing: .04em; }
+
+  /* Tag catégorie */
+  .tag-badge {
+    display: inline-flex;
+    border: 1.5px solid #111;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: #111;
+    font-weight: 500;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Titres de section */
+  .sec-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+
+  /* Texte corps */
+  .body-txt {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Lorem court */
+  .lorem {
+    font-size: 14px;
+    color: #AAA;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Navigation préc/suiv */
+  .prev-next {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #E0E0E0;
+    padding-top: 14px;
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+  .prev-next span { font-size: 13px; color: #888; }
+
+  /* Barre de progression */
+  .progress-wrap { margin-bottom: 18px; flex-shrink: 0; }
+  .progress-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .progress-meta span { font-size: 12px; color: #888; }
+  .progress-track { height: 3px; background: #E0E0E0; border-radius: 2px; }
+  .progress-fill { height: 100%; background: #111; border-radius: 2px; }
+
+  /* Question quiz */
+  .quiz-question {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Option quiz */
+  .quiz-opt {
+    border: 1.5px solid #E0E0E0;
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 14px;
+    color: #111;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .quiz-opt .opt-letter {
+    width: 24px; height: 24px;
+    border: 1.5px solid #111;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #111;
+    flex-shrink: 0;
+  }
+  .quiz-opt.correct { border-color: #111; background: #111; color: #fff; }
+  .quiz-opt.correct .opt-letter { border-color: #fff; color: #fff; }
+  .quiz-opt.wrong { border-color: #888; background: #F2F2F2; color: #888; }
+  .quiz-opt.wrong .opt-letter { border-color: #888; color: #888; }
+
+  /* Score résultat */
+  .score-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 0 20px;
+    flex-shrink: 0;
+  }
+  .score-ring {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    border: 3px solid #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 12px;
+  }
+  .score-msg { font-size: 14px; color: #555; text-align: center; line-height: 1.5; }
+
+  /* Bouton */
+  .btn {
+    display: block;
+    border: 1.5px solid #111;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .btn.filled { background: #111; color: #fff; }
+
+  /* Ligne FAQ */
+  .faq-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #E8E8E8;
+    flex-shrink: 0;
+    gap: 12px;
+  }
+  .faq-row .faq-q { font-size: 14px; color: #111; line-height: 1.4; }
+  .faq-row .faq-c svg { width: 14px; height: 14px; stroke: #BBB; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Compteur favoris */
+  .fav-count { font-size: 13px; color: #888; margin-bottom: 16px; flex-shrink: 0; }
+
+  /* État vide */
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1.5px dashed #DEDEDE;
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+  .empty-state svg { width: 36px; height: 36px; stroke: #CECECE; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .empty-state span { font-size: 13px; color: #AAAAAA; text-align: center; line-height: 1.5; }
+
+  /* Grille accueil */
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .home-card {
+    border: 1.5px solid #111;
+    border-radius: 12px;
+    padding: 22px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .home-card-icon {
+    width: 36px; height: 36px;
+    background: #111;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px;
+  }
+  .home-card-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .home-card-title { font-size: 15px; font-weight: 700; color: #111; }
+  .home-card-sub { font-size: 12px; color: #888; }
+
+  /* Hero accueil */
+  .home-hero {
+    border: 1.5px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+    flex-shrink: 0;
+  }
+  .home-hero-title { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 6px; line-height: 1.2; }
+  .home-hero-sub { font-size: 13px; color: #888; line-height: 1.5; }
+
+  /* Divider */
+  .divider { height: 1px; background: #E8E8E8; margin: 14px 0; flex-shrink: 0; }
+
+  /* Correction quiz */
+  .correction-box {
+    border: 1.5px solid #111;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+  .correction-box .corr-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+  .correction-box .corr-text { font-size: 13px; color: #111; }
+
+</style>
+</head>
+<body>
+
+<p class="page-title">Wireframes · Les Bambinets · iPhone 14 (390 × 844 px)</p>
+
+<div class="grid">
+
+<!-- ════════════════════════
+     1 — ACCUEIL
+════════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">1 / 7 — Accueil</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons">
+        <div class="signal"><span></span><span></span><span></span><span></span></div>
+        <span class="wifi-icon">WiFi</span>
+        <div class="battery"><div class="battery-fill"></div></div>
+      </div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-title">Les Bambinets</span>
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#111;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+    </div>
+    <div class="content">
+      <div class="home-hero">
+        <div class="home-hero-title">Bonjour 👋</div>
+        <div class="home-hero-sub">Apprenez la langue des signes avec votre bébé, à votre rythme.</div>
+      </div>
+      <div class="home-grid">
+        <div class="home-card">
+          <div class="home-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <span class="home-card-title">Glossaire</span>
+          <span class="home-card-sub">20 signes illustrés en vidéo</span>
+        </div>
+        <div class="home-card">
+          <div class="home-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <span class="home-card-title">Quiz</span>
+          <span class="home-card-sub">Testez vos acquis</span>
+        </div>
+        <div class="home-card">
+          <div class="home-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <span class="home-card-title">FAQ</span>
+          <span class="home-card-sub">Vos questions, nos réponses</span>
+        </div>
+        <div class="home-card">
+          <div class="home-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <span class="home-card-title">Mes favoris</span>
+          <span class="home-card-sub">Signes sauvegardés</span>
+        </div>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item active">
+        <div class="tab-icon-box active"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <span class="tab-label-text active">Accueil</span>
+      </div>
+      <div class="tab-item">
+        <div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <span class="tab-label-text">Glossaire</span>
+      </div>
+      <div class="tab-item">
+        <div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <span class="tab-label-text">Quiz</span>
+      </div>
+      <div class="tab-item">
+        <div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <span class="tab-label-text">Favoris</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     2 — GLOSSAIRE (liste)
+════════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">2 / 7 — Glossaire</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons"><div class="signal"><span></span><span></span><span></span><span></span></div><span class="wifi-icon">WiFi</span><div class="battery"><div class="battery-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-title">Glossaire</span>
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:#111;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+    </div>
+    <div class="content">
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Rechercher un signe…</span>
+      </div>
+      <div class="filter-row">
+        <span class="pill on">Tous</span>
+        <span class="pill">Essentiels</span>
+        <span class="pill">Émotions</span>
+        <span class="pill">Loisirs</span>
+        <span class="pill">Nature</span>
+      </div>
+      <div class="alpha-sep">A</div>
+      <div class="list-row">
+        <div><div class="list-word">Au revoir</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="icon-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="alpha-sep">B</div>
+      <div class="list-row">
+        <div><div class="list-word">Boire</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="icon-heart filled"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div><div class="list-word">Bonjour</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="icon-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="alpha-sep">C</div>
+      <div class="list-row">
+        <div><div class="list-word">Câlin</div><div class="list-cat">Émotions</div></div>
+        <div class="list-right">
+          <div class="icon-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div><div class="list-word">Chat</div><div class="list-cat">Nature</div></div>
+        <div class="list-right">
+          <div class="icon-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="alpha-sep">D</div>
+      <div class="list-row">
+        <div><div class="list-word">Dodo</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="icon-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-label-text">Accueil</span></div>
+      <div class="tab-item active"><div class="tab-icon-box active"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-label-text active">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-label-text">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-label-text">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     3 — FICHE SIGNE
+════════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">3 / 7 — Fiche signe</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons"><div class="signal"><span></span><span></span><span></span><span></span></div><span class="wifi-icon">WiFi</span><div class="battery"><div class="battery-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <div class="nav-back">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#111;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="15 18 9 12 15 6"/></svg>
+        Glossaire
+      </div>
+      <span class="nav-title">Boire</span>
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#111;fill:#111;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+    </div>
+    <div class="content">
+      <div class="ph-video" style="height:210px; margin-bottom:16px;">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span class="ph-video-label">Vidéo du signe — placeholder</span>
+      </div>
+      <span class="tag-badge">Essentiels</span>
+      <div class="sec-title">Description</div>
+      <p class="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Portez la main en direction de la bouche, répétez le geste.</p>
+      <div class="sec-title">Astuce</div>
+      <p class="lorem">Lorem ipsum dolor sit amet, associez ce signe à la parole pour renforcer l'apprentissage de votre enfant.</p>
+      <div class="prev-next">
+        <span>‹ Précédent</span>
+        <span>Suivant ›</span>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-label-text">Accueil</span></div>
+      <div class="tab-item active"><div class="tab-icon-box active"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-label-text active">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-label-text">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-label-text">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     4 — QUIZ (question)
+════════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">4 / 7 — Quiz (question)</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons"><div class="signal"><span></span><span></span><span></span><span></span></div><span class="wifi-icon">WiFi</span><div class="battery"><div class="battery-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:#111;fill:none;stroke-width:2;stroke-linecap:round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <span class="nav-title">Quiz</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <div class="progress-wrap">
+        <div class="progress-meta"><span>Question 1 sur 5</span><span>20 %</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:20%"></div></div>
+      </div>
+      <p class="quiz-question">Quel signe est montré dans la vidéo&nbsp;?</p>
+      <div class="ph-video" style="height:180px; margin-bottom:20px;">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span class="ph-video-label">Vidéo du signe — placeholder</span>
+      </div>
+      <div class="quiz-opt"><span class="opt-letter">A</span> Lorem ipsum</div>
+      <div class="quiz-opt"><span class="opt-letter">B</span> Lorem ipsum</div>
+      <div class="quiz-opt"><span class="opt-letter">C</span> Lorem ipsum</div>
+      <div class="quiz-opt"><span class="opt-letter">D</span> Lorem ipsum</div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-label-text">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-label-text">Glossaire</span></div>
+      <div class="tab-item active"><div class="tab-icon-box active"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-label-text active">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-label-text">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     5 — QUIZ (résultat)
+════════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">5 / 7 — Quiz (résultat)</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons"><div class="signal"><span></span><span></span><span></span><span></span></div><span class="wifi-icon">WiFi</span><div class="battery"><div class="battery-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-spacer"></span>
+      <span class="nav-title">Résultats</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <div class="score-block">
+        <div class="score-ring">4 / 5</div>
+        <p class="score-msg">Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit.</p>
+      </div>
+      <div class="divider"></div>
+      <div class="sec-title">Correction</div>
+      <div class="correction-box">
+        <div class="corr-label">Question 3 — Bonne réponse</div>
+        <div class="corr-text">Lorem ipsum — [nom du signe]</div>
+      </div>
+      <div class="ph-img" style="height:90px; margin-bottom:16px;"><span>Illustration du signe</span></div>
+      <div class="btn filled">Rejouer le quiz</div>
+      <div class="btn">Retour à l'accueil</div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-label-text">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-label-text">Glossaire</span></div>
+      <div class="tab-item active"><div class="tab-icon-box active"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-label-text active">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-label-text">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     6 — FAQ
+════════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">6 / 7 — FAQ</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons"><div class="signal"><span></span><span></span><span></span><span></span></div><span class="wifi-icon">WiFi</span><div class="battery"><div class="battery-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-title">FAQ</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <p class="body-txt" style="margin-bottom:20px;">Questions fréquentes sur les signes avec bébé</p>
+      <div class="faq-row">
+        <span class="faq-q">À quel âge commencer les signes ?</span>
+        <span class="faq-c"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q">Est-ce que ça retarde le langage ?</span>
+        <span class="faq-c"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q">Combien de signes apprendre pour commencer ?</span>
+        <span class="faq-c"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q">Comment impliquer la crèche ?</span>
+        <span class="faq-c"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q">Et si mon bébé ne répond pas ?</span>
+        <span class="faq-c"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q">Faut-il apprendre la LSF complète ?</span>
+        <span class="faq-c"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q">Quelles ressources complémentaires ?</span>
+        <span class="faq-c"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-label-text">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-label-text">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-label-text">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-label-text">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     7 — FAVORIS
+════════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">7 / 7 — Mes favoris</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons"><div class="signal"><span></span><span></span><span></span><span></span></div><span class="wifi-icon">WiFi</span><div class="battery"><div class="battery-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-title">Mes favoris</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <p class="fav-count">2 signes sauvegardés</p>
+      <div class="list-row">
+        <div><div class="list-word">Boire</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="icon-heart filled"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div><div class="list-word">Merci</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="icon-heart filled"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="icon-chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Ajoutez des signes depuis<br>le glossaire</span>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-label-text">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-label-text">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon-box"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-label-text">Quiz</span></div>
+      <div class="tab-item active"><div class="tab-icon-box active"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-label-text active">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

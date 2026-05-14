@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossier d'analyse – Outil de recommandation Seconde Peau</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+  :root {
+    --ink: #1a1a18;
+    --ink2: #4a4a45;
+    --ink3: #888780;
+    --paper: #faf8f3;
+    --paper2: #f2ede3;
+    --paper3: #e8e1d0;
+    --accent: #c84b2f;
+    --accent2: #e8a830;
+    --teal: #1d7a5e;
+    --teal-light: #e1f5ee;
+    --coral: #c84b2f;
+    --coral-light: #faeae6;
+    --amber: #b87518;
+    --amber-light: #faeeda;
+    --border: rgba(26,26,24,0.12);
+    --page-w: 860px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    background: var(--paper);
+    max-width: var(--page-w);
+    margin: 0 auto;
+    padding: 56px 64px 80px;
+  }
+
+  .page-break { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
+
+  /* COVER */
+  .cover { padding: 40px 0 52px; border-bottom: 2px solid var(--ink); }
+  .cover-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin-bottom: 28px; }
+  .cover-title { font-family: 'DM Serif Display', serif; font-size: 46px; line-height: 1.1; color: var(--ink); margin-bottom: 10px; }
+  .cover-sub { font-family: 'DM Serif Display', serif; font-size: 22px; font-style: italic; color: var(--ink2); margin-bottom: 36px; }
+  .cover-meta { display: flex; gap: 40px; font-size: 13px; color: var(--ink3); }
+  .cover-meta strong { color: var(--ink); font-weight: 500; display: block; }
+
+  /* SECTION HEADERS */
+  .part-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 52px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .part-label::after { content: ''; flex: 1; height: 1px; background: var(--coral-light); }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 28px 0 10px;
+    border-left: 3px solid var(--accent);
+    padding-left: 12px;
+  }
+
+  p { margin-bottom: 16px; color: var(--ink2); }
+  strong { color: var(--ink); font-weight: 500; }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .callout-negative { background: var(--coral-light); border-left: 3px solid var(--coral); }
+  .callout-neutral { background: var(--amber-light); border-left: 3px solid var(--amber); }
+  .callout-positive { background: var(--teal-light); border-left: 3px solid var(--teal); }
+  .callout strong { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .callout-negative strong { color: var(--coral); }
+  .callout-neutral strong { color: var(--amber); }
+  .callout-positive strong { color: var(--teal); }
+
+  /* STAT GRID */
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+  .stat-card {
+    background: var(--paper2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    position: relative;
+  }
+  .stat-card.neg { border-top: 3px solid var(--coral); }
+  .stat-card.neu { border-top: 3px solid var(--amber); }
+  .stat-card.pos { border-top: 3px solid var(--teal); }
+  .stat-number { font-family: 'DM Serif Display', serif; font-size: 30px; color: var(--ink); line-height: 1; margin: 4px 0; }
+  .stat-number.neg { color: var(--coral); }
+  .stat-number.pos { color: var(--teal); }
+  .stat-label { font-size: 12px; color: var(--ink3); line-height: 1.4; }
+
+  /* TICKET QUOTES */
+  .quote-block { margin: 20px 0; border-left: 2px solid var(--paper3); padding-left: 20px; }
+  .quote-text {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink2);
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+  .quote-tag { font-size: 11px; color: var(--ink3); font-weight: 500; letter-spacing: 0.05em; }
+
+  /* RECO CARDS */
+  .reco-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 20px 0; }
+  .reco-card {
+    background: var(--paper2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .reco-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .pill-urgent { background: var(--coral-light); color: var(--coral); }
+  .pill-medium { background: var(--amber-light); color: var(--amber); }
+  .pill-later { background: var(--teal-light); color: var(--teal); }
+  .reco-card h4 { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+  .reco-card p { font-size: 13px; margin-bottom: 0; }
+
+  /* EMPATHY MAP */
+  .empathy-map { width: 100%; margin: 28px 0; }
+  .em-center {
+    text-align: center;
+    padding: 20px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  .em-center-title { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 4px; }
+  .em-center-sub { font-size: 12px; opacity: 0.6; }
+  .em-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .em-cell {
+    background: var(--paper2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .em-cell-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .em-cell-label.pense { color: #5c3ab7; border-color: #d4caff; }
+  .em-cell-label.dit { color: #1d7a5e; border-color: #9fe1cb; }
+  .em-cell-label.fait { color: #b87518; border-color: #fac775; }
+  .em-cell-label.ressent { color: #c84b2f; border-color: #f5c4b3; }
+  .em-cell ul { padding-left: 16px; font-size: 13px; color: var(--ink2); line-height: 1.7; }
+  .em-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .em-douleurs { background: var(--coral-light); border: 1px solid #f5c4b3; border-radius: 10px; padding: 16px 18px; }
+  .em-gains { background: var(--teal-light); border: 1px solid #9fe1cb; border-radius: 10px; padding: 16px 18px; }
+  .em-douleurs .em-cell-label { color: var(--coral); border-color: #f0997b; }
+  .em-gains .em-cell-label { color: var(--teal); border-color: #5dcaa5; }
+
+  /* JOURNEY MAP */
+  .journey { margin: 28px 0; overflow-x: auto; }
+  .journey-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .journey-table th {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+  .journey-table td {
+    padding: 12px 12px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink2);
+    line-height: 1.55;
+  }
+  .journey-table tr:last-child td { border-bottom: none; }
+  .step-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 20px;
+    padding: 2px 9px;
+    margin-bottom: 6px;
+  }
+  .emotion-bar { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .emotion-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .e-neg { background: var(--coral); }
+  .e-neu { background: var(--amber); }
+  .e-pos { background: var(--teal); }
+  .friction-tag { font-size: 11px; color: var(--coral); background: var(--coral-light); padding: 1px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
+
+  /* IDEAL JOURNEY */
+  .ideal-step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+  .ideal-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--teal);
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .ideal-content h4 { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+  .ideal-content p { font-size: 13px; margin-bottom: 0; }
+  .ideal-gain { font-size: 12px; color: var(--teal); background: var(--teal-light); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-top: 5px; }
+  .ideal-connector { width: 1px; background: var(--paper3); height: 16px; margin-left: 16px; }
+
+  @media print {
+    body { max-width: 100%; padding: 30px 40px; }
+    .stat-grid { page-break-inside: avoid; }
+    .em-grid { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <p class="cover-eyebrow">UX Design · Analyse de fonctionnalité</p>
+  <h1 class="cover-title">Outil de recommandation<br>de tenues</h1>
+  <p class="cover-sub">Diagnostic et recommandations — Seconde Peau</p>
+  <div class="cover-meta">
+    <div><strong>Rédacteur</strong>UX Designer, Seconde Peau</div>
+    <div><strong>Date</strong>Mai 2026</div>
+    <div><strong>Fonctionnalité</strong>Recommandation vestimentaire</div>
+  </div>
+</div>
+
+<!-- ================================================ -->
+<!-- PARTIE 1 – ÉTAT DES LIEUX -->
+<!-- ================================================ -->
+
+<div class="part-label">Partie 1 — État des lieux</div>
+<h2>Conclusions sur l'expérience utilisateur</h2>
+
+<h3>Retours qualitatifs — ce que disent les utilisateurs</h3>
+
+<p>
+  L'analyse des tickets clients et des enquêtes de satisfaction révèle un consensus clair : l'outil de recommandation est perçu comme <strong>intrusif, peu pertinent et techniquement défaillant</strong>. Quatre grandes familles de friction ressortent des verbatims.
+</p>
+
+<div class="quote-block">
+  <p class="quote-text">« Dès que je me connecte, la page d'accueil est remplie de recommandations qui ne m'intéressent pas du tout […] les recommandations prennent une place énorme à côté de la fiche produit. »</p>
+  <span class="quote-tag">Ticket client · Intrusion de l'outil dans la navigation</span>
+</div>
+
+<div class="callout callout-negative">
+  <strong>Friction 1 – Recommandations omniprésentes et non pertinentes</strong>
+  Les recommandations s'imposent sur la page d'accueil, dans les catégories et sur les fiches produit, sans tenir compte des critères de recherche en cours. Un utilisateur recherchant un pull bleu marine s'est vu proposer des pulls de toutes les couleurs sauf la bonne.
+</div>
+
+<div class="callout callout-negative">
+  <strong>Friction 2 – Formulaire de préférences défaillant</strong>
+  Le formulaire de 9 questions est perçu comme long, lent et pénible. Il ne propose pas de barre de progression, ne permet pas de revenir en arrière, ne sauvegarde pas les réponses en cours et ne confirme pas leur prise en compte. Aucun feedback visuel n'est fourni.
+</div>
+
+<div class="callout callout-negative">
+  <strong>Friction 3 – Redondance des données demandées</strong>
+  Après avoir renseigné leurs préférences vestimentaires, certains utilisateurs sont redirigés vers une page de profil où des informations déjà fournies à l'inscription (adresse, date de naissance, genre) leur sont redemandées. Ce comportement génère confusion et abandon.
+</div>
+
+<div class="callout callout-negative">
+  <strong>Friction 4 – Navigation globalement dégradée</strong>
+  Les filtres par taille, couleur et prix qui existaient avant la fonctionnalité semblent noyés ou perturbés par le nouvel algorithme. Les utilisateurs déclarent ne plus retrouver ce qu'ils cherchent. L'intuitivité du parcours est jugée en forte baisse.
+</div>
+
+<h3>Données quantitatives — ce que mesurent les chiffres</h3>
+
+<p>
+  Les métriques extraites par le webmaster confirment et amplifient les signaux qualitatifs. Plusieurs indicateurs clés se sont dégradés simultanément depuis le déploiement, formant un tableau cohérent d'une expérience qui fait fuir les utilisateurs.
+</p>
+
+<div class="stat-grid">
+  <div class="stat-card neg">
+    <div class="stat-label">Taux de rebond</div>
+    <div class="stat-number neg">+15 pts</div>
+    <div class="stat-label">de 45 % à 60 % — les utilisateurs quittent sans explorer</div>
+  </div>
+  <div class="stat-card neg">
+    <div class="stat-label">Taux de conversion</div>
+    <div class="stat-number neg">−50 %</div>
+    <div class="stat-label">de 2 % à 1 % — deux fois moins d'achats finalisés</div>
+  </div>
+  <div class="stat-card neg">
+    <div class="stat-label">Nouvelles inscriptions</div>
+    <div class="stat-number neg">−20 %</div>
+    <div class="stat-label">le formulaire décourage les nouveaux visiteurs</div>
+  </div>
+  <div class="stat-card neg">
+    <div class="stat-label">Temps sur la page d'accueil</div>
+    <div class="stat-number neg">−20 %</div>
+    <div class="stat-label">45 s → 36 s — l'intérêt initial ne se traduit plus</div>
+  </div>
+  <div class="stat-card neg">
+    <div class="stat-label">Temps moyen sur le site</div>
+    <div class="stat-number neg">−33 %</div>
+    <div class="stat-label">3 min → 2 min — les sessions raccourcissent</div>
+  </div>
+  <div class="stat-card neu">
+    <div class="stat-label">Pages vues / visite</div>
+    <div class="stat-number" style="color: var(--amber);">+67 %</div>
+    <div class="stat-label">3 → 5 pages — mais sans conversion : errance, pas engagement</div>
+  </div>
+</div>
+
+<p>
+  Le temps passé sur la <strong>page de paramétrage du profil</strong> est significativement élevé (+40 %, 2 min 30 s), signalant que les utilisateurs y restent bloqués ou désorientés. À l'inverse, le temps passé sur les <strong>pages produit</strong> diminue (−10 %), suggérant que l'outil perturbe la décision d'achat plutôt qu'il ne la facilite. La hausse du temps sur la <strong>page panier</strong> (+25 %) reste difficile à interpréter positivement en l'absence de conversion.
+</p>
+
+<!-- ================================================ -->
+<!-- CARTE D'EMPATHIE -->
+<!-- ================================================ -->
+
+<div class="part-label">Visualisation 1 — Carte d'empathie</div>
+<h2>Profil de l'utilisateur type</h2>
+
+<p>Utilisateur cible : client régulier de Seconde Peau, à l'aise avec le shopping en ligne, qui vient chercher un article précis et est perturbé par l'irruption de l'outil de recommandation dans son parcours habituel.</p>
+
+<div class="empathy-map">
+  <div class="em-center">
+    <div class="em-center-title">L'utilisateur régulier de Seconde Peau</div>
+    <div class="em-center-sub">Acheteur en ligne habitué · Recherche d'un article précis · Familier de la navigation par filtres</div>
+  </div>
+
+  <div class="em-grid">
+    <div class="em-cell">
+      <div class="em-cell-label pense">🧠 Pense &amp; ressent (intérieurement)</div>
+      <ul>
+        <li>« Je connais mon style, je n'ai pas besoin qu'on me guide. »</li>
+        <li>« Pourquoi le site a-t-il changé ? C'était bien avant. »</li>
+        <li>« Ce formulaire n'en finit pas, combien de questions encore ? »</li>
+        <li>« Mes choix ont-ils même été enregistrés ? »</li>
+        <li>« Je ne fais plus confiance à cet outil. »</li>
+      </ul>
+    </div>
+    <div class="em-cell">
+      <div class="em-cell-label dit">💬 Dit &amp; fait (verbatims)</div>
+      <ul>
+        <li>« Les recommandations ne correspondent pas à mes goûts. »</li>
+        <li>« C'est beaucoup trop intrusif. »</li>
+        <li>« Je ne sais pas si mes préférences ont été prises en compte. »</li>
+        <li>« La navigation est beaucoup moins intuitive qu'avant. »</li>
+        <li>« J'espère qu'ils vont vite supprimer ça. »</li>
+      </ul>
+    </div>
+    <div class="em-cell">
+      <div class="em-cell-label fait">👁 Voit &amp; entend</div>
+      <ul>
+        <li>Un pop-up d'entrée de jeu, avant même d'avoir vu un produit</li>
+        <li>Des recommandations partout : accueil, catégories, fiches produit</li>
+        <li>Un formulaire sans barre de progression ni bouton "retour"</li>
+        <li>Aucun message de confirmation après envoi du formulaire</li>
+        <li>Des résultats de recherche qui ne correspondent plus à sa requête</li>
+      </ul>
+    </div>
+    <div class="em-cell">
+      <div class="em-cell-label ressent">❤️ Ressent (émotions)</div>
+      <ul>
+        <li><strong>Frustration</strong> face aux recommandations non pertinentes</li>
+        <li><strong>Impatience</strong> devant le formulaire long et lent</li>
+        <li><strong>Méfiance</strong> vis-à-vis de la fiabilité de l'outil</li>
+        <li><strong>Découragement</strong> quand il n'arrive plus à trouver ce qu'il cherche</li>
+        <li><strong>Abandon</strong> : quitte le site sans achat</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="em-bottom">
+    <div class="em-douleurs">
+      <div class="em-cell-label ressent">⚡ Points de douleur (pain points)</div>
+      <ul style="padding-left: 16px; font-size: 13px; color: var(--ink2); line-height: 1.7;">
+        <li>Pop-up forcé avant toute navigation libre</li>
+        <li>Formulaire lent, sans progression ni sauvegarde</li>
+        <li>Recommandations inadaptées malgré le profil renseigné</li>
+        <li>Fiches produit envahies par les suggestions</li>
+        <li>Filtres de base devenus inaccessibles ou inefficaces</li>
+        <li>Aucune confirmation de l'enregistrement des préférences</li>
+      </ul>
+    </div>
+    <div class="em-gains">
+      <div class="em-cell-label dit">🎯 Besoins réels (gains attendus)</div>
+      <ul style="padding-left: 16px; font-size: 13px; color: var(--ink2); line-height: 1.7;">
+        <li>Accès rapide aux produits sans interruption</li>
+        <li>Filtres par taille, couleur et prix fiables et visibles</li>
+        <li>Recommandations <em>optionnelles</em>, contextuelles et pertinentes</li>
+        <li>Formulaire court, progressif et rassurant</li>
+        <li>Confirmation claire que ses préférences sont enregistrées</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================ -->
+<!-- PARCOURS ACTUEL -->
+<!-- ================================================ -->
+
+<div class="part-label">Visualisation 2 — Parcours utilisateur actuel</div>
+<h2>Expérience telle qu'elle est vécue aujourd'hui</h2>
+
+<div class="journey">
+  <table class="journey-table">
+    <thead>
+      <tr>
+        <th style="width:14%">Étape</th>
+        <th style="width:22%">Action de l'utilisateur</th>
+        <th style="width:24%">Ce qu'il voit / vit</th>
+        <th style="width:22%">Émotion</th>
+        <th style="width:18%">Point de friction</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="step-badge">1</span><br>Arrivée sur le site</td>
+        <td>L'utilisateur navigue vers Seconde Peau pour trouver un vêtement précis</td>
+        <td>Apparition immédiate d'un <strong>pop-up</strong> demandant de renseigner ses préférences vestimentaires, avant même de voir les produits</td>
+        <td>
+          <div class="emotion-bar"><div class="emotion-dot e-neu"></div> Neutral → surpris</div>
+          <br>Interrompu dans son élan dès l'entrée
+        </td>
+        <td><span class="friction-tag">Pop-up forcé</span></td>
+      </tr>
+      <tr>
+        <td><span class="step-badge">2</span><br>Remplissage du formulaire</td>
+        <td>Il tente de compléter les 9 questions de préférences</td>
+        <td>Questions une à une, <strong>pas de barre de progression</strong>, chargement lent, <strong>impossible de revenir en arrière</strong>, aucune sauvegarde intermédiaire. Parfois redemande des infos déjà fournies à l'inscription</td>
+        <td>
+          <div class="emotion-bar"><div class="emotion-dot e-neg"></div> Frustré, impatient</div>
+          <br>Temps passé sur cette page +40 % (2 min 30 s)
+        </td>
+        <td><span class="friction-tag">Formulaire opaque</span><br><span class="friction-tag">Données redondantes</span></td>
+      </tr>
+      <tr>
+        <td><span class="step-badge">3</span><br>Validation du profil</td>
+        <td>Il clique sur "Enregistrer" à la dernière question</td>
+        <td><strong>Aucun feedback de confirmation</strong>. Il ne sait pas si ses réponses ont été prises en compte. Redirigé vers la page de profil sans message clair</td>
+        <td>
+          <div class="emotion-bar"><div class="emotion-dot e-neg"></div> Méfiant, perdu</div>
+          <br>Incertitude totale sur la suite
+        </td>
+        <td><span class="friction-tag">Absence de feedback</span></td>
+      </tr>
+      <tr>
+        <td><span class="step-badge">4</span><br>Navigation dans les catégories</td>
+        <td>Il cherche un article en parcourant les catégories</td>
+        <td>Les recommandations s'intercalent partout dans les résultats, <strong>perturbant la navigation</strong>. Les filtres habituels (taille, couleur, prix) semblent moins accessibles ou moins efficaces</td>
+        <td>
+          <div class="emotion-bar"><div class="emotion-dot e-neg"></div> Désorienté, découragé</div>
+          <br>Taux de rebond : 60 % (+15 pts)
+        </td>
+        <td><span class="friction-tag">Résultats non pertinents</span><br><span class="friction-tag">Filtres dégradés</span></td>
+      </tr>
+      <tr>
+        <td><span class="step-badge">5</span><br>Consultation de la fiche produit</td>
+        <td>Il trouve un article potentiellement intéressant et clique dessus</td>
+        <td>La fiche produit est <strong>envahie par les recommandations</strong>, qui occupent un espace important et nuisent à la lisibilité. Il passe moins de temps sur la fiche (−10 %)</td>
+        <td>
+          <div class="emotion-bar"><div class="emotion-dot e-neg"></div> Irrité, distrait</div>
+          <br>Décision d'achat perturbée
+        </td>
+        <td><span class="friction-tag">Encombrement visuel</span></td>
+      </tr>
+      <tr>
+        <td><span class="step-badge">6</span><br>Abandon ou achat difficile</td>
+        <td>Il quitte le site ou tente de finaliser son achat</td>
+        <td>Beaucoup abandonnent avant le panier. Ceux qui y arrivent y restent plus longtemps (+25 %) sans nécessairement convertir. Taux de conversion divisé par deux (1 %)</td>
+        <td>
+          <div class="emotion-bar"><div class="emotion-dot e-neg"></div> Découragé, insatisfait</div>
+          <br>−20 % de nouvelles inscriptions
+        </td>
+        <td><span class="friction-tag">Non-conversion</span><br><span class="friction-tag">Perte de confiance</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="page-break">
+
+<!-- ================================================ -->
+<!-- PARTIE 2 – RECOMMANDATIONS -->
+<!-- ================================================ -->
+
+<div class="part-label">Partie 2 — Recommandations</div>
+<h2>Actions pour supprimer les points de friction</h2>
+
+<p>
+  L'outil de recommandation souffre de deux problèmes distincts : un <strong>problème de placement</strong> (il s'impose partout, tout le temps) et un <strong>problème de qualité</strong> (ses suggestions ne sont pas pertinentes). Les recommandations ci-dessous traitent ces deux niveaux, en distinguant les corrections urgentes des améliorations structurelles.
+</p>
+
+<div class="reco-grid">
+  <div class="reco-card">
+    <span class="reco-pill pill-urgent">Urgent</span>
+    <h4>R1 — Supprimer le pop-up d'entrée</h4>
+    <p>Remplacer le pop-up obligatoire par une invitation contextuelle (bandeau non bloquant ou point d'entrée dans le menu profil). L'utilisateur doit pouvoir explorer librement avant d'être sollicité.</p>
+  </div>
+  <div class="reco-card">
+    <span class="reco-pill pill-urgent">Urgent</span>
+    <h4>R2 — Refondre le formulaire de préférences</h4>
+    <p>Ajouter une barre de progression, permettre le retour en arrière, activer la sauvegarde automatique, et afficher un message de confirmation explicite à l'enregistrement. Réduire les questions redondantes avec les données d'inscription.</p>
+  </div>
+  <div class="reco-card">
+    <span class="reco-pill pill-urgent">Urgent</span>
+    <h4>R3 — Circonscrire les recommandations</h4>
+    <p>Limiter les recommandations à une zone dédiée (section "Vous aimerez aussi" en bas de fiche produit ou page dédiée). Les retirer de la page d'accueil principale et des résultats de catégorie pour ne pas perturber la navigation.</p>
+  </div>
+  <div class="reco-card">
+    <span class="reco-pill pill-medium">Prioritaire</span>
+    <h4>R4 — Améliorer la pertinence algorithmique</h4>
+    <p>Les critères de recherche en cours (couleur, taille, catégorie) doivent primer sur le profil de préférences statiques. Si l'utilisateur cherche du bleu marine, les recommandations doivent respecter ce filtre.</p>
+  </div>
+  <div class="reco-card">
+    <span class="reco-pill pill-medium">Prioritaire</span>
+    <h4>R5 — Rétablir la primauté des filtres</h4>
+    <p>S'assurer que les filtres par taille, couleur et prix restent fonctionnels, visibles et indépendants de l'outil de recommandation. Les filtres explicites de l'utilisateur ne doivent jamais être court-circuités.</p>
+  </div>
+  <div class="reco-card">
+    <span class="reco-pill pill-later">Amélioration</span>
+    <h4>R6 — Rendre les recommandations optionnelles</h4>
+    <p>Permettre à l'utilisateur de désactiver l'outil de recommandation depuis son profil ou via un toggle visible. La personnalisation doit être un service, pas une contrainte.</p>
+  </div>
+</div>
+
+<p>
+  Ces recommandations suivent un ordre de priorité fondé sur l'impact sur la conversion et la facilité d'implémentation. Les points R1, R2 et R3 constituent des corrections de fond qui peuvent être déployées rapidement et auraient un effet immédiat sur le taux de rebond et la satisfaction. R4 et R5 nécessitent une révision algorithmique et de la logique produit. R6 relève d'une vision long terme de la personnalisation choisie.
+</p>
+
+<!-- ================================================ -->
+<!-- PARCOURS IDÉAL -->
+<!-- ================================================ -->
+
+<div class="part-label">Visualisation 3 — Parcours utilisateur idéal</div>
+<h2>L'expérience telle qu'elle devrait être vécue</h2>
+
+<div class="ideal-step">
+  <div class="ideal-num">1</div>
+  <div class="ideal-content">
+    <h4>Arrivée fluide — navigation libre immédiate</h4>
+    <p>L'utilisateur arrive sur la page d'accueil sans interruption. Un bandeau discret (non bloquant) l'invite à personnaliser son expérience s'il le souhaite. Il peut l'ignorer et naviguer librement.</p>
+    <span class="ideal-gain">✓ Suppression du pop-up forcé</span>
+  </div>
+</div>
+<div class="ideal-connector"></div>
+<div class="ideal-step">
+  <div class="ideal-num">2</div>
+  <div class="ideal-content">
+    <h4>Formulaire clair et rassurant (si l'utilisateur choisit de le remplir)</h4>
+    <p>Le formulaire affiche une barre de progression ("Question 3/9"), propose un bouton "Retour", sauvegarde les réponses automatiquement, et se termine par un message de confirmation visible. Les données déjà connues (genre, taille) sont pré-remplies depuis le profil d'inscription.</p>
+    <span class="ideal-gain">✓ Expérience de personnalisation rassurante</span>
+  </div>
+</div>
+<div class="ideal-connector"></div>
+<div class="ideal-step">
+  <div class="ideal-num">3</div>
+  <div class="ideal-content">
+    <h4>Navigation par catégories — filtres efficaces et résultats pertinents</h4>
+    <p>Les catégories affichent les produits correspondant exactement à la recherche. Les filtres habituels (taille, couleur, prix) sont bien visibles et prioritaires sur les préférences de profil. Les recommandations ne s'intercalent pas dans les résultats.</p>
+    <span class="ideal-gain">✓ Filtres rétablis · ✓ Résultats fiables</span>
+  </div>
+</div>
+<div class="ideal-connector"></div>
+<div class="ideal-step">
+  <div class="ideal-num">4</div>
+  <div class="ideal-content">
+    <h4>Fiche produit lisible — recommandations contextualisées en bas de page</h4>
+    <p>La fiche produit présente les informations clés sans encombrement. Une section "Vous aimerez aussi" apparaît en bas de page, avec des suggestions réellement cohérentes avec l'article consulté et le profil de l'utilisateur.</p>
+    <span class="ideal-gain">✓ Encombrement supprimé · ✓ Recommandations pertinentes</span>
+  </div>
+</div>
+<div class="ideal-connector"></div>
+<div class="ideal-step">
+  <div class="ideal-num">5</div>
+  <div class="ideal-content">
+    <h4>Ajout au panier — conversion fluide</h4>
+    <p>L'utilisateur ajoute l'article au panier sans distraction. La page panier est épurée, sans recommandations parasites. Le chemin vers la validation est court et rassurant.</p>
+    <span class="ideal-gain">✓ Conversion facilitée</span>
+  </div>
+</div>
+<div class="ideal-connector"></div>
+<div class="ideal-step">
+  <div class="ideal-num">6</div>
+  <div class="ideal-content">
+    <h4>Post-achat — engagement durable</h4>
+    <p>Après l'achat, l'utilisateur reçoit des recommandations par e-mail ou dans son espace profil, basées sur son historique réel. La personnalisation devient un avantage perçu, pas une contrainte subie.</p>
+    <span class="ideal-gain">✓ Fidélisation · ✓ Valeur de la recommandation démontrée</span>
+  </div>
+</div>
+
+<hr class="page-break">
+
+<p style="font-size: 12px; color: var(--ink3); text-align: center; margin-top: 40px;">
+  Dossier d'analyse · Fonctionnalité de recommandation vestimentaire · Seconde Peau · Mai 2026
+</p>
+
+</body>
+</html>

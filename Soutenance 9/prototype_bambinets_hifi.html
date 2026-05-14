@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Prototype HiFi — Les Bambinets</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary:    #F22F54;
+    --primary-lt: #FDE8ED;
+    --cyan:       #8BE1EF;
+    --yellow:     #FFC91F;
+    --dark:       #16161D;
+    --muted:      #7B788D;
+    --surface:    #F8F7FC;
+    --border:     #E8E6F0;
+    --white:      #FFFFFF;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #1A1A2E;
+    padding: 56px 40px;
+    min-height: 100vh;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 56px;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    justify-content: center;
+  }
+
+  .frame-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .frame-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+  }
+
+  /* ── FRAME iPhone 14 : 390 × 844 ── */
+  .frame {
+    width: 390px;
+    height: 844px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    border-radius: 44px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 0 1.5px rgba(255,255,255,.08);
+    position: relative;
+  }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    height: 44px;
+    padding: 0 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+    background: var(--white);
+  }
+  .status-bar.dark { background: var(--primary); }
+  .status-bar.dark .time,
+  .status-bar.dark .sb-icons { color: var(--white); }
+  .time { font-size: 13px; font-weight: 600; color: var(--dark); }
+  .sb-icons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .signal { display: flex; align-items: flex-end; gap: 2px; }
+  .signal span { background: currentColor; width: 3px; border-radius: 1px; display: block; }
+  .signal span:nth-child(1) { height: 4px; }
+  .signal span:nth-child(2) { height: 6px; }
+  .signal span:nth-child(3) { height: 9px; }
+  .signal span:nth-child(4) { height: 12px; }
+  .bat { width: 22px; height: 11px; border: 1.5px solid currentColor; border-radius: 2px; position: relative; display: flex; align-items: center; padding: 1.5px; }
+  .bat::after { content: ''; position: absolute; right: -4px; top: 50%; transform: translateY(-50%); width: 2px; height: 5px; background: currentColor; border-radius: 0 1px 1px 0; }
+  .bat-fill { height: 100%; width: 70%; background: currentColor; border-radius: 1px; }
+
+  /* ── NAV BAR ── */
+  .nav-bar {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-bar.primary-bg {
+    background: var(--primary);
+    border-bottom: none;
+  }
+  .nav-bar.primary-bg .nav-title,
+  .nav-bar.primary-bg .nav-icon { color: var(--white); }
+  .nav-title { font-size: 17px; font-weight: 700; color: var(--dark); letter-spacing: -.01em; }
+  .nav-icon { color: var(--primary); font-size: 22px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+  .nav-back { font-size: 14px; color: var(--primary); font-weight: 500; display: flex; align-items: center; gap: 4px; }
+  .nav-back svg { width: 8px; }
+  .nav-spacer { width: 28px; }
+
+  /* ── CONTENT ── */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+    background: var(--white);
+  }
+  .content.bg-surface { background: var(--surface); }
+
+  /* ── BOTTOM TAB BAR ── */
+  .tab-bar {
+    height: 83px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-shrink: 0;
+    background: var(--white);
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    gap: 3px;
+  }
+  .tab-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tab-icon svg { width: 22px; height: 22px; stroke: #C4C2D0; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke .15s; }
+  .tab-item.active .tab-icon svg { stroke: var(--primary); }
+  .tab-lbl { font-size: 10px; color: #C4C2D0; font-weight: 500; }
+  .tab-item.active .tab-lbl { color: var(--primary); font-weight: 600; }
+
+  /* ── COMPOSANTS ── */
+
+  /* Hero accueil */
+  .hero-band {
+    background: var(--primary);
+    margin: -20px -20px 0;
+    padding: 24px 20px 28px;
+    flex-shrink: 0;
+  }
+  .hero-greeting { font-size: 12px; color: rgba(255,255,255,.75); font-weight: 500; margin-bottom: 2px; }
+  .hero-title { font-size: 22px; font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 6px; }
+  .hero-sub { font-size: 13px; color: rgba(255,255,255,.75); line-height: 1.5; }
+
+  /* Grille accueil */
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 20px;
+    flex-shrink: 0;
+  }
+  .home-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    cursor: pointer;
+    transition: border-color .15s;
+  }
+  .home-card:hover { border-color: var(--primary); }
+  .home-card-icon {
+    width: 40px; height: 40px;
+    background: var(--primary-lt);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 2px;
+  }
+  .home-card-icon svg { width: 22px; height: 22px; stroke: var(--primary); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .home-card-title { font-size: 14px; font-weight: 700; color: var(--dark); }
+  .home-card-sub { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* Barre de recherche */
+  .search-bar {
+    height: 44px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+  .search-bar svg { width: 18px; height: 18px; stroke: var(--muted); fill: none; stroke-width: 1.5; stroke-linecap: round; flex-shrink: 0; }
+  .search-bar span { font-size: 14px; color: var(--muted); font-family: 'Poppins', sans-serif; }
+
+  /* Chips / filtres */
+  .chips-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .chip {
+    border: 1.5px solid var(--border);
+    border-radius: 99px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+  .chip.on {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+  }
+
+  /* Séparateur alpha */
+  .alpha-sep {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .1em;
+    padding: 10px 0 4px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  /* Ligne liste */
+  .list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .list-word { font-size: 15px; font-weight: 600; color: var(--dark); }
+  .list-cat { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .list-right { display: flex; align-items: center; gap: 10px; }
+  .ic-heart { width: 22px; height: 22px; }
+  .ic-heart svg { width: 22px; height: 22px; stroke: #D0CEDC; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .ic-heart.filled svg { stroke: var(--primary); fill: var(--primary); }
+  .ic-chev svg { width: 14px; height: 14px; stroke: #C4C2D0; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Placeholder vidéo */
+  .ph-video {
+    background: var(--surface);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .ph-video::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(242,47,84,.06) 0%, transparent 60%);
+  }
+  .play-btn {
+    width: 52px; height: 52px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(242,47,84,.35);
+  }
+  .play-btn svg { width: 20px; height: 20px; stroke: none; fill: var(--white); margin-left: 3px; }
+  .ph-video-lbl { font-size: 11px; color: var(--muted); font-weight: 500; z-index: 1; }
+
+  /* Badge catégorie */
+  .cat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--primary-lt);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Titre section */
+  .sec-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+
+  /* Corps de texte */
+  .body-txt {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.65;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+
+  .lorem {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Prev/next */
+  .prev-next {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+  .prev-next a { font-size: 13px; color: var(--primary); font-weight: 500; }
+
+  /* Progress quiz */
+  .progress-wrap { margin-bottom: 16px; flex-shrink: 0; }
+  .progress-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .progress-meta span { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .progress-meta .pct { color: var(--primary); font-weight: 700; }
+  .progress-track { height: 4px; background: var(--border); border-radius: 2px; }
+  .progress-fill { height: 100%; background: var(--primary); border-radius: 2px; }
+
+  /* Question */
+  .quiz-q { font-size: 16px; font-weight: 700; color: var(--dark); line-height: 1.4; margin-bottom: 14px; flex-shrink: 0; }
+
+  /* Options quiz */
+  .quiz-opt {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    background: var(--white);
+  }
+  .opt-letter {
+    width: 28px; height: 28px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .quiz-opt.correct { border-color: var(--primary); background: var(--primary-lt); color: var(--primary); }
+  .quiz-opt.correct .opt-letter { border-color: var(--primary); color: var(--primary); background: var(--white); }
+  .quiz-opt.wrong { border-color: var(--border); background: var(--surface); color: var(--muted); }
+
+  /* Score */
+  .score-block { display: flex; flex-direction: column; align-items: center; padding: 20px 0 18px; flex-shrink: 0; }
+  .score-ring {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    background: var(--primary-lt);
+  }
+  .score-msg { font-size: 14px; color: var(--muted); text-align: center; line-height: 1.5; }
+
+  /* Bouton primaire */
+  .btn-primary {
+    display: block;
+    background: var(--primary);
+    border-radius: 12px;
+    padding: 15px 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .btn-secondary {
+    display: block;
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--border); margin: 12px 0; flex-shrink: 0; }
+
+  /* Correction quiz */
+  .correction-box {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+  .corr-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .corr-text { font-size: 13px; color: var(--dark); font-weight: 500; }
+
+  /* FAQ */
+  .faq-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    gap: 12px;
+  }
+  .faq-q-text { font-size: 14px; color: var(--dark); line-height: 1.4; font-weight: 500; }
+  .faq-chev svg { width: 14px; height: 14px; stroke: var(--primary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Favoris */
+  .fav-count { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 16px; flex-shrink: 0; }
+
+  /* Empty state */
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1.5px dashed var(--border);
+    border-radius: 16px;
+    margin-top: 16px;
+    padding: 24px;
+  }
+  .empty-state svg { width: 36px; height: 36px; stroke: #D0CEDC; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .empty-state span { font-size: 13px; color: #C4C2D0; text-align: center; line-height: 1.5; font-weight: 500; }
+
+  /* Placeholder image */
+  .ph-img {
+    background: var(--surface);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ph-img span { font-size: 11px; color: var(--muted); }
+
+  /* Inline SVG tab icons helper */
+</style>
+</head>
+<body>
+
+<p class="page-title">Prototype haute fidélité · Les Bambinets · iPhone 14 (390 × 844 px)</p>
+
+<div class="grid">
+
+<!-- ══════════════════════
+     1 — ACCUEIL
+══════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">1 / 7 — Accueil</span>
+  <div class="frame">
+    <div class="status-bar dark">
+      <span class="time">9:41</span>
+      <div class="sb-icons">
+        <div class="signal" style="color:#fff"><span></span><span></span><span></span><span></span></div>
+        <span>WiFi</span>
+        <div class="bat" style="color:#fff"><div class="bat-fill"></div></div>
+      </div>
+    </div>
+    <div class="nav-bar primary-bg">
+      <span class="nav-title">Les Bambinets</span>
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+    </div>
+    <div class="content" style="padding:0; background:var(--white);">
+      <div class="hero-band">
+        <div class="hero-greeting">Bonjour 👋</div>
+        <div class="hero-title">Apprenez les signes<br>avec votre bébé</div>
+        <div class="hero-sub">Langue des signes adaptée aux 0–3 ans</div>
+      </div>
+      <div style="padding:0 20px 20px">
+        <div class="home-grid">
+          <div class="home-card">
+            <div class="home-card-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <span class="home-card-title">Glossaire</span>
+            <span class="home-card-sub">20 signes en vidéo</span>
+          </div>
+          <div class="home-card">
+            <div class="home-card-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <span class="home-card-title">Quiz</span>
+            <span class="home-card-sub">Testez vos acquis</span>
+          </div>
+          <div class="home-card">
+            <div class="home-card-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <span class="home-card-title">FAQ</span>
+            <span class="home-card-sub">Vos questions</span>
+          </div>
+          <div class="home-card">
+            <div class="home-card-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <span class="home-card-title">Mes favoris</span>
+            <span class="home-card-sub">Signes sauvegardés</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item active">
+        <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <span class="tab-lbl">Accueil</span>
+      </div>
+      <div class="tab-item">
+        <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <span class="tab-lbl">Glossaire</span>
+      </div>
+      <div class="tab-item">
+        <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <span class="tab-lbl">Quiz</span>
+      </div>
+      <div class="tab-item">
+        <div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <span class="tab-lbl">Favoris</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     2 — GLOSSAIRE
+══════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">2 / 7 — Glossaire</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="sb-icons"><div class="signal" style="color:var(--dark)"><span></span><span></span><span></span><span></span></div><span>WiFi</span><div class="bat"><div class="bat-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-title">Glossaire</span>
+      <div class="nav-icon"><svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--primary);fill:none;stroke-width:1.5;stroke-linecap:round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    </div>
+    <div class="content">
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Rechercher un signe…</span>
+      </div>
+      <div class="chips-row">
+        <span class="chip on">Tous</span>
+        <span class="chip">Essentiels</span>
+        <span class="chip">Émotions</span>
+        <span class="chip">Loisirs</span>
+        <span class="chip">Nature</span>
+      </div>
+      <div class="alpha-sep">A</div>
+      <div class="list-row">
+        <div><div class="list-word">Au revoir</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="ic-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="alpha-sep">B</div>
+      <div class="list-row">
+        <div><div class="list-word">Boire</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="ic-heart filled"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div><div class="list-word">Bonjour</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="ic-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="alpha-sep">C</div>
+      <div class="list-row">
+        <div><div class="list-word">Câlin</div><div class="list-cat">Émotions</div></div>
+        <div class="list-right">
+          <div class="ic-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div><div class="list-word">Chat</div><div class="list-cat">Nature</div></div>
+        <div class="list-right">
+          <div class="ic-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="alpha-sep">D</div>
+      <div class="list-row">
+        <div><div class="list-word">Dodo</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="ic-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-lbl">Accueil</span></div>
+      <div class="tab-item active"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-lbl">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-lbl">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-lbl">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     3 — FICHE SIGNE
+══════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">3 / 7 — Fiche signe</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="sb-icons"><div class="signal" style="color:var(--dark)"><span></span><span></span><span></span><span></span></div><span>WiFi</span><div class="bat"><div class="bat-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <div class="nav-back">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--primary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="15 18 9 12 15 6"/></svg>
+        Glossaire
+      </div>
+      <span class="nav-title">Boire</span>
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--primary);fill:var(--primary);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+    </div>
+    <div class="content">
+      <div class="ph-video" style="height:216px; margin-bottom:16px;">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <span class="ph-video-lbl">Vidéo du signe — Boire</span>
+      </div>
+      <span class="cat-badge">Essentiels</span>
+      <div class="sec-title">Description</div>
+      <p class="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Portez la main en direction de la bouche.</p>
+      <div class="sec-title">Astuce</div>
+      <p class="lorem">Lorem ipsum dolor sit amet, associez ce signe à la parole pour renforcer l'apprentissage.</p>
+      <div class="prev-next">
+        <a>‹ Précédent</a>
+        <a>Suivant ›</a>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-lbl">Accueil</span></div>
+      <div class="tab-item active"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-lbl">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-lbl">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-lbl">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     4 — QUIZ QUESTION
+══════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">4 / 7 — Quiz (question)</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="sb-icons"><div class="signal" style="color:var(--dark)"><span></span><span></span><span></span><span></span></div><span>WiFi</span><div class="bat"><div class="bat-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--primary);fill:none;stroke-width:2;stroke-linecap:round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <span class="nav-title">Quiz</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <div class="progress-wrap">
+        <div class="progress-meta"><span>Question 1 sur 5</span><span class="pct">20 %</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:20%"></div></div>
+      </div>
+      <p class="quiz-q">Quel signe est montré dans la vidéo&nbsp;?</p>
+      <div class="ph-video" style="height:176px; margin-bottom:18px;">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <span class="ph-video-lbl">Vidéo du signe</span>
+      </div>
+      <div class="quiz-opt"><span class="opt-letter">A</span> Lorem ipsum</div>
+      <div class="quiz-opt"><span class="opt-letter">B</span> Lorem ipsum</div>
+      <div class="quiz-opt"><span class="opt-letter">C</span> Lorem ipsum</div>
+      <div class="quiz-opt"><span class="opt-letter">D</span> Lorem ipsum</div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-lbl">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-lbl">Glossaire</span></div>
+      <div class="tab-item active"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-lbl">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-lbl">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     5 — QUIZ RÉSULTAT
+══════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">5 / 7 — Quiz (résultat)</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="sb-icons"><div class="signal" style="color:var(--dark)"><span></span><span></span><span></span><span></span></div><span>WiFi</span><div class="bat"><div class="bat-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-spacer"></span>
+      <span class="nav-title">Résultats</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <div class="score-block">
+        <div class="score-ring">4 / 5</div>
+        <p class="score-msg">Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit.</p>
+      </div>
+      <div class="divider"></div>
+      <div class="sec-title">Correction</div>
+      <div class="correction-box">
+        <div class="corr-label">Question 3 — Bonne réponse</div>
+        <div class="corr-text">Lorem ipsum — [nom du signe]</div>
+      </div>
+      <div class="ph-img" style="height:88px; margin-bottom:16px;"><span>Illustration du signe</span></div>
+      <div class="btn-primary">Rejouer le quiz</div>
+      <div class="btn-secondary">Retour à l'accueil</div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-lbl">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-lbl">Glossaire</span></div>
+      <div class="tab-item active"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-lbl">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-lbl">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     6 — FAQ
+══════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">6 / 7 — FAQ</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="sb-icons"><div class="signal" style="color:var(--dark)"><span></span><span></span><span></span><span></span></div><span>WiFi</span><div class="bat"><div class="bat-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-title">FAQ</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <p class="body-txt" style="color:var(--muted); margin-bottom:18px; font-size:13px;">Questions fréquentes sur les signes avec bébé</p>
+      <div class="faq-row">
+        <span class="faq-q-text">À quel âge commencer les signes ?</span>
+        <span class="faq-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q-text">Est-ce que ça retarde le langage ?</span>
+        <span class="faq-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q-text">Combien de signes apprendre pour commencer ?</span>
+        <span class="faq-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q-text">Comment impliquer la crèche ?</span>
+        <span class="faq-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q-text">Et si mon bébé ne répond pas ?</span>
+        <span class="faq-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q-text">Faut-il apprendre la LSF complète ?</span>
+        <span class="faq-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="faq-row">
+        <span class="faq-q-text">Quelles ressources complémentaires ?</span>
+        <span class="faq-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-lbl">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-lbl">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-lbl">Quiz</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-lbl">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     7 — FAVORIS
+══════════════════════ -->
+<div class="frame-wrap">
+  <span class="frame-label">7 / 7 — Mes favoris</span>
+  <div class="frame">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="sb-icons"><div class="signal" style="color:var(--dark)"><span></span><span></span><span></span><span></span></div><span>WiFi</span><div class="bat"><div class="bat-fill"></div></div></div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-title">Mes favoris</span>
+      <span class="nav-spacer"></span>
+    </div>
+    <div class="content">
+      <p class="fav-count">2 signes sauvegardés</p>
+      <div class="list-row">
+        <div><div class="list-word">Boire</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="ic-heart filled"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div><div class="list-word">Merci</div><div class="list-cat">Essentiels</div></div>
+        <div class="list-right">
+          <div class="ic-heart filled"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="ic-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Ajoutez des signes depuis<br>le glossaire</span>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="tab-lbl">Accueil</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span class="tab-lbl">Glossaire</span></div>
+      <div class="tab-item"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="tab-lbl">Quiz</span></div>
+      <div class="tab-item active"><div class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="tab-lbl">Favoris</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

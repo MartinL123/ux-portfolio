@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Les Bambinets — Soutenance UX</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --r:  #F22F54;
+  --rl: #FDE8ED;
+  --dk: #16161D;
+  --mu: #7B788D;
+  --sf: #F8F7FC;
+  --bo: #E8E6F0;
+  --wh: #FFFFFF;
+  --nv: #1A1A2E;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0d0d14;
+  overflow: hidden;
+  width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.deck {
+  position: relative;
+  width: 1280px; height: 720px;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 40px 100px rgba(0,0,0,.7);
+}
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s ease;
+  overflow: hidden;
+}
+.slide.on { opacity: 1; pointer-events: all; }
+
+/* NAV */
+.nav {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px; z-index: 99;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(10px);
+  border-radius: 99px; padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.nav button {
+  background: none; border: 1px solid rgba(255,255,255,.2);
+  color: #fff; border-radius: 99px; padding: 4px 14px;
+  font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: .15s;
+}
+.nav button:hover { background: rgba(255,255,255,.1); }
+.nav button:disabled { opacity: .25; cursor: default; }
+.dots { display: flex; gap: 5px; }
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.25); cursor: pointer; transition: .2s;
+}
+.dot.on { background: var(--r); width: 16px; border-radius: 3px; }
+.snum { font-size: 11px; color: rgba(255,255,255,.4); font-weight: 500; min-width: 32px; text-align: center; }
+
+/* SHARED */
+.chip {
+  display: inline-block; background: var(--rl); color: var(--r);
+  font-size: 9px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
+}
+.h1 { font-size: 48px; font-weight: 800; color: var(--dk); letter-spacing: -.02em; line-height: 1.08; margin-top: 10px; }
+.card { background: var(--wh); border: 1px solid var(--bo); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,.06); }
+.lbl { font-size: 9px; font-weight: 700; color: var(--r); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+
+/* ─── SLIDE 1 ─── */
+#s1 { background: var(--nv); }
+.s1l { position: absolute; left:0;top:0;bottom:0;width:660px; display:flex;flex-direction:column;justify-content:center;padding:88px; }
+.s1-brand { font-size:68px;font-weight:800;color:var(--r);letter-spacing:-.03em;line-height:1; margin-bottom:14px; }
+.s1-sub { font-size:22px;color:var(--wh);font-weight:500;margin-bottom:6px; }
+.s1-desc { font-size:14px;color:var(--mu);margin-bottom:40px; }
+.s1-line { width:56px;height:3px;background:var(--r);border-radius:2px;margin-bottom:28px; }
+.s1-meta { font-size:12px;color:var(--mu); }
+.s1r { position:absolute;right:0;top:0;bottom:0;width:620px;background:var(--r); display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;overflow:hidden; }
+.s1r::before { content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.08);bottom:-80px;right:-70px; }
+.s1r::after  { content:'';position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.06);top:30px;left:30px; }
+.s1-n { font-size:96px;font-weight:800;color:var(--wh);line-height:1;position:relative;z-index:1; }
+.s1-nl { font-size:20px;color:rgba(255,255,255,.8);font-weight:500;position:relative;z-index:1; }
+.s1-pills { display:flex;gap:8px;position:relative;z-index:1; }
+.s1-pill { background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:var(--wh);font-size:11px;font-weight:600;padding:5px 14px;border-radius:99px; }
+
+/* ─── SLIDE 2 ─── */
+#s2 { background: var(--wh); }
+.s2 { padding:56px 72px;display:flex;flex-direction:column;height:100%;gap:24px; }
+.s2-grid { display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px;flex:1; }
+.s2-client { grid-row:1/3; }
+.cname { font-size:34px;font-weight:800;color:var(--dk);margin:8px 0 4px; }
+.crole { font-size:13px;color:var(--mu);margin-bottom:18px; }
+.cdiv { height:1px;background:var(--bo);margin-bottom:16px; }
+.cquote { font-size:13px;color:var(--mu);line-height:1.7;font-style:italic; }
+.phase-list { display:flex;flex-direction:column;gap:10px;margin-top:8px; }
+.ph { display:flex;align-items:center;gap:12px; }
+.ph-n { width:26px;height:26px;background:var(--r);color:var(--wh);border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.ph-t { font-size:14px;font-weight:600;color:var(--dk); }
+
+/* ─── SLIDE 3 ─── */
+#s3 { background: var(--sf); }
+.s3 { padding:56px 72px;display:flex;flex-direction:column;height:100%;gap:24px; }
+.s3-grid { display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1; }
+.pc { background:var(--wh);border:1px solid var(--bo);border-radius:20px;box-shadow:0 4px 24px rgba(0,0,0,.06);padding:32px;display:flex;flex-direction:column; }
+.pc-hd { display:flex;align-items:center;gap:14px;margin-bottom:18px; }
+.pc-em { width:50px;height:50px;background:var(--rl);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px; }
+.pc-tl { font-size:19px;font-weight:700;color:var(--dk); }
+.pc-st { font-size:11px;color:var(--mu); }
+.pc-div { height:1px;background:var(--bo);margin-bottom:18px; }
+.pc-rows { display:flex;flex-direction:column;gap:12px; }
+.pc-k { font-size:9px;font-weight:700;color:var(--r);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px; }
+.pc-v { font-size:12px;color:var(--dk);line-height:1.5; }
+
+/* ─── SLIDE 4 ─── */
+#s4 { background: var(--wh); }
+.s4 { padding:52px 72px;display:flex;flex-direction:column;height:100%;gap:20px; }
+.s4-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1; }
+.fc { background:var(--wh);border:1px solid var(--bo);border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.05);padding:24px 24px 24px 28px;display:flex;gap:14px; }
+.fc-bar { width:4px;background:var(--r);border-radius:2px;flex-shrink:0; }
+.fc-num { font-size:10px;font-weight:700;color:var(--r);letter-spacing:.1em;margin-bottom:5px; }
+.fc-tl { font-size:17px;font-weight:700;color:var(--dk);margin-bottom:7px; }
+.fc-ds { font-size:12px;color:var(--mu);line-height:1.6; }
+.s4-warn { background:var(--rl);border-radius:10px;padding:11px 18px;display:flex;align-items:center;gap:10px; }
+.s4-warn-t { font-size:13px;font-weight:700;color:var(--r); }
+
+/* ─── SLIDE 5 ─── */
+#s5 { background: var(--sf); }
+.s5 { padding:52px 72px;display:flex;flex-direction:column;height:100%;gap:24px; }
+.flow { display:flex;align-items:center;gap:0; }
+.fs { background:var(--wh);border:1px solid var(--bo);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.05);padding:14px 18px;text-align:center;flex:1;position:relative; }
+.fs.act { border-color:var(--r);box-shadow:0 0 0 2px rgba(242,47,84,.12); }
+.fs.act::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--r);border-radius:3px 3px 0 0; }
+.fs-l { font-size:13px;font-weight:700;color:var(--dk); }
+.fs-s { font-size:11px;color:var(--mu);margin-top:3px; }
+.fa { font-size:18px;color:var(--r);padding:0 5px;flex-shrink:0; }
+.others { display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1; }
+.oc { background:var(--wh);border:1px solid var(--bo);border-radius:12px;padding:16px 18px;display:flex;gap:10px; }
+.od { width:7px;height:7px;background:var(--r);border-radius:50%;flex-shrink:0;margin-top:4px; }
+.ot { font-size:12px;color:var(--dk);line-height:1.55; }
+
+/* ─── SLIDE 6 ─── */
+#s6 { background: var(--wh); }
+.s6 { padding:52px 72px;display:flex;flex-direction:column;height:100%;gap:20px; }
+.wf-row { display:flex;gap:10px;align-items:flex-start;flex:1; }
+.wfp { display:flex;flex-direction:column;align-items:center;gap:6px;flex:1; }
+.wff {
+  width:100%; aspect-ratio:9/16;
+  background:var(--wh); border:1.5px solid var(--bo);
+  border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,.08);
+  overflow:hidden; display:flex; flex-direction:column;
+}
+.wf-sb { height:6px;flex-shrink:0; }
+.wf-nb { height:10px;flex-shrink:0;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:center; }
+.wf-nb span { font-size:4px;font-weight:700;color:var(--dk); }
+.wf-ct { flex:1;padding:4px;display:flex;flex-direction:column;gap:3px; }
+.wl { height:7px;background:var(--sf);border-radius:2px; }
+.wl.r { background:var(--rl); }
+.wf-tb { height:10px;flex-shrink:0;border-top:1px solid var(--bo);background:var(--sf);display:flex;align-items:center;justify-content:space-around; }
+.wd { width:4px;height:4px;border-radius:50%;background:var(--bo); }
+.wd.on { background:var(--r);width:8px;border-radius:2px; }
+.wf-lbl { font-size:9px;color:var(--mu);font-weight:500; }
+.s6-pr { display:grid;grid-template-columns:repeat(4,1fr);gap:10px; }
+.pr { background:var(--sf);border-radius:10px;padding:11px 13px;display:flex;gap:8px;align-items:flex-start; }
+.prd { width:5px;height:5px;background:var(--r);border-radius:50%;flex-shrink:0;margin-top:5px; }
+.prt { font-size:10px;color:var(--dk);line-height:1.5; }
+
+/* ─── SLIDE 7 ─── */
+#s7 { background: var(--sf); }
+.s7 { padding:52px 72px;display:flex;flex-direction:column;height:100%;gap:24px; }
+.s7-g { display:grid;grid-template-columns:1fr auto 1fr;gap:18px;flex:1;align-items:center; }
+.s7c { background:var(--wh);border:1px solid var(--bo);border-radius:20px;box-shadow:0 4px 24px rgba(0,0,0,.06);padding:28px;height:100%;display:flex;flex-direction:column;gap:9px; }
+.s7c.p { border-color:var(--r);box-shadow:0 4px 24px rgba(242,47,84,.1); }
+.s7ct { font-size:15px;font-weight:700;margin-bottom:5px; }
+.s7i { display:flex;align-items:center;gap:10px;font-size:12px; }
+.xm { color:var(--bo);font-weight:700;font-size:13px; }
+.ck { color:var(--r);font-weight:700;font-size:13px; }
+.s7ac { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px; }
+.s7arr { font-size:30px;color:var(--r); }
+.s7al { font-size:9px;color:var(--mu);text-align:center;font-weight:600;letter-spacing:.06em;text-transform:uppercase; }
+
+/* ─── SLIDE 8 ─── */
+#s8 { background: var(--nv); }
+.s8 { padding:48px 60px;display:flex;flex-direction:column;height:100%;gap:20px; }
+.s8t { font-size:38px;font-weight:800;color:var(--wh);letter-spacing:-.02em; }
+.s8ps { display:flex;gap:12px;flex:1;align-items:flex-start; }
+.s8p { display:flex;flex-direction:column;align-items:center;gap:7px;flex:1; }
+.s8f {
+  width:100%; aspect-ratio:9/19.5;
+  border-radius:12px; overflow:hidden;
+  display:flex; flex-direction:column;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 8px 28px rgba(0,0,0,.4);
+}
+.s8st { height:7px;flex-shrink:0; }
+.s8nv { height:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.05); }
+.s8nv span { font-size:5px;font-weight:700; }
+.s8bd { flex:1;display:flex;flex-direction:column;gap:4px;padding:5px; }
+.sl { height:8px;border-radius:3px; }
+.s8tb { height:11px;flex-shrink:0;display:flex;align-items:center;justify-content:space-around;border-top:1px solid rgba(255,255,255,.05); }
+.std { width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.2); }
+.std.on { background:var(--r); }
+.s8l { font-size:9px;color:rgba(255,255,255,.35);font-weight:500; }
+
+/* ─── SLIDE 9 ─── */
+#s9 { background: var(--wh); }
+.s9 { padding:52px 72px;display:flex;flex-direction:column;height:100%;gap:24px; }
+.s9-g { display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1; }
+.ac { background:var(--wh);border:1px solid var(--bo);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);padding:22px;display:flex;flex-direction:column;gap:11px; }
+.ac-hd { display:flex;align-items:center;gap:12px; }
+.ac-b { width:30px;height:30px;background:var(--r);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--wh);font-weight:700;flex-shrink:0; }
+.ac-t { font-size:15px;font-weight:700;color:var(--dk); }
+.ac-dv { height:1px;background:var(--bo); }
+.ac-ls { display:flex;flex-direction:column;gap:6px; }
+.ac-it { display:flex;gap:8px;align-items:flex-start;font-size:11px;color:var(--mu);line-height:1.5; }
+.ack { color:var(--r);font-weight:700;font-size:12px;flex-shrink:0; }
+
+/* ─── SLIDE 10 ─── */
+#s10 { background: var(--nv); }
+.s10l { position:absolute;left:0;top:0;bottom:0;width:390px;background:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden; }
+.s10l::before { content:'';position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.1);bottom:-70px;left:-50px; }
+.s10l::after  { content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.07);top:40px;right:-30px; }
+.s10-big { font-size:58px;font-weight:800;color:var(--wh);line-height:1.05;text-align:center;position:relative;z-index:1; }
+.s10-sub { font-size:13px;color:rgba(255,255,255,.6);font-weight:500;position:relative;z-index:1; }
+.s10r { position:absolute;left:390px;top:0;right:0;bottom:0;padding:52px 52px 52px 44px;display:flex;flex-direction:column;justify-content:space-between; }
+.s10cs { display:flex;flex-direction:column;gap:10px; }
+.s10c { background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:16px 20px;display:flex;flex-direction:column;gap:4px; }
+.s10ct { font-size:15px;font-weight:700;color:var(--wh); }
+.s10cd { font-size:11px;color:rgba(255,255,255,.45);line-height:1.5; }
+.s10m { background:var(--r);border-radius:11px;padding:14px 22px;text-align:center;font-size:15px;font-weight:700;color:var(--wh);letter-spacing:.01em; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ─── 1 COVER ─── -->
+<div class="slide on" id="s1">
+  <div class="s1l">
+    <div class="s1-brand">Les<br>Bambinets</div>
+    <div class="s1-sub">Application mobile</div>
+    <div class="s1-desc">Langue des signes pour bébés · 0–3 ans</div>
+    <div class="s1-line"></div>
+    <div class="s1-meta">Soutenance UX Design · Projet 9</div>
+  </div>
+  <div class="s1r">
+    <div class="s1-n">15</div>
+    <div class="s1-nl">min de présentation</div>
+    <div class="s1-pills">
+      <span class="s1-pill">Brief</span>
+      <span class="s1-pill">Wireframes</span>
+      <span class="s1-pill">Prototype</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 2 CONTEXTE ─── -->
+<div class="slide" id="s2">
+  <div class="s2">
+    <div><span class="chip">Brief UX</span><div class="h1">Contexte du projet</div></div>
+    <div class="s2-grid">
+      <div class="card s2-client" style="padding:28px">
+        <div class="lbl">La cliente</div>
+        <div class="cname">Camille</div>
+        <div class="crole">Directrice de la crèche « Les Bambinets »</div>
+        <div class="cdiv"></div>
+        <div class="cquote">« Nous voulons aider les adultes à mieux communiquer avec les bébés grâce aux signes, avant même le langage verbal. »</div>
+      </div>
+      <div class="card" style="padding:24px">
+        <div class="lbl">L'agence</div>
+        <div style="font-size:19px;font-weight:700;color:var(--dk);margin-top:4px">« En avant les babies ! »</div>
+        <div style="font-size:12px;color:var(--mu);margin-top:8px;line-height:1.6">Contenu & interfaces digitales pour les professionnels de l'enfance</div>
+      </div>
+      <div class="card" style="padding:24px">
+        <div class="lbl">3 phases</div>
+        <div class="phase-list">
+          <div class="ph"><div class="ph-n">1</div><div class="ph-t">Brief UX</div></div>
+          <div class="ph"><div class="ph-n">2</div><div class="ph-t">Wireframes</div></div>
+          <div class="ph"><div class="ph-n">3</div><div class="ph-t">Prototype interactif — Figma</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 3 UTILISATEURS ─── -->
+<div class="slide" id="s3">
+  <div class="s3">
+    <div><span class="chip">Brief UX</span><div class="h1">Utilisateurs cibles</div></div>
+    <div class="s3-grid">
+      <div class="pc">
+        <div class="pc-hd"><div class="pc-em">👩‍⚕️</div><div><div class="pc-tl">Professionnels</div><div class="pc-st">de la petite enfance</div></div></div>
+        <div class="pc-div"></div>
+        <div class="pc-rows">
+          <div><div class="pc-k">Profils</div><div class="pc-v">Éducateurs, auxiliaires de puériculture</div></div>
+          <div><div class="pc-k">Besoin</div><div class="pc-v">Mieux communiquer au quotidien avec les bébés de la crèche</div></div>
+          <div><div class="pc-k">Contexte</div><div class="pc-v">Usage professionnel structuré, collectif</div></div>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-hd"><div class="pc-em">👨‍👶</div><div><div class="pc-tl">Parents</div><div class="pc-st">d'enfants de 0 à 3 ans</div></div></div>
+        <div class="pc-div"></div>
+        <div class="pc-rows">
+          <div><div class="pc-k">Profils</div><div class="pc-v">Familles accompagnant bébé à la maison</div></div>
+          <div><div class="pc-k">Besoin</div><div class="pc-v">Apprendre quelques signes essentiels, à leur rythme</div></div>
+          <div><div class="pc-k">Contexte</div><div class="pc-v">Usage personnel, mobile, non-expert</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 4 FONCTIONNALITÉS ─── -->
+<div class="slide" id="s4">
+  <div class="s4">
+    <div><span class="chip">Brief UX</span><div class="h1">Fonctionnalités demandées</div></div>
+    <div class="s4-grid">
+      <div class="fc"><div class="fc-bar"></div><div><div class="fc-num">01</div><div class="fc-tl">Glossaire</div><div class="fc-ds">~20 mots signés en vidéo · Tri alphabétique · Filtres par catégorie (essentiels, émotions, loisirs, nature…)</div></div></div>
+      <div class="fc"><div class="fc-bar"></div><div><div class="fc-num">02</div><div class="fc-tl">Favoris</div><div class="fc-ds">Bouton ♥ sur chaque signe · Bibliothèque personnelle · Accès rapide aux signes les plus utilisés</div></div></div>
+      <div class="fc"><div class="fc-bar"></div><div><div class="fc-num">03</div><div class="fc-tl">Microquiz</div><div class="fc-ds">Questions vidéo ou image · 4 propositions · Score + correction · Validation des acquis</div></div></div>
+      <div class="fc"><div class="fc-bar"></div><div><div class="fc-num">04</div><div class="fc-tl">FAQ</div><div class="fc-ds">Questions fréquentes des adultes · Réponses détaillées · Guide pour accompagner les bébés</div></div></div>
+    </div>
+    <div class="s4-warn"><span style="font-size:18px">⚠️</span><span class="s4-warn-t">Contrainte centrale : la vidéo est le médium principal — aussi bien dans le glossaire que dans les quiz</span></div>
+  </div>
+</div>
+
+<!-- ─── 5 PARCOURS ─── -->
+<div class="slide" id="s5">
+  <div class="s5">
+    <div><span class="chip">Brief UX</span><div class="h1">Parcours utilisateur</div></div>
+    <div class="flow">
+      <div class="fs act"><div class="fs-l">Accueil</div><div class="fs-s">4 entrées</div></div>
+      <div class="fa">→</div>
+      <div class="fs"><div class="fs-l">Glossaire</div><div class="fs-s">Filtres + liste</div></div>
+      <div class="fa">→</div>
+      <div class="fs"><div class="fs-l">Fiche signe</div><div class="fs-s">Vidéo + infos</div></div>
+      <div class="fa">→</div>
+      <div class="fs"><div class="fs-l">♥ Favori</div><div class="fs-s">Sauvegarde</div></div>
+      <div class="fa">→</div>
+      <div class="fs"><div class="fs-l">Quiz / Retour</div><div class="fs-s">Continuer</div></div>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:var(--dk)">Autres parcours</div>
+    <div class="others">
+      <div class="oc"><div class="od"></div><div class="ot"><strong>Quiz</strong> → Question vidéo → Résultat + correction → Rejouer</div></div>
+      <div class="oc"><div class="od"></div><div class="ot"><strong>FAQ</strong> → Sélection d'un thème → Réponse détaillée</div></div>
+      <div class="oc"><div class="od"></div><div class="ot"><strong>Favoris</strong> → Bibliothèque personnelle → Fiche signe</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 6 WIREFRAMES ─── -->
+<div class="slide" id="s6">
+  <div class="s6">
+    <div><span class="chip">Wireframes</span><div class="h1" style="font-size:38px">Architecture de l'information</div></div>
+    <div class="wf-row">
+      <!-- Accueil -->
+      <div class="wfp">
+        <div class="wff">
+          <div class="wf-sb" style="background:#F22F54"></div>
+          <div class="wf-nb" style="background:#F22F54"><span style="color:#fff">Accueil</span></div>
+          <div class="wf-ct">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;flex:1">
+              <div style="background:var(--sf);border-radius:3px"></div><div style="background:var(--sf);border-radius:3px"></div>
+              <div style="background:var(--sf);border-radius:3px"></div><div style="background:var(--sf);border-radius:3px"></div>
+            </div>
+          </div>
+          <div class="wf-tb"><div class="wd on"></div><div class="wd"></div><div class="wd"></div><div class="wd"></div></div>
+        </div>
+        <div class="wf-lbl">Accueil</div>
+      </div>
+      <!-- Glossaire -->
+      <div class="wfp">
+        <div class="wff">
+          <div class="wf-sb" style="background:var(--sf)"></div>
+          <div class="wf-nb"><span>Glossaire</span></div>
+          <div class="wf-ct">
+            <div class="wl"></div>
+            <div style="display:flex;gap:2px"><div class="wl" style="background:#F22F54;flex:.5"></div><div class="wl"></div><div class="wl"></div></div>
+            <div class="wl r"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div>
+          </div>
+          <div class="wf-tb"><div class="wd"></div><div class="wd on"></div><div class="wd"></div><div class="wd"></div></div>
+        </div>
+        <div class="wf-lbl">Glossaire</div>
+      </div>
+      <!-- Fiche signe -->
+      <div class="wfp">
+        <div class="wff">
+          <div class="wf-sb" style="background:var(--sf)"></div>
+          <div class="wf-nb"><span>Boire</span></div>
+          <div class="wf-ct">
+            <div style="background:var(--sf);border-radius:3px;flex:0 0 38%;border:1px dashed var(--bo);display:flex;align-items:center;justify-content:center"><span style="font-size:5px;color:var(--mu)">▶</span></div>
+            <div class="wl r" style="width:45%"></div><div class="wl"></div><div class="wl"></div>
+          </div>
+          <div class="wf-tb"><div class="wd"></div><div class="wd on"></div><div class="wd"></div><div class="wd"></div></div>
+        </div>
+        <div class="wf-lbl">Fiche signe</div>
+      </div>
+      <!-- Quiz Q -->
+      <div class="wfp">
+        <div class="wff">
+          <div class="wf-sb" style="background:var(--sf)"></div>
+          <div class="wf-nb"><span>Quiz</span></div>
+          <div class="wf-ct">
+            <div style="height:3px;background:#F22F54;border-radius:2px;flex-shrink:0"></div>
+            <div style="background:var(--sf);border-radius:3px;flex:0 0 30%;border:1px dashed var(--bo)"></div>
+            <div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div>
+          </div>
+          <div class="wf-tb"><div class="wd"></div><div class="wd"></div><div class="wd on"></div><div class="wd"></div></div>
+        </div>
+        <div class="wf-lbl">Quiz — Q.</div>
+      </div>
+      <!-- Résultats -->
+      <div class="wfp">
+        <div class="wff">
+          <div class="wf-sb" style="background:var(--sf)"></div>
+          <div class="wf-nb"><span>Résultats</span></div>
+          <div class="wf-ct" style="align-items:center">
+            <div style="width:22px;height:22px;border-radius:50%;border:2px solid #F22F54;background:var(--rl);display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:4px;font-weight:700;color:#F22F54">4/5</span></div>
+            <div class="wl" style="width:100%"></div>
+            <div class="wl r" style="width:100%"></div>
+            <div class="wl" style="background:#F22F54;width:100%;border-radius:3px"></div>
+            <div class="wl" style="width:100%"></div>
+          </div>
+          <div class="wf-tb"><div class="wd"></div><div class="wd"></div><div class="wd on"></div><div class="wd"></div></div>
+        </div>
+        <div class="wf-lbl">Résultats</div>
+      </div>
+      <!-- FAQ -->
+      <div class="wfp">
+        <div class="wff">
+          <div class="wf-sb" style="background:var(--sf)"></div>
+          <div class="wf-nb"><span>FAQ</span></div>
+          <div class="wf-ct">
+            <div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div>
+          </div>
+          <div class="wf-tb"><div class="wd"></div><div class="wd"></div><div class="wd"></div><div class="wd"></div></div>
+        </div>
+        <div class="wf-lbl">FAQ</div>
+      </div>
+      <!-- Favoris -->
+      <div class="wfp">
+        <div class="wff">
+          <div class="wf-sb" style="background:var(--sf)"></div>
+          <div class="wf-nb"><span>Favoris</span></div>
+          <div class="wf-ct">
+            <div class="wl"></div><div class="wl r"></div><div class="wl r"></div>
+            <div style="flex:1;border:1px dashed var(--bo);border-radius:3px"></div>
+          </div>
+          <div class="wf-tb"><div class="wd"></div><div class="wd"></div><div class="wd"></div><div class="wd on"></div></div>
+        </div>
+        <div class="wf-lbl">Favoris</div>
+      </div>
+    </div>
+    <div class="s6-pr">
+      <div class="pr"><div class="prd"></div><div class="prt">Format iPhone 14 — 390 × 844 px uniforme</div></div>
+      <div class="pr"><div class="prd"></div><div class="prt">Noir & blanc strict, zéro couleur de marque</div></div>
+      <div class="pr"><div class="prd"></div><div class="prt">Placeholders vidéo — contenu non figé</div></div>
+      <div class="pr"><div class="prd"></div><div class="prt">Lorem ipsum sauf libellés de navigation</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 7 WIRE → PROTO ─── -->
+<div class="slide" id="s7">
+  <div class="s7">
+    <div><span class="chip">Prototype</span><div class="h1">Du wireframe au prototype</div></div>
+    <div class="s7-g">
+      <div class="s7c">
+        <div class="s7ct" style="color:var(--mu)">Wireframe</div>
+        <div class="s7i"><span class="xm">✗</span><span style="color:var(--mu)">Noir et blanc uniquement</span></div>
+        <div class="s7i"><span class="xm">✗</span><span style="color:var(--mu)">Sans charte couleur</span></div>
+        <div class="s7i"><span class="xm">✗</span><span style="color:var(--mu)">Placeholders vidéo</span></div>
+        <div class="s7i"><span class="xm">✗</span><span style="color:var(--mu)">Lorem ipsum</span></div>
+        <div style="height:1px;background:var(--bo);margin:4px 0"></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Architecture validée</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Parcours définis</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Validé par Nina</span></div>
+      </div>
+      <div class="s7ac">
+        <div class="s7arr">→</div>
+        <div class="s7al">Style guide<br>appliqué</div>
+      </div>
+      <div class="s7c p">
+        <div class="s7ct" style="color:var(--r)">Prototype haute fidélité</div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">#F22F54 — couleur primaire</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Poppins Bold / Regular</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Boutons CTA uppercase</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Chips de filtres actifs</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Hero band rouge — accueil</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Icônes actives en rouge</span></div>
+        <div class="s7i"><span class="ck">✓</span><span style="color:var(--dk)">Badges catégorie rouge clair</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 8 7 ÉCRANS ─── -->
+<div class="slide" id="s8">
+  <div class="s8">
+    <div class="s8t">Les 7 écrans du prototype</div>
+    <div class="s8ps">
+      <!-- Accueil -->
+      <div class="s8p">
+        <div class="s8f" style="border-color:rgba(242,47,84,.4)">
+          <div class="s8st" style="background:#F22F54"></div>
+          <div class="s8nv" style="background:#F22F54"><span style="color:#fff">Accueil</span></div>
+          <div class="s8bd" style="background:#fff">
+            <div style="background:#F22F54;border-radius:5px;height:20px;flex-shrink:0"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;flex:1">
+              <div style="background:#FDE8ED;border-radius:4px;border:1px solid #FBBDC8"></div>
+              <div style="background:#FDE8ED;border-radius:4px;border:1px solid #FBBDC8"></div>
+              <div style="background:#FDE8ED;border-radius:4px;border:1px solid #FBBDC8"></div>
+              <div style="background:#FDE8ED;border-radius:4px;border:1px solid #FBBDC8"></div>
+            </div>
+          </div>
+          <div class="s8tb" style="background:#fff"><div class="std on"></div><div class="std"></div><div class="std"></div><div class="std"></div></div>
+        </div>
+        <div class="s8l">Accueil</div>
+      </div>
+      <!-- Glossaire -->
+      <div class="s8p">
+        <div class="s8f">
+          <div class="s8st" style="background:#F0F0F5"></div>
+          <div class="s8nv" style="background:#fff;border-bottom:1px solid #E8E6F0"><span style="color:#16161D">Glossaire</span></div>
+          <div class="s8bd" style="background:#fff">
+            <div class="sl" style="background:#F0F0F5"></div>
+            <div style="display:flex;gap:2px"><div class="sl" style="background:#F22F54;flex:.5"></div><div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div></div>
+            <div class="sl" style="background:#FDE8ED"></div>
+            <div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div>
+          </div>
+          <div class="s8tb" style="background:#fff"><div class="std"></div><div class="std on"></div><div class="std"></div><div class="std"></div></div>
+        </div>
+        <div class="s8l">Glossaire</div>
+      </div>
+      <!-- Fiche signe -->
+      <div class="s8p">
+        <div class="s8f">
+          <div class="s8st" style="background:#F0F0F5"></div>
+          <div class="s8nv" style="background:#fff;border-bottom:1px solid #E8E6F0"><span style="color:#16161D">Boire</span></div>
+          <div class="s8bd" style="background:#fff">
+            <div style="background:#F8F7FC;border-radius:4px;flex:0 0 36%;border:1px dashed #E8E6F0;display:flex;align-items:center;justify-content:center">
+              <div style="width:12px;height:12px;background:#F22F54;border-radius:50%;display:flex;align-items:center;justify-content:center"><span style="color:#fff;font-size:4px">▶</span></div>
+            </div>
+            <div class="sl" style="background:#FDE8ED;width:45%"></div>
+            <div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div>
+          </div>
+          <div class="s8tb" style="background:#fff"><div class="std"></div><div class="std on"></div><div class="std"></div><div class="std"></div></div>
+        </div>
+        <div class="s8l">Fiche signe</div>
+      </div>
+      <!-- Quiz Q -->
+      <div class="s8p">
+        <div class="s8f">
+          <div class="s8st" style="background:#F0F0F5"></div>
+          <div class="s8nv" style="background:#fff;border-bottom:1px solid #E8E6F0"><span style="color:#16161D">Quiz</span></div>
+          <div class="s8bd" style="background:#fff">
+            <div style="height:2px;background:#F22F54;border-radius:1px;flex-shrink:0"></div>
+            <div style="background:#F8F7FC;border-radius:4px;flex:0 0 28%;border:1px dashed #E8E6F0"></div>
+            <div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div>
+            <div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div>
+          </div>
+          <div class="s8tb" style="background:#fff"><div class="std"></div><div class="std"></div><div class="std on"></div><div class="std"></div></div>
+        </div>
+        <div class="s8l">Quiz — Q.</div>
+      </div>
+      <!-- Résultats -->
+      <div class="s8p">
+        <div class="s8f">
+          <div class="s8st" style="background:#F0F0F5"></div>
+          <div class="s8nv" style="background:#fff;border-bottom:1px solid #E8E6F0"><span style="color:#16161D">Résultats</span></div>
+          <div class="s8bd" style="background:#fff;align-items:center">
+            <div style="width:26px;height:26px;border-radius:50%;border:2px solid #F22F54;background:#FDE8ED;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:5px;font-weight:700;color:#F22F54">4/5</span></div>
+            <div class="sl" style="background:#F0F0F5;width:100%"></div>
+            <div class="sl" style="background:#FDE8ED;width:100%"></div>
+            <div class="sl" style="background:#F22F54;width:100%;border-radius:3px"></div>
+            <div class="sl" style="background:#F0F0F5;width:100%"></div>
+          </div>
+          <div class="s8tb" style="background:#fff"><div class="std"></div><div class="std"></div><div class="std on"></div><div class="std"></div></div>
+        </div>
+        <div class="s8l">Résultats</div>
+      </div>
+      <!-- FAQ -->
+      <div class="s8p">
+        <div class="s8f">
+          <div class="s8st" style="background:#F0F0F5"></div>
+          <div class="s8nv" style="background:#fff;border-bottom:1px solid #E8E6F0"><span style="color:#16161D">FAQ</span></div>
+          <div class="s8bd" style="background:#fff">
+            <div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div>
+            <div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div>
+            <div class="sl" style="background:#F0F0F5"></div><div class="sl" style="background:#F0F0F5"></div>
+          </div>
+          <div class="s8tb" style="background:#fff"><div class="std"></div><div class="std"></div><div class="std"></div><div class="std"></div></div>
+        </div>
+        <div class="s8l">FAQ</div>
+      </div>
+      <!-- Favoris -->
+      <div class="s8p">
+        <div class="s8f">
+          <div class="s8st" style="background:#F0F0F5"></div>
+          <div class="s8nv" style="background:#fff;border-bottom:1px solid #E8E6F0"><span style="color:#16161D">Favoris</span></div>
+          <div class="s8bd" style="background:#fff">
+            <div class="sl" style="background:#F0F0F5"></div>
+            <div class="sl" style="background:#FDE8ED"></div>
+            <div class="sl" style="background:#FDE8ED"></div>
+            <div style="flex:1;border:1px dashed #E8E6F0;border-radius:4px"></div>
+          </div>
+          <div class="s8tb" style="background:#fff"><div class="std"></div><div class="std"></div><div class="std"></div><div class="std on"></div></div>
+        </div>
+        <div class="s8l">Favoris</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 9 ACCESSIBILITÉ ─── -->
+<div class="slide" id="s9">
+  <div class="s9">
+    <div><span class="chip">Accessibilité</span><div class="h1" style="font-size:38px">Critères RGAA / WCAG</div></div>
+    <div class="s9-g">
+      <div class="ac">
+        <div class="ac-hd"><div class="ac-b">✓</div><div class="ac-t">Couleurs — niveau AA</div></div>
+        <div class="ac-dv"></div>
+        <div class="ac-ls">
+          <div class="ac-it"><span class="ack">✓</span>Contraste #F22F54 sur blanc : ratio 4,8:1</div>
+          <div class="ac-it"><span class="ack">✓</span>Contraste texte #16161D sur #F8F7FC : ratio 17:1</div>
+          <div class="ac-it"><span class="ack">✓</span>Vérification via plugin A11Y Figma</div>
+        </div>
+      </div>
+      <div class="ac">
+        <div class="ac-hd"><div class="ac-b">✓</div><div class="ac-t">Typographie</div></div>
+        <div class="ac-dv"></div>
+        <div class="ac-ls">
+          <div class="ac-it"><span class="ack">✓</span>Poppins — hauteur d'x lisible, aucun texte &lt; 11px</div>
+          <div class="ac-it"><span class="ack">✓</span>Hiérarchie claire : titres 28–36pt / corps 12–14pt</div>
+          <div class="ac-it"><span class="ack">✓</span>Interligne ≥ 1.3 sur tous les blocs de texte</div>
+        </div>
+      </div>
+      <div class="ac">
+        <div class="ac-hd"><div class="ac-b">✓</div><div class="ac-t">Vidéos & médias</div></div>
+        <div class="ac-dv"></div>
+        <div class="ac-ls">
+          <div class="ac-it"><span class="ack">✓</span>Sous-titres recommandés sur chaque vidéo</div>
+          <div class="ac-it"><span class="ack">✓</span>Bouton play visible et contrasté</div>
+          <div class="ac-it"><span class="ack">✓</span>Alternatives textuelles pour chaque signe</div>
+        </div>
+      </div>
+      <div class="ac">
+        <div class="ac-hd"><div class="ac-b">✓</div><div class="ac-t">Navigation & composants</div></div>
+        <div class="ac-dv"></div>
+        <div class="ac-ls">
+          <div class="ac-it"><span class="ack">✓</span>Tab bar fixe — navigation cohérente partout</div>
+          <div class="ac-it"><span class="ack">✓</span>Zones tactiles ≥ 44 × 44 px (standard iOS)</div>
+          <div class="ac-it"><span class="ack">✓</span>États actifs clairement différenciés (rouge / gris)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 10 SUITE ─── -->
+<div class="slide" id="s10">
+  <div class="s10l">
+    <div class="s10-big">Et<br>ensuite ?</div>
+    <div class="s10-sub">Pistes d'évolution</div>
+  </div>
+  <div class="s10r">
+    <div class="s10cs">
+      <div class="s10c"><div class="s10ct">Mode hors-ligne</div><div class="s10cd">Téléchargement des vidéos pour un usage sans connexion — pertinent en crèche</div></div>
+      <div class="s10c"><div class="s10ct">Progression gamifiée</div><div class="s10cd">Badges et niveaux pour motiver parents et professionnels à progresser</div></div>
+      <div class="s10c"><div class="s10ct">Profil multi-utilisateurs</div><div class="s10cd">Comptes séparés parent / pro avec historique et favoris distincts</div></div>
+      <div class="s10c"><div class="s10ct">Contenu étendu</div><div class="s10cd">Passer de 20 à 100+ signes, avec nouveaux thèmes : école, médecin, fêtes</div></div>
+    </div>
+    <div class="s10m">Merci pour votre attention — Questions ?</div>
+  </div>
+</div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button id="p" disabled>←</button>
+  <div class="dots" id="dt"></div>
+  <button id="n">→</button>
+  <span class="snum" id="sn">1 / 10</span>
+</div>
+
+<script>
+const ss = document.querySelectorAll('.slide');
+const dt = document.getElementById('dt');
+let c = 0;
+ss.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' on':'');
+  d.onclick = () => go(i);
+  dt.appendChild(d);
+});
+function go(n) {
+  ss[c].classList.remove('on');
+  dt.children[c].classList.remove('on');
+  c = n;
+  ss[c].classList.add('on');
+  dt.children[c].classList.add('on');
+  document.getElementById('p').disabled = c===0;
+  document.getElementById('n').disabled = c===ss.length-1;
+  document.getElementById('sn').textContent = `${c+1} / ${ss.length}`;
+}
+document.getElementById('p').onclick = () => c>0 && go(c-1);
+document.getElementById('n').onclick = () => c<ss.length-1 && go(c+1);
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') { if(c<ss.length-1) go(c+1); }
+  if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   { if(c>0) go(c-1); }
+});
+</script>
+</body>
+</html>
