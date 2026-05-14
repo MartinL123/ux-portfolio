@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Equi-libre — Présentation complète</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #1a1a1a;
+  --cream: #f5f1e9;
+  --yellow: #fbf4bd;
+  --font: 'Plus Jakarta Sans', sans-serif;
+  --W: 1880px;
+  --H: 1010px;
+  --R: 15px;
+}
+
+body {
+  background: #0d0d0d;
+  font-family: var(--font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+}
+
+/* ── COUNTER ── */
+.slide-counter {
+  width: var(--W);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #444;
+}
+
+/* ── BASE SLIDE ── */
+.slide {
+  width: var(--W);
+  height: var(--H);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* nav bar */
+.nav {
+  position: absolute;
+  top: 16px; left: 19px; right: 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  z-index: 10;
+}
+.nav .left { display: flex; gap: 64px; }
+
+/* inner card */
+.card {
+  position: absolute;
+  top: 50px; left: 19px; right: 19px; bottom: 0;
+  border-radius: var(--R);
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 1 — TITRE
+══════════════════════════════════════════ */
+.s1 { background: var(--black); }
+.s1 .nav { color: var(--cream); }
+.s1 .card {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  text-align: center;
+}
+.s1 .title-main {
+  font-size: 108px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--black);
+  max-width: 1400px;
+}
+.s1 .title-sub {
+  font-size: 108px;
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--black);
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 2 — PROJET
+══════════════════════════════════════════ */
+.s2 { background: var(--black); }
+.s2 .nav { color: var(--cream); }
+.s2 .card {
+  background: var(--black);
+  border: 1px solid var(--cream);
+  display: flex;
+  align-items: center;
+  padding: 0 100px;
+  gap: 240px;
+}
+.s2 .proj-title {
+  font-size: 110px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--cream);
+  flex-shrink: 0;
+  width: 640px;
+}
+.s2 .proj-right {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  color: var(--cream);
+}
+.s2 .proj-block { font-size: 42px; line-height: 1.5; }
+.s2 .proj-block strong { font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   SLIDE 3 — ANALYSE CONCURRENTIELLE (apps)
+══════════════════════════════════════════ */
+.s3 { background: var(--cream); }
+.s3 .nav { color: var(--black); }
+.s3 .card {
+  background: var(--cream);
+  border: 1px solid var(--black);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  padding: 60px 60px 50px;
+}
+.app-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  flex: 1;
+  padding: 0 30px;
+}
+.app-col:not(:last-child) {
+  border-right: 1px solid rgba(26,26,26,0.1);
+}
+.app-img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: #e8e4dc;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+.app-name {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--black);
+  text-transform: uppercase;
+}
+.app-points {
+  font-size: 20px;
+  color: var(--black);
+  line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 4 — ARCHITECTURE v1 (sur MacBook)
+══════════════════════════════════════════ */
+.s4 { background: var(--cream); }
+.s4 .nav { color: var(--black); }
+.s4 .card {
+  background: var(--cream);
+  border: 1px solid var(--black);
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  padding: 60px 0 60px 40px;
+  align-items: center;
+}
+.s4 .label-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+.s4 .arch-title {
+  font-size: 66px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--black);
+  letter-spacing: -1.5px;
+}
+.s4 .arch-caption { font-size: 20px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--black); margin-top: 8px; }
+.s4 .arch-body { font-size: 20px; color: var(--black); line-height: 1.6; }
+.s4 .arch-diagram {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 30px;
+}
+.arch-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 1200px;
+}
+.arch-root {
+  background: #f5c842;
+  border-radius: 8px;
+  padding: 14px 48px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+}
+.arch-branches {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  position: relative;
+}
+.arch-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.arch-node {
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--black);
+  text-align: center;
+  white-space: nowrap;
+}
+.arch-node.yellow { background: #f5c842; }
+.arch-node.green  { background: #5cb870; color: #fff; }
+.arch-node.purple { background: #b68ad4; color: #fff; }
+.arch-node.blue   { background: #7eb3e8; color: var(--black); }
+.arch-node.orange { background: #f0a050; color: #fff; }
+.arch-child {
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+  text-align: center;
+}
+.arch-child.yellow { background: rgba(245,200,66,0.5); }
+.arch-child.green  { background: rgba(92,184,112,0.35); }
+.arch-child.purple { background: rgba(182,138,212,0.35); }
+.arch-child.blue   { background: rgba(126,179,232,0.35); }
+.arch-child.orange { background: rgba(240,160,80,0.35); }
+
+/* ══════════════════════════════════════════
+   SLIDE 5 — ARCHITECTURE v2 (parcours)
+══════════════════════════════════════════ */
+.s5 { background: var(--cream); }
+.s5 .nav { color: var(--black); }
+.s5 .card {
+  background: var(--cream);
+  border: 1px solid var(--black);
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  padding: 60px 0 60px 40px;
+  align-items: center;
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 6 — TRI DE CARTES
+══════════════════════════════════════════ */
+.s6 { background: var(--black); }
+.s6 .nav { color: var(--cream); }
+.s6 .card-left {
+  position: absolute;
+  top: 50px; left: 19px;
+  width: 560px; bottom: 0;
+  background: var(--cream);
+  border-radius: var(--R);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 40px;
+  gap: 20px;
+}
+.s6 .card-right {
+  position: absolute;
+  top: 50px; left: 600px; right: 19px; bottom: 0;
+  background: var(--yellow);
+  border-radius: var(--R);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 60px;
+  gap: 40px;
+  align-items: center;
+}
+.tri-title { font-size: 64px; font-weight: 400; line-height: 1.1; color: var(--black); }
+.tri-sub { font-size: 32px; font-weight: 400; color: var(--black); line-height: 1.4; }
+.stat-block { display: flex; flex-direction: column; gap: 8px; }
+.stat-num { font-size: 108px; font-weight: 300; line-height: 1; color: var(--black); }
+.stat-label { font-size: 34px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--black); }
+.stat-note { font-size: 30px; font-weight: 700; color: var(--black); line-height: 1.4; }
+
+/* ══════════════════════════════════════════
+   SLIDE 7 — PERSONAS (améliorée)
+══════════════════════════════════════════ */
+.s7 { background: var(--black); }
+.s7 .nav { color: var(--cream); }
+.s7 .card {
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px 30px 28px;
+}
+.personas-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+  flex: 1;
+}
+.persona-card {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--black);
+}
+.p-tag { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; opacity: .5; }
+.p-name { font-size: 30px; font-weight: 700; letter-spacing: -.5px; }
+.p-meta { font-size: 16px; opacity: .6; }
+.p-divider { height: 1px; background: rgba(26,26,26,.15); }
+.p-goal { font-size: 18px; font-weight: 700; line-height: 1.4; }
+.p-frustration { font-size: 15px; opacity: .65; line-height: 1.5; }
+.p-feature {
+  margin-top: auto;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(26,26,26,.08);
+  border-radius: 8px; padding: 9px 14px;
+  font-size: 13px; font-weight: 700;
+}
+.insight-bar {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  color: var(--black);
+  flex-shrink: 0;
+}
+.insight-label-tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 4px;
+  text-transform: uppercase; opacity: .4; white-space: nowrap;
+}
+.insight-txt { font-size: 24px; font-weight: 400; line-height: 1.5; }
+.insight-txt strong { font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   SLIDES 8–11 — WIREFRAMES (4 slides paires)
+══════════════════════════════════════════ */
+.swf { background: var(--black); }
+.swf .nav { color: var(--cream); }
+.swf .card {
+  background: var(--cream);
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  overflow: hidden;
+}
+.wf-sidebar {
+  background: var(--black);
+  padding: 50px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  color: var(--cream);
+}
+.wf-stag { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; opacity: .35; }
+.wf-sh { font-size: 52px; font-weight: 700; line-height: 1.05; letter-spacing: -1px; }
+.wf-sh span { font-weight: 300; }
+.wf-sdesc { font-size: 17px; opacity: .6; line-height: 1.6; }
+.wf-annotation-list { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+.wf-ann {
+  border-left: 2px solid rgba(245,241,233,.2);
+  padding-left: 16px;
+}
+.wf-ann-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.wf-ann-body { font-size: 13px; opacity: .55; line-height: 1.5; }
+.wf-ann-tag { margin-top: 5px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: .35; }
+
+.wf-screens-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--cream);
+  padding: 40px 40px;
+  gap: 24px;
+  align-items: center;
+}
+.phone-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.phone-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: rgba(26,26,26,.4);
+}
+.phone {
+  background: var(--black);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 380px;
+  padding: 10px 0 0;
+}
+.ph-status {
+  height: 16px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ph-pill { width: 36px; height: 3px; background: rgba(245,241,233,.3); border-radius: 2px; }
+.ph-topbar {
+  padding: 8px 14px;
+  font-size: 9px; font-weight: 700; color: rgba(245,241,233,.6);
+  font-family: var(--font);
+  flex-shrink: 0;
+}
+.ph-body {
+  flex: 1;
+  padding: 2px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+.ph-card {
+  background: rgba(245,241,233,.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.ph-card-title { font-size: 9px; font-weight: 700; color: rgba(245,241,233,.5); font-family: var(--font); }
+.ph-bar { height: 4px; background: rgba(245,241,233,.2); border-radius: 2px; }
+.ph-bar.s70 { width: 70%; }
+.ph-bar.s50 { width: 50%; }
+.ph-btn {
+  background: rgba(245,241,233,.18);
+  border-radius: 4px; padding: 5px;
+  font-size: 8px; color: rgba(245,241,233,.6);
+  text-align: center; font-family: var(--font); font-weight: 600;
+}
+.ph-quick-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+}
+.ph-qb {
+  background: rgba(245,241,233,.08);
+  border-radius: 4px; padding: 8px;
+  font-size: 8px; color: rgba(245,241,233,.5);
+  text-align: center; font-family: var(--font);
+}
+.ph-section-title {
+  font-size: 9px; font-weight: 700; color: rgba(245,241,233,.5);
+  font-family: var(--font); padding: 0 0 2px;
+}
+.ph-list-item {
+  background: rgba(245,241,233,.08);
+  border-radius: 6px; padding: 8px 10px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 4px;
+}
+.ph-list-text { font-size: 8px; color: rgba(245,241,233,.6); font-family: var(--font); }
+.ph-arrow { font-size: 8px; color: rgba(245,241,233,.4); }
+.ph-emoji-row {
+  display: flex; justify-content: space-around;
+  padding: 6px 10px;
+}
+.ph-emoji { font-size: 16px; }
+.ph-nav {
+  height: 32px;
+  background: rgba(245,241,233,.05);
+  border-top: 1px solid rgba(245,241,233,.07);
+  display: flex; justify-content: space-around; align-items: center;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.ph-nav-dot { width: 7px; height: 7px; background: rgba(245,241,233,.2); border-radius: 50%; }
+.ph-nav-dot.on { background: var(--cream); }
+.ph-back {
+  font-size: 11px; color: rgba(245,241,233,.6); font-family: var(--font);
+  padding: 8px 14px; display: flex; align-items: center; gap: 4px;
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 12 — SYNTHÈSE DES DÉCISIONS UX
+══════════════════════════════════════════ */
+.s12 { background: var(--black); }
+.s12 .nav { color: var(--cream); }
+.s12 .card {
+  background: var(--cream);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  padding: 50px 50px 44px;
+  gap: 28px;
+}
+.synth-title {
+  grid-column: 1 / -1;
+  font-size: 66px; font-weight: 700;
+  line-height: 1.0; letter-spacing: -1px; color: var(--black);
+}
+.synth-title span { font-weight: 300; }
+.dec-block {
+  background: var(--black); color: var(--cream);
+  border-radius: 12px; padding: 30px 28px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.dec-num { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; opacity: .4; }
+.dec-title { font-size: 28px; font-weight: 700; line-height: 1.2; }
+.dec-why { font-size: 16px; font-weight: 400; line-height: 1.6; opacity: .75; }
+.dec-data {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(245,241,233,.15);
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; opacity: .4;
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 13 — CONCLUSION FINALE
+══════════════════════════════════════════ */
+.s13 { background: var(--black); }
+.s13 .nav { color: var(--cream); }
+.s13 .card {
+  background: var(--cream);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  padding: 55px 55px 44px;
+  gap: 28px;
+}
+.concl-left {
+  display: flex; flex-direction: column;
+  justify-content: center; gap: 20px;
+}
+.concl-pretitle { font-size: 12px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; opacity: .4; color: var(--black); }
+.concl-title { font-size: 74px; font-weight: 700; line-height: 1.0; letter-spacing: -2px; color: var(--black); }
+.concl-title span { font-weight: 300; }
+.concl-sub { font-size: 20px; color: var(--black); opacity: .6; line-height: 1.5; max-width: 420px; }
+.concl-right { display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.concl-pt {
+  background: var(--black); color: var(--cream);
+  border-radius: 12px; padding: 22px 26px;
+  display: flex; gap: 18px; align-items: flex-start;
+}
+.concl-pt-num { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; opacity: .3; padding-top: 3px; flex-shrink: 0; }
+.concl-pt-body { display: flex; flex-direction: column; gap: 4px; }
+.concl-pt-title { font-size: 20px; font-weight: 700; }
+.concl-pt-desc { font-size: 14px; opacity: .6; line-height: 1.5; }
+.concl-footer {
+  grid-column: 1 / -1;
+  background: var(--black); color: var(--cream);
+  border-radius: 12px; padding: 24px 36px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.concl-footer-q { font-size: 28px; font-weight: 700; }
+.concl-footer-meta { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; opacity: .4; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ SLIDE 1 — TITRE ══════════ -->
+<div class="slide-counter"><span>01 / 13</span><span>Slide de titre</span></div>
+<div class="slide s1">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Conception de l'architecture d'information</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card">
+    <div class="s1-inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:24px;text-align:center;">
+      <div class="title-main">Conception de l'architecture d'information</div>
+      <div class="title-sub">Application mobile Equi-libre</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 2 — PROJET ══════════ -->
+<div class="slide-counter"><span>02 / 13</span><span>Contexte du projet</span></div>
+<div class="slide s2">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Projet : Application mobile</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card">
+    <div class="proj-title">Projet :<br>Application<br>mobile<br>Equi-libre</div>
+    <div class="proj-right">
+      <div class="proj-block">
+        <strong>Objectifs :</strong><br><br>
+        • Réduire le stress<br>
+        • Suivre ses émotions<br>
+        • Organiser ses tâches<br>
+        • Accéder à des ressources
+      </div>
+      <div class="proj-block">
+        <strong>Rôle UX :</strong><br><br>
+        • Structurer les contenus<br>
+        • Définir la navigation<br>
+        • Concevoir les wireframes
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 3 — ANALYSE CONCURRENTIELLE ══════════ -->
+<div class="slide-counter"><span>03 / 13</span><span>Analyse concurrentielle</span></div>
+<div class="slide s3">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Analyse concurrentielle</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card">
+    <div class="app-col">
+      <div class="app-img">
+        <img src="https://www.figma.com/api/mcp/asset/aba2ed44-cd24-4146-98d4-8fadaac615a9" alt="Headspace" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'font-size:48px;font-weight:700;color:rgba(26,26,26,.3)\'>HS</div>'">
+      </div>
+      <div class="app-name">Headspace</div>
+      <div class="app-points">
+        • Navigation très simple<br>
+        • Parcours guidé<br>
+        • Contenus très accessibles<br>
+        • Wording rassurant
+      </div>
+    </div>
+    <div class="app-col">
+      <div class="app-img">
+        <img src="https://www.figma.com/api/mcp/asset/b3250d99-1c0f-4460-b79d-f1b2d8c565a7" alt="Calm" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'font-size:48px;font-weight:700;color:rgba(26,26,26,.3)\'>CA</div>'">
+      </div>
+      <div class="app-name">Calm</div>
+      <div class="app-points">
+        • Interface immersive<br>
+        • Mise en avant des contenus<br>
+        • Navigation intuitive<br>
+        • Ton apaisant
+      </div>
+    </div>
+    <div class="app-col">
+      <div class="app-img">
+        <img src="https://www.figma.com/api/mcp/asset/128bf53d-1cb9-44db-a929-3d1bce215e69" alt="Petit Bambou" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'font-size:48px;font-weight:700;color:rgba(26,26,26,.3)\'>PB</div>'">
+      </div>
+      <div class="app-name">Petit Bambou</div>
+      <div class="app-points">
+        • Parcours structuré<br>
+        • Catégorisation claire<br>
+        • Progression guidée<br>
+        • Vocabulaire pédagogique
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 4 — ARCHITECTURE v1 ══════════ -->
+<div class="slide-counter"><span>04 / 13</span><span>Architecture de l'information</span></div>
+<div class="slide s4">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Architecture de l'information</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card">
+    <div class="s4 label-col" style="padding-left:30px;">
+      <div class="arch-title">Architecture<br>de<br>l'information</div>
+      <div class="arch-caption">Explication</div>
+      <div class="arch-body">Cette architecture permet un accès rapide aux fonctionnalités principales et facilite la navigation globale.</div>
+    </div>
+    <div class="arch-diagram">
+      <div class="arch-tree">
+        <div class="arch-root">Accueil</div>
+        <div class="arch-branches">
+          <div class="arch-branch">
+            <div class="arch-node yellow">Exercices</div>
+            <div class="arch-child yellow">Méditation guidée</div>
+            <div class="arch-child yellow">Exercice de respiration</div>
+            <div class="arch-child yellow">Relaxation audio</div>
+            <div class="arch-child yellow">Visualisation positive</div>
+          </div>
+          <div class="arch-branch">
+            <div class="arch-node green">Suivi personnel</div>
+            <div class="arch-child green">Journal émotionnel</div>
+            <div class="arch-child green">Test de stress</div>
+            <div class="arch-child green">Suivi des émotions</div>
+            <div class="arch-child green">Test de bien-être</div>
+          </div>
+          <div class="arch-branch">
+            <div class="arch-node purple">Organisation</div>
+            <div class="arch-child purple">To-do list</div>
+            <div class="arch-child purple">Agenda</div>
+            <div class="arch-child purple">Semainier</div>
+          </div>
+          <div class="arch-branch">
+            <div class="arch-node blue">Ressources</div>
+            <div class="arch-child blue">Article sur l'anxiété</div>
+            <div class="arch-child blue">Article sur le sommeil</div>
+            <div class="arch-child blue">Article sur le burn-out</div>
+            <div class="arch-child blue">Conseils pratiques</div>
+          </div>
+          <div class="arch-branch">
+            <div class="arch-node orange">Profil</div>
+            <div class="arch-child orange">Paramètres</div>
+            <div class="arch-child orange">Notifications</div>
+            <div class="arch-child orange">Historique</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 5 — ARCHITECTURE v2 (parcours personas) ══════════ -->
+<div class="slide-counter"><span>05 / 13</span><span>Architecture — Parcours utilisateurs</span></div>
+<div class="slide s5">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Architecture de l'information</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card" style="display:grid;grid-template-columns:420px 1fr;padding:55px 40px 55px 36px;gap:40px;align-items:center;background:var(--cream);border:1px solid var(--black);">
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:20px;">
+      <div style="font-size:64px;font-weight:400;line-height:1.1;color:var(--black);letter-spacing:-1.5px;">Architecture<br>de<br>l'information</div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--black);">Parcours par persona</div>
+      <div style="font-size:18px;color:var(--black);line-height:1.6;opacity:.7;">Les parcours utilisateurs permettent de visualiser le cheminement logique dans l'application.</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:28px;height:4px;background:#e74c3c;border-radius:2px;flex-shrink:0;"></div>
+          <span style="font-size:16px;font-weight:600;color:var(--black);">Jules — Exercices rapides</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:28px;height:4px;background:#3498db;border-radius:2px;flex-shrink:0;"></div>
+          <span style="font-size:16px;font-weight:600;color:var(--black);">Esmée — Organisation</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:28px;height:4px;background:#27ae60;border-radius:2px;flex-shrink:0;"></div>
+          <span style="font-size:16px;font-weight:600;color:var(--black);">Pierre — Suivi émotionnel</span>
+        </div>
+      </div>
+    </div>
+    <!-- Architecture annotée avec parcours -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+      <div style="background:#f5c842;border-radius:8px;padding:12px 40px;font-size:20px;font-weight:700;color:var(--black);">Accueil</div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <!-- Exercices -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;">
+          <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:3px;height:18px;background:#e74c3c;border-radius:1px;"></div>
+          <div style="background:#f5c842;border-radius:8px;padding:10px 18px;font-size:16px;font-weight:700;color:var(--black);border:3px solid #e74c3c;">Exercices</div>
+          <div style="background:rgba(245,200,66,.4);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Méditation</div>
+          <div style="background:rgba(245,200,66,.4);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);border:2px solid #e74c3c;">Respiration →</div>
+          <div style="background:rgba(245,200,66,.4);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Relaxation</div>
+          <div style="background:rgba(245,200,66,.4);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Visualisation</div>
+        </div>
+        <!-- Suivi -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;">
+          <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:3px;height:18px;background:#27ae60;border-radius:1px;"></div>
+          <div style="background:#5cb870;border-radius:8px;padding:10px 18px;font-size:16px;font-weight:700;color:#fff;border:3px solid #27ae60;">Suivi</div>
+          <div style="background:rgba(92,184,112,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Journal →</div>
+          <div style="background:rgba(92,184,112,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);border:2px solid #27ae60;">Tendances</div>
+          <div style="background:rgba(92,184,112,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Test stress</div>
+          <div style="background:rgba(92,184,112,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Bien-être</div>
+        </div>
+        <!-- Organisation -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;">
+          <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:3px;height:18px;background:#3498db;border-radius:1px;"></div>
+          <div style="background:#b68ad4;border-radius:8px;padding:10px 18px;font-size:16px;font-weight:700;color:#fff;border:3px solid #3498db;">Organisation</div>
+          <div style="background:rgba(182,138,212,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);border:2px solid #3498db;">To-do list →</div>
+          <div style="background:rgba(182,138,212,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Agenda</div>
+          <div style="background:rgba(182,138,212,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Semainier</div>
+        </div>
+        <!-- Ressources -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;">
+          <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:3px;height:18px;background:rgba(26,26,26,.2);border-radius:1px;"></div>
+          <div style="background:#7eb3e8;border-radius:8px;padding:10px 18px;font-size:16px;font-weight:700;color:var(--black);">Ressources</div>
+          <div style="background:rgba(126,179,232,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Anxiété</div>
+          <div style="background:rgba(126,179,232,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Sommeil</div>
+          <div style="background:rgba(126,179,232,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Burn-out</div>
+          <div style="background:rgba(126,179,232,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Conseils</div>
+        </div>
+        <!-- Profil -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;">
+          <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:3px;height:18px;background:rgba(26,26,26,.2);border-radius:1px;"></div>
+          <div style="background:#f0a050;border-radius:8px;padding:10px 18px;font-size:16px;font-weight:700;color:#fff;">Profil</div>
+          <div style="background:rgba(240,160,80,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Paramètres</div>
+          <div style="background:rgba(240,160,80,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Notifs</div>
+          <div style="background:rgba(240,160,80,.3);border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--black);">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 6 — TRI DE CARTES ══════════ -->
+<div class="slide-counter"><span>06 / 13</span><span>Tri de cartes — Résultats</span></div>
+<div class="slide s6">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Tri de cartes</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card-left">
+    <div class="tri-title">Tri de<br>cartes</div>
+    <div class="tri-sub">Résultats<br>principaux</div>
+  </div>
+  <div class="card-right">
+    <div class="stat-block">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Participants</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Catégories validées</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">d'accord sur<br>"Organisation"</div>
+    </div>
+    <div class="stat-note">Les catégories liées à la santé mentale étaient moins claires pour les participants</div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 7 — PERSONAS (améliorée) ══════════ -->
+<div class="slide-counter"><span>07 / 13</span><span>Personas — améliorée</span></div>
+<div class="slide s7">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Personas</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card" style="background:var(--black);padding:28px 28px 26px;display:flex;flex-direction:column;gap:18px;">
+    <div class="personas-row">
+      <div class="persona-card">
+        <span class="p-tag">Persona 01</span>
+        <div class="p-name">Jules Martin</div>
+        <div class="p-meta">34 ans — Cadre en entreprise</div>
+        <div class="p-divider"></div>
+        <div class="p-goal">🎯 Décompresser rapidement après une journée intense</div>
+        <div class="p-frustration">Frustration : trop d'étapes avant un exercice. Il abandonne si l'app est complexe.</div>
+        <div class="p-feature">⚡ Exercices rapides · accès en 1 tap</div>
+      </div>
+      <div class="persona-card">
+        <span class="p-tag">Persona 02</span>
+        <div class="p-name">Esmée Laurent</div>
+        <div class="p-meta">41 ans — Parent actif</div>
+        <div class="p-divider"></div>
+        <div class="p-goal">🎯 Structurer son quotidien entre travail et famille</div>
+        <div class="p-frustration">Frustration : les outils sont éparpillés. Elle cherche tout au même endroit.</div>
+        <div class="p-feature">📅 Agenda & To-do intégrés</div>
+      </div>
+      <div class="persona-card">
+        <span class="p-tag">Persona 03</span>
+        <div class="p-name">Pierre Dubois</div>
+        <div class="p-meta">28 ans — Étudiant</div>
+        <div class="p-divider"></div>
+        <div class="p-goal">🎯 Comprendre ses émotions et identifier ses sources de stress</div>
+        <div class="p-frustration">Frustration : il ne voit pas l'évolution de son état dans le temps.</div>
+        <div class="p-feature">📈 Journal · Suivi des tendances</div>
+      </div>
+    </div>
+    <div class="insight-bar">
+      <span class="insight-label-tag">Insights UX</span>
+      <div class="insight-txt">Les 3 personas partagent un besoin commun : <strong>rapidité d'accès</strong>, <strong>simplicité de navigation</strong> et <strong>accompagnement émotionnel clair</strong> — ce qui justifie les choix d'architecture retenus.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 8 — WIREFRAMES : Accueil + Exercices ══════════ -->
+<div class="slide-counter"><span>08 / 13</span><span>Wireframes — Accueil & Exercices</span></div>
+<div class="slide swf">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Wireframes basse fidélité</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card" style="display:grid;grid-template-columns:320px 1fr;overflow:hidden;">
+    <div class="wf-sidebar">
+      <div class="wf-stag">Wireframes 1 & 2</div>
+      <div class="wf-sh">Accueil<br><span>& Exercices</span></div>
+      <div class="wf-sdesc">Chaque écran illustre une décision UX tracée vers les données utilisateurs.</div>
+      <div class="wf-annotation-list">
+        <div class="wf-ann">
+          <div class="wf-ann-title">Exercice du jour en hero</div>
+          <div class="wf-ann-body">Accès à l'action principale en 0 étape. Jules (P1) décompresse sans friction dès l'ouverture.</div>
+          <div class="wf-ann-tag">→ Insight UX · Persona 1</div>
+        </div>
+        <div class="wf-ann">
+          <div class="wf-ann-title">Liste avec durée visible</div>
+          <div class="wf-ann-body">Permet à Jules de choisir selon le temps dispo. Pattern validé par l'analyse Headspace.</div>
+          <div class="wf-ann-tag">→ Analyse Headspace</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-screens-area">
+      <!-- Écran Accueil -->
+      <div class="phone-wrap">
+        <div class="phone-label">01 · Accueil</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-topbar">Bonjour [Utilisateur]</div>
+          <div class="ph-body">
+            <div class="ph-card">
+              <div class="ph-card-title">Exercice du jour</div>
+              <div class="ph-bar"></div>
+              <div class="ph-bar s70"></div>
+              <div class="ph-btn" style="margin-top:4px;">Commencer →</div>
+            </div>
+            <div class="ph-section-title">Accès rapide</div>
+            <div class="ph-quick-grid">
+              <div class="ph-qb">Exercices</div>
+              <div class="ph-qb">Suivi</div>
+              <div class="ph-qb">Organisation</div>
+              <div class="ph-qb">Ressources</div>
+            </div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot on"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Écran Exercices -->
+      <div class="phone-wrap">
+        <div class="phone-label">02 · Exercices</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-topbar">Exercices</div>
+          <div class="ph-body">
+            <div class="ph-list-item"><div class="ph-list-text">🧘 Méditation guidée · 10 min</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">🌬 Respiration · 5 min</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">🎵 Relaxation · 8 min</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">✨ Visualisation · 12 min</div><div class="ph-arrow">→</div></div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot on"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 9 — WIREFRAMES : Exercice détail + Suivi ══════════ -->
+<div class="slide-counter"><span>09 / 13</span><span>Wireframes — Détail exercice & Suivi</span></div>
+<div class="slide swf">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Wireframes basse fidélité</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card" style="display:grid;grid-template-columns:320px 1fr;overflow:hidden;">
+    <div class="wf-sidebar">
+      <div class="wf-stag">Wireframes 3 & 4</div>
+      <div class="wf-sh">Détail<br><span>& Suivi</span></div>
+      <div class="wf-sdesc">Fluidité du parcours entre sélection et lancement d'un exercice.</div>
+      <div class="wf-annotation-list">
+        <div class="wf-ann">
+          <div class="wf-ann-title">Fiche exercice claire</div>
+          <div class="wf-ann-body">Titre, durée, image placeholder, CTA unique. Pas de surcharge cognitive.</div>
+          <div class="wf-ann-tag">→ Principe minimalisme</div>
+        </div>
+        <div class="wf-ann">
+          <div class="wf-ann-title">Check-in émotionnel</div>
+          <div class="wf-ann-body">Inspiré de MindDoc. Pierre (P3) enregistre son état en 1 tap, alimentant les graphiques.</div>
+          <div class="wf-ann-tag">→ Analyse MindDoc · Persona 3</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-screens-area">
+      <!-- Écran Détail exercice -->
+      <div class="phone-wrap">
+        <div class="phone-label">03 · Détail exercice</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-back">← Respiration</div>
+          <div class="ph-body">
+            <div style="font-size:9px;color:rgba(245,241,233,.5);font-family:var(--font);">Exercice de respiration guidée</div>
+            <div style="font-size:8px;color:rgba(245,241,233,.35);font-family:var(--font);">Durée : 5 minutes</div>
+            <div style="background:rgba(245,241,233,.06);border-radius:6px;height:80px;display:flex;align-items:center;justify-content:center;">
+              <div style="font-size:10px;color:rgba(245,241,233,.3);font-family:var(--font);">image</div>
+            </div>
+            <div class="ph-bar" style="margin-top:4px;"></div>
+            <div class="ph-bar s70"></div>
+            <div class="ph-bar s50"></div>
+            <div class="ph-btn" style="margin-top:6px;padding:8px;">Lancer l'exercice</div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot on"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Écran Suivi -->
+      <div class="phone-wrap">
+        <div class="phone-label">04 · Suivi personnel</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-topbar">Suivi personnel</div>
+          <div class="ph-body">
+            <div class="ph-card">
+              <div class="ph-card-title">Comment allez-vous ?</div>
+              <div class="ph-emoji-row">
+                <span class="ph-emoji">😞</span>
+                <span class="ph-emoji">😐</span>
+                <span class="ph-emoji">😊</span>
+              </div>
+            </div>
+            <div class="ph-list-item"><div class="ph-list-text">📝 Journal émotionnel</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">📊 Suivi des émotions</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">🧪 Test de stress</div><div class="ph-arrow">→</div></div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot on"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 10 — WIREFRAMES : Journal + Organisation ══════════ -->
+<div class="slide-counter"><span>10 / 13</span><span>Wireframes — Journal & Organisation</span></div>
+<div class="slide swf">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Wireframes basse fidélité</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card" style="display:grid;grid-template-columns:320px 1fr;overflow:hidden;">
+    <div class="wf-sidebar">
+      <div class="wf-stag">Wireframes 5 & 6</div>
+      <div class="wf-sh">Journal<br><span>& Organisation</span></div>
+      <div class="wf-sdesc">Outils de suivi personnel et de gestion du quotidien intégrés dans deux sections distinctes.</div>
+      <div class="wf-annotation-list">
+        <div class="wf-ann">
+          <div class="wf-ann-title">Zone de saisie libre</div>
+          <div class="wf-ann-body">Sélection émotionnelle + zone texte = double capture pour Pierre (P3).</div>
+          <div class="wf-ann-tag">→ Persona 3</div>
+        </div>
+        <div class="wf-ann">
+          <div class="wf-ann-title">Outils organisationnels</div>
+          <div class="wf-ann-body">To-do, Agenda, Semainier — tout en un. 80% d'accord sur "Organisation" au tri de cartes.</div>
+          <div class="wf-ann-tag">→ Tri de cartes · 80% · Persona 2</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-screens-area">
+      <!-- Journal émotionnel -->
+      <div class="phone-wrap">
+        <div class="phone-label">05 · Journal émotionnel</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-back">← Journal émotionnel</div>
+          <div class="ph-body">
+            <div style="font-size:9px;color:rgba(245,241,233,.5);font-family:var(--font);">Comment vous sentez-vous ?</div>
+            <div class="ph-emoji-row" style="justify-content:center;gap:20px;">
+              <span class="ph-emoji">😞</span>
+              <span class="ph-emoji">😐</span>
+              <span class="ph-emoji">😊</span>
+            </div>
+            <div style="background:rgba(245,241,233,.06);border-radius:6px;padding:10px;flex:1;min-height:80px;">
+              <div style="font-size:8px;color:rgba(245,241,233,.3);font-family:var(--font);">Décrivez votre journée…</div>
+            </div>
+            <div class="ph-btn" style="padding:8px;">Enregistrer</div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot on"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Organisation -->
+      <div class="phone-wrap">
+        <div class="phone-label">06 · Organisation</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-topbar">Organisation</div>
+          <div class="ph-body">
+            <div class="ph-card">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="ph-card-title">✔ To-do list</div>
+                <div class="ph-arrow">→</div>
+              </div>
+              <div class="ph-bar"></div>
+              <div class="ph-bar s70"></div>
+            </div>
+            <div class="ph-card">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="ph-card-title">📅 Agenda</div>
+                <div class="ph-arrow">→</div>
+              </div>
+              <div style="display:flex;gap:3px;margin-top:4px;">
+                <div style="flex:1;background:rgba(245,241,233,.15);border-radius:2px;height:12px;"></div>
+                <div style="flex:1;background:rgba(245,241,233,.08);border-radius:2px;height:12px;"></div>
+                <div style="flex:1;background:rgba(245,241,233,.08);border-radius:2px;height:12px;"></div>
+                <div style="flex:1;background:rgba(245,241,233,.15);border-radius:2px;height:12px;"></div>
+                <div style="flex:1;background:rgba(245,241,233,.08);border-radius:2px;height:12px;"></div>
+              </div>
+            </div>
+            <div class="ph-card">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="ph-card-title">📆 Semainier</div>
+                <div class="ph-arrow">→</div>
+              </div>
+              <div class="ph-bar" style="margin-top:4px;"></div>
+              <div class="ph-bar s50"></div>
+            </div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot on"></div>
+            <div class="ph-nav-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 11 — WIREFRAMES : Ressources + Profil ══════════ -->
+<div class="slide-counter"><span>11 / 13</span><span>Wireframes — Ressources & Profil</span></div>
+<div class="slide swf">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Wireframes basse fidélité</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card" style="display:grid;grid-template-columns:320px 1fr;overflow:hidden;">
+    <div class="wf-sidebar">
+      <div class="wf-stag">Wireframes 7 & 8</div>
+      <div class="wf-sh">Ressources<br><span>& Profil</span></div>
+      <div class="wf-sdesc">Accès aux contenus éducatifs et à la gestion du compte utilisateur.</div>
+      <div class="wf-annotation-list">
+        <div class="wf-ann">
+          <div class="wf-ann-title">Catégories thématiques</div>
+          <div class="wf-ann-body">Anxiété, sommeil, burn-out regroupés explicitement pour réduire l'ambiguïté du tri de cartes.</div>
+          <div class="wf-ann-tag">→ Tri de cartes · catégories floues</div>
+        </div>
+        <div class="wf-ann">
+          <div class="wf-ann-title">Profil & statistiques</div>
+          <div class="wf-ann-body">Vue personnelle : exercices réalisés, humeur moyenne. Donne du sens au suivi quotidien.</div>
+          <div class="wf-ann-tag">→ Rétention · engagement</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-screens-area">
+      <!-- Ressources -->
+      <div class="phone-wrap">
+        <div class="phone-label">07 · Ressources</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-topbar">Ressources</div>
+          <div class="ph-body">
+            <div class="ph-list-item"><div class="ph-list-text">Anxiété</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">Sommeil</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">Stress</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">Burn-out</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">Conseils pratiques</div><div class="ph-arrow">→</div></div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot on"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Profil -->
+      <div class="phone-wrap">
+        <div class="phone-label">08 · Profil</div>
+        <div class="phone">
+          <div class="ph-status"><div class="ph-pill"></div></div>
+          <div class="ph-topbar">Profil</div>
+          <div class="ph-body">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 0;">
+              <div style="width:44px;height:44px;background:rgba(245,241,233,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(245,241,233,.4);font-family:var(--font);">icon</div>
+              <div style="font-size:9px;color:rgba(245,241,233,.5);font-family:var(--font);">[Nom utilisateur]</div>
+            </div>
+            <div class="ph-card">
+              <div class="ph-card-title">Statistiques</div>
+              <div style="font-size:8px;color:rgba(245,241,233,.5);font-family:var(--font);">✔ Exercices réalisés</div>
+              <div style="font-size:8px;color:rgba(245,241,233,.5);font-family:var(--font);">✔ Humeur moyenne</div>
+            </div>
+            <div class="ph-list-item"><div class="ph-list-text">Notifications</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">Paramètres</div><div class="ph-arrow">→</div></div>
+            <div class="ph-list-item"><div class="ph-list-text">Historique</div><div class="ph-arrow">→</div></div>
+          </div>
+          <div class="ph-nav">
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot"></div>
+            <div class="ph-nav-dot on"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 12 — SYNTHÈSE DES DÉCISIONS UX ══════════ -->
+<div class="slide-counter"><span>12 / 13</span><span>Synthèse — Décisions UX ✦ nouvelle slide</span></div>
+<div class="slide s12">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Synthèse des décisions UX</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card">
+    <div class="synth-title">3 décisions UX<br><span>qui définissent l'application</span></div>
+    <div class="dec-block">
+      <span class="dec-num">Décision 01</span>
+      <div class="dec-title">Bottom navigation à 5 sections</div>
+      <div class="dec-why">Le tri de cartes a validé 4 catégories principales. Une 5e (Profil) a été ajoutée pour la gestion personnelle, cohérente avec les bonnes pratiques mobile.</div>
+      <div class="dec-data">Source → Tri de cartes · 5 participants</div>
+    </div>
+    <div class="dec-block">
+      <span class="dec-num">Décision 02</span>
+      <div class="dec-title">Exercice du jour en point d'entrée</div>
+      <div class="dec-why">Jules (Persona 1) recherche un accès rapide après le travail. L'accueil propose directement une action, réduisant la friction à zéro clic.</div>
+      <div class="dec-data">Source → Persona 1 · Insight UX</div>
+    </div>
+    <div class="dec-block">
+      <span class="dec-num">Décision 03</span>
+      <div class="dec-title">Ressources catégorisées par thème</div>
+      <div class="dec-why">Anxiété, sommeil et burn-out étaient interprétés différemment selon les participants. Les regrouper sous des thèmes explicites réduit l'ambiguïté.</div>
+      <div class="dec-data">Source → Tri de cartes · 80% accord Organisation</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 13 — CONCLUSION ══════════ -->
+<div class="slide-counter"><span>13 / 13</span><span>Conclusion — améliorée</span></div>
+<div class="slide s13">
+  <div class="nav">
+    <div class="left"><span>05, 2026</span><span>Equi-libre / Conclusion</span></div>
+    <span>Agence UX / Martin Lanrezac</span>
+  </div>
+  <div class="card">
+    <div class="concl-left">
+      <div class="concl-pretitle">En résumé</div>
+      <div class="concl-title">Une<br>architecture<br><span>centrée sur</span><br>les besoins</div>
+      <div class="concl-sub">Trois personas, un tri de cartes, deux analyses concurrentes — pour une navigation en 5 sections, claire et sans friction.</div>
+    </div>
+    <div class="concl-right">
+      <div class="concl-pt">
+        <div class="concl-pt-num">01</div>
+        <div class="concl-pt-body">
+          <div class="concl-pt-title">Navigation simple & directe</div>
+          <div class="concl-pt-desc">5 sections max · bottom navigation · inspiré des bonnes pratiques Headspace & MindDoc</div>
+        </div>
+      </div>
+      <div class="concl-pt">
+        <div class="concl-pt-num">02</div>
+        <div class="concl-pt-body">
+          <div class="concl-pt-title">Contenus organisés par besoins</div>
+          <div class="concl-pt-desc">Chaque section répond à un profil utilisateur identifié lors de la recherche terrain</div>
+        </div>
+      </div>
+      <div class="concl-pt">
+        <div class="concl-pt-num">03</div>
+        <div class="concl-pt-body">
+          <div class="concl-pt-title">Approche globale du bien-être</div>
+          <div class="concl-pt-desc">Exercices + Suivi + Organisation + Ressources — là où les concurrents se limitent à un seul aspect</div>
+        </div>
+      </div>
+    </div>
+    <div class="concl-footer">
+      <div class="concl-footer-q">Merci — des questions ?</div>
+      <div class="concl-footer-meta">Martin Lanrezac · Agence UX · Mai 2026</div>
+    </div>
+  </div>
+</div>
+
+<div style="height:60px;"></div>
+</body>
+</html>
