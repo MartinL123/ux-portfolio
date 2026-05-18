@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Gestion des livrables · UX Portfolio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0a0a0f;
+  --bg2:     #111118;
+  --bg3:     #1a1a24;
+  --bg4:     #22222e;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text:    #e8e8f0;
+  --text2:   #9090a8;
+  --text3:   #55556a;
+  --accent:  #6c5ce7;
+  --accent2: #a29bfe;
+  --green:   #00b894;
+  --red:     #e17055;
+  --yellow:  #fdcb6e;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(10,10,15,0.9);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+  height: 52px; padding: 0 32px;
+}
+.topbar-logo { font-size: 13px; font-weight: 800; color: #fff; text-decoration: none; }
+.topbar-logo span { color: var(--accent2); }
+.topbar-back { font-size: 12px; color: var(--text3); text-decoration: none; transition: color .15s; }
+.topbar-back:hover { color: var(--text); }
+.topbar-sep { width: 1px; height: 20px; background: var(--border2); }
+.topbar-title { font-size: 12px; font-weight: 600; color: var(--text2); }
+.topbar-spacer { flex: 1; }
+.topbar-compat {
+  font-size: 11px; color: var(--text3);
+  display: flex; align-items: center; gap: 6px;
+}
+.compat-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+.compat-dot.warn { background: var(--yellow); }
+
+/* ── LAYOUT ── */
+.page { max-width: 900px; margin: 0 auto; padding: 48px 32px 80px; }
+
+/* ── LANDING ── */
+#landing {
+  text-align: center; padding: 80px 0 64px;
+  border-bottom: 1px solid var(--border); margin-bottom: 48px;
+}
+.landing-icon { font-size: 48px; margin-bottom: 20px; }
+.landing-title { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px; }
+.landing-title span { color: var(--accent2); }
+.landing-sub { font-size: 14px; color: var(--text2); max-width: 440px; margin: 0 auto 32px; line-height: 1.7; }
+
+.btn-pick {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--accent); color: #fff;
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  padding: 12px 24px; border: none; border-radius: 8px;
+  cursor: pointer; transition: opacity .15s, transform .1s;
+}
+.btn-pick:hover { opacity: .88; }
+.btn-pick:active { transform: scale(.97); }
+.btn-pick svg { flex-shrink: 0; }
+
+.info-row {
+  display: flex; align-items: center; justify-content: center; gap: 24px;
+  margin-top: 24px; flex-wrap: wrap;
+}
+.info-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--text3);
+}
+.info-pill svg { opacity: .6; }
+
+/* ── STATUS BAR ── */
+#status-bar {
+  display: none;
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: 8px; padding: 12px 16px;
+  font-size: 13px; color: var(--text2);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 32px;
+}
+#status-bar.hidden { display: none; }
+.status-icon { font-size: 16px; }
+#status-text { flex: 1; }
+.btn-change {
+  font-size: 12px; color: var(--accent2); background: none;
+  border: none; cursor: pointer; font-family: inherit;
+  padding: 2px 6px; border-radius: 4px; transition: background .15s;
+}
+.btn-change:hover { background: rgba(162,155,254,.1); }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.sec-title { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.sec-count {
+  font-size: 12px; color: var(--text3); font-weight: 500;
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 3px 10px; border-radius: 20px;
+}
+
+/* ── SOUTENANCE CARDS ── */
+.s-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; margin-bottom: 12px;
+  overflow: hidden; transition: border-color .2s;
+}
+.s-card:hover { border-color: var(--border2); }
+
+.s-head {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; cursor: pointer;
+  user-select: none;
+}
+.s-head:hover .s-chevron { color: var(--text2); }
+.s-num {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; flex-shrink: 0;
+  color: #fff;
+}
+.s-info { flex: 1; min-width: 0; }
+.s-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.s-meta { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.s-chevron {
+  color: var(--text3); transition: transform .2s, color .15s;
+  flex-shrink: 0;
+}
+.s-card.open .s-chevron { transform: rotate(90deg); }
+
+.s-body { display: none; border-top: 1px solid var(--border); }
+.s-card.open .s-body { display: block; }
+
+/* ── FILE LIST ── */
+.file-list { padding: 8px 0; }
+.file-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px; transition: background .15s;
+}
+.file-item:hover { background: rgba(255,255,255,.03); }
+.fext {
+  font-size: 9px; font-weight: 700; letter-spacing: .06em;
+  padding: 3px 7px; border-radius: 4px; flex-shrink: 0;
+  font-family: 'Inter', monospace;
+}
+.ext-pdf  { background: rgba(192,57,43,.25); color: #e55; }
+.ext-docx, .ext-doc { background: rgba(41,128,185,.25); color: #6af; }
+.ext-html { background: rgba(230,126,34,.25); color: #fb8; }
+.ext-zip  { background: rgba(142,68,173,.25); color: #c8a; }
+.ext-xlsx { background: rgba(39,174,96,.25); color: #6da; }
+.ext-odt  { background: rgba(22,160,133,.25); color: #5cc; }
+.ext-pptx { background: rgba(211,84,0,.25); color: #f90; }
+.ext-default { background: var(--bg4); color: var(--text2); }
+
+.file-name { flex: 1; font-size: 13px; color: var(--text2); min-width: 0; }
+.file-name strong { color: var(--text); font-weight: 500; display: block;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-name span { font-size: 11px; color: var(--text3); }
+
+.btn-del {
+  opacity: 0; background: none; border: none; cursor: pointer;
+  color: var(--red); padding: 4px 6px; border-radius: 5px;
+  transition: opacity .15s, background .15s; font-family: inherit; font-size: 12px;
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
+}
+.file-item:hover .btn-del { opacity: 1; }
+.btn-del:hover { background: rgba(225,112,85,.15); }
+
+.file-empty {
+  padding: 20px 20px; font-size: 13px; color: var(--text3);
+  font-style: italic;
+}
+
+/* ── ADD BUTTON ── */
+.s-footer {
+  padding: 12px 20px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.btn-add {
+  display: flex; align-items: center; gap: 7px;
+  background: none; border: 1px solid var(--border2);
+  color: var(--text2); font-family: inherit; font-size: 13px; font-weight: 500;
+  padding: 7px 14px; border-radius: 6px; cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.btn-add:hover { border-color: var(--accent); color: var(--accent2); background: var(--accent-glow); }
+.btn-add svg { flex-shrink: 0; }
+
+/* ── MODAL ── */
+.modal-bg {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.65); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center;
+}
+.modal-bg.open { display: flex; }
+
+.modal {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 12px; padding: 28px; width: 100%; max-width: 480px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.6);
+  animation: modal-in .15s ease;
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(10px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.modal-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.modal-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: var(--text2); margin-bottom: 6px; letter-spacing: .02em;
+}
+.field input, .field select {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: 6px; padding: 9px 12px; color: var(--text);
+  font-family: inherit; font-size: 14px;
+  outline: none; transition: border-color .15s;
+}
+.field input:focus, .field select:focus { border-color: var(--accent); }
+.field input::placeholder { color: var(--text3); }
+
+.file-preview {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.file-preview .fext { font-size: 10px; }
+.file-preview-name { font-size: 13px; color: var(--text2); flex: 1; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-preview-size { font-size: 12px; color: var(--text3); white-space: nowrap; }
+
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+.btn-cancel {
+  background: none; border: 1px solid var(--border2); color: var(--text2);
+  font-family: inherit; font-size: 13px; font-weight: 500;
+  padding: 8px 16px; border-radius: 6px; cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.btn-cancel:hover { border-color: var(--text3); color: var(--text); }
+
+.btn-confirm {
+  background: var(--accent); color: #fff;
+  border: none; font-family: inherit; font-size: 13px; font-weight: 600;
+  padding: 8px 18px; border-radius: 6px; cursor: pointer;
+  transition: opacity .15s;
+}
+.btn-confirm:hover { opacity: .88; }
+.btn-confirm:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── DELETE CONFIRM ── */
+.del-confirm {
+  display: none; background: rgba(225,112,85,.1); border: 1px solid rgba(225,112,85,.25);
+  border-radius: 6px; padding: 10px 14px; margin: 0 20px 8px;
+  font-size: 13px; color: var(--red);
+  align-items: center; gap: 10px;
+}
+.del-confirm.open { display: flex; }
+.del-confirm span { flex: 1; }
+.btn-del-confirm {
+  background: var(--red); color: #fff; border: none;
+  font-family: inherit; font-size: 12px; font-weight: 600;
+  padding: 5px 12px; border-radius: 5px; cursor: pointer;
+}
+.btn-del-cancel {
+  background: none; border: none; color: var(--text3); font-family: inherit;
+  font-size: 12px; cursor: pointer; padding: 4px 8px;
+}
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--bg4); border: 1px solid var(--border2);
+  border-radius: 8px; padding: 12px 20px; font-size: 13px;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4); z-index: 999;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+  max-width: 380px;
+}
+#toast.show { opacity: 1; }
+#toast.success { border-color: rgba(0,184,148,.3); color: var(--green); }
+#toast.error { border-color: rgba(225,112,85,.3); color: var(--red); }
+
+/* ── COMPAT WARNING ── */
+#compat-warning {
+  background: rgba(253,203,110,.08); border: 1px solid rgba(253,203,110,.25);
+  border-radius: 8px; padding: 14px 18px; font-size: 13px; color: var(--yellow);
+  line-height: 1.65; display: none; margin-bottom: 24px;
+}
+#compat-warning strong { font-weight: 600; }
+
+/* ── NO-FOLDER ── */
+#no-folder { display: block; }
+#has-folder { display: none; }
+body.has-dir #no-folder { display: none; }
+body.has-dir #has-folder { display: block; }
+body.has-dir #landing { display: none; }
+
+/* hidden file input */
+#file-input { display: none; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">UX <span>Portfolio</span></a>
+  <div class="topbar-sep"></div>
+  <a href="index.html" class="topbar-back">← Retour</a>
+  <div class="topbar-sep"></div>
+  <span class="topbar-title">Gestion des livrables</span>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-compat" id="compat-indicator">
+    <div class="compat-dot" id="compat-dot"></div>
+    <span id="compat-label">Chargement…</span>
+  </div>
+</nav>
+
+<input type="file" id="file-input" />
+
+<div class="page">
+
+  <!-- ── COMPAT WARNING ── -->
+  <div id="compat-warning">
+    <strong>⚠ Navigateur non compatible.</strong> Cette page nécessite Chrome ou Edge (version récente)
+    pour accéder au système de fichiers. Firefox et Safari ne supportent pas encore l'API requise.
+    Ouvre cette page dans Chrome pour profiter de toutes les fonctionnalités.
+  </div>
+
+  <!-- ── LANDING (no folder selected) ── -->
+  <div id="no-folder">
+    <div id="landing">
+      <div class="landing-icon">📁</div>
+      <h1 class="landing-title">Gestion des <span>livrables</span></h1>
+      <p class="landing-sub">
+        Sélectionne le dossier local de ton portfolio pour ajouter, supprimer ou organiser
+        les documents de chaque soutenance. Les pages HTML sont mises à jour automatiquement.
+      </p>
+      <button class="btn-pick" id="btn-pick-main">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 4.5A1.5 1.5 0 0 1 3.5 3h3.086a1.5 1.5 0 0 1 1.06.44l.915.914A1.5 1.5 0 0 0 9.62 4.5H12.5A1.5 1.5 0 0 1 14 6v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12V4.5Z" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M8 8v4M6 10l2-2 2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Ouvrir le dossier portfolio
+      </button>
+      <div class="info-row">
+        <span class="info-pill">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.5v4M8 5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Chrome / Edge uniquement
+        </span>
+        <span class="info-pill">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Ajouter des documents
+        </span>
+        <span class="info-pill">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Supprimer des documents
+        </span>
+        <span class="info-pill">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          HTML mis à jour auto
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN (folder selected) ── -->
+  <div id="has-folder">
+    <div id="status-bar">
+      <span class="status-icon">📂</span>
+      <span id="status-text">Dossier sélectionné</span>
+      <button class="btn-change" id="btn-change">Changer →</button>
+    </div>
+
+    <div class="sec-header">
+      <div class="sec-title">Soutenances</div>
+      <span class="sec-count" id="s-count">—</span>
+    </div>
+
+    <div id="soutenances-list"></div>
+  </div>
+
+</div>
+
+<!-- ── ADD FILE MODAL ── -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Ajouter un document</div>
+    <div class="modal-sub" id="modal-sub">Le fichier sera copié dans le dossier de la soutenance.</div>
+    <div class="file-preview" id="modal-preview" style="display:none">
+      <span class="fext ext-default" id="modal-ext">?</span>
+      <span class="file-preview-name" id="modal-fname">—</span>
+      <span class="file-preview-size" id="modal-fsize">—</span>
+    </div>
+    <div class="field">
+      <label for="modal-display">Nom affiché dans le tracker</label>
+      <input type="text" id="modal-display" placeholder="Ex : Dossier d'analyse — Seconde Peau V2" />
+    </div>
+    <div class="field">
+      <label for="modal-group">Section</label>
+      <select id="modal-group">
+        <option value="docs">📄 Documents de la soutenance</option>
+        <option value="web">🌐 Livrables interactifs (HTML)</option>
+        <option value="res">📦 Ressources complémentaires</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modal-cancel">Annuler</button>
+      <button class="btn-confirm" id="modal-confirm" disabled>Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div id="toast"></div>
+
+<script>
+// ── COMPAT CHECK ──────────────────────────────────────────────────────────
+const supported = 'showDirectoryPicker' in window;
+const dot = document.getElementById('compat-dot');
+const lbl = document.getElementById('compat-label');
+if (supported) {
+  dot.classList.remove('warn');
+  lbl.textContent = 'Compatible';
+} else {
+  dot.classList.add('warn');
+  lbl.textContent = 'Non compatible';
+  document.getElementById('compat-warning').style.display = 'block';
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let rootHandle = null;
+let pendingAdd  = { soutenanceNum: null, file: null };
+
+const GROUP_LABELS = {
+  docs: '📄 Documents de la soutenance',
+  web:  '🌐 Livrables interactifs (HTML)',
+  res:  '📦 Ressources complémentaires',
+};
+
+const SOUTENANCE_NAMES = {
+  1:  'Introduction au cours',
+  2:  'Étude utilisateurs · SNCF Connect',
+  3:  'Ergonomie de site · Cabanes de France',
+  4:  'Atelier co-conception · Framework 7P',
+  5:  'Promesse de service',
+  6:  'Évolution de service',
+  7:  'Dans la peau d\'un développeur · Avenirs',
+  8:  'Architecture IA · Equi-libre',
+  9:  'Prototypes HTML · Les Bambinets',
+  10: 'Data visualisation · Seconde Peau',
+  11: 'Portfolio final · Certification',
+};
+
+const SOUTENANCE_COLORS = {
+  1:'#e17055',2:'#fd79a8',3:'#00cec9',4:'#fdcb6e',5:'#6c5ce7',
+  6:'#0984e3',7:'#00b894',8:'#e84393',9:'#74b9ff',10:'#55efc4',11:'#a29bfe'
+};
+
+// ── UTILS ─────────────────────────────────────────────────────────────────
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function getExt(name) {
+  const m = name.match(/\.([^.]+)$/);
+  return m ? m[1].toLowerCase() : '';
+}
+
+function extClass(ext) {
+  const map = { pdf:'ext-pdf', docx:'ext-docx', doc:'ext-doc', html:'ext-html',
+                zip:'ext-zip', xlsx:'ext-xlsx', odt:'ext-odt', pptx:'ext-pptx' };
+  return map[ext] || 'ext-default';
+}
+
+function formatFilename(raw) {
+  let name = raw.replace(/\.[^.]+$/, '');
+  name = decodeURIComponent(name.replace(/\+/g, ' '));
+  name = name.replace(/_/g, ' ');
+  if (/^ML[_ ]P\d+/i.test(name)) {
+    const m = name.match(/P(\d+)/i);
+    return 'Livrable OpenClassrooms P' + (m ? m[1].padStart(2, '0') : '');
+  }
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (type ? ' ' + type : '');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.className = ''; }, 3000);
+}
+
+// ── PICK FOLDER ───────────────────────────────────────────────────────────
+async function pickFolder() {
+  if (!supported) { toast('Navigateur non compatible. Utilise Chrome ou Edge.', 'error'); return; }
+  try {
+    rootHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    document.body.classList.add('has-dir');
+    document.getElementById('status-text').textContent = '📂 ' + rootHandle.name;
+    await loadSoutenances();
+  } catch (e) {
+    if (e.name !== 'AbortError') toast('Erreur lors de l\'ouverture du dossier.', 'error');
+  }
+}
+
+document.getElementById('btn-pick-main').addEventListener('click', pickFolder);
+document.getElementById('btn-change').addEventListener('click', pickFolder);
+
+// ── LOAD SOUTENANCES ──────────────────────────────────────────────────────
+async function loadSoutenances() {
+  const container = document.getElementById('soutenances-list');
+  container.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:20px 0">Chargement…</div>';
+
+  const soutenances = [];
+
+  for await (const [name, handle] of rootHandle.entries()) {
+    if (handle.kind !== 'directory') continue;
+    const m = name.match(/^Soutenance\s+(\d+)$/i);
+    if (!m) continue;
+    const num = parseInt(m[1]);
+    const files = [];
+    for await (const [fname, fhandle] of handle.entries()) {
+      if (fhandle.kind !== 'file') continue;
+      if (fname.startsWith('.') || fname === 'meta.json') continue;
+      const f = await fhandle.getFile();
+      files.push({ name: fname, handle: fhandle, size: f.size, ext: getExt(fname) });
+    }
+    files.sort((a, b) => a.name.localeCompare(b.name));
+    soutenances.push({ num, name, files });
+  }
+
+  soutenances.sort((a, b) => a.num - b.num);
+  document.getElementById('s-count').textContent = soutenances.length + ' soutenances';
+
+  container.innerHTML = '';
+  for (const s of soutenances) {
+    container.appendChild(renderCard(s));
+  }
+}
+
+// ── RENDER CARD ───────────────────────────────────────────────────────────
+function renderCard(s) {
+  const color = SOUTENANCE_COLORS[s.num] || '#6c5ce7';
+  const title = SOUTENANCE_NAMES[s.num] || 'Soutenance ' + s.num;
+
+  const card = document.createElement('div');
+  card.className = 's-card';
+  card.id = 'card-' + s.num;
+
+  // Head
+  const head = document.createElement('div');
+  head.className = 's-head';
+  head.innerHTML = `
+    <div class="s-num" style="background:${color}">${String(s.num).padStart(2,'0')}</div>
+    <div class="s-info">
+      <div class="s-name">${title}</div>
+      <div class="s-meta">${s.files.length} document${s.files.length !== 1 ? 's' : ''} · Soutenance ${s.num}/</div>
+    </div>
+    <svg class="s-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  head.addEventListener('click', () => {
+    card.classList.toggle('open');
+  });
+
+  // Body
+  const body = document.createElement('div');
+  body.className = 's-body';
+
+  // File list
+  const list = document.createElement('div');
+  list.className = 'file-list';
+
+  if (s.files.length === 0) {
+    list.innerHTML = '<div class="file-empty">Aucun document dans ce dossier.</div>';
+  } else {
+    for (const f of s.files) {
+      list.appendChild(renderFileItem(s.num, f));
+    }
+  }
+
+  // Footer / add button
+  const footer = document.createElement('div');
+  footer.className = 's-footer';
+  const addBtn = document.createElement('button');
+  addBtn.className = 'btn-add';
+  addBtn.innerHTML = `
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    Ajouter un document`;
+  addBtn.addEventListener('click', () => openAddModal(s.num));
+  footer.appendChild(addBtn);
+
+  body.appendChild(list);
+  body.appendChild(footer);
+  card.appendChild(head);
+  card.appendChild(body);
+  return card;
+}
+
+function renderFileItem(soutenanceNum, f) {
+  const item = document.createElement('div');
+  item.className = 'file-item';
+  item.id = 'file-' + soutenanceNum + '-' + f.name;
+
+  const extSpan = document.createElement('span');
+  extSpan.className = 'fext ' + extClass(f.ext);
+  extSpan.textContent = f.ext.toUpperCase() || '?';
+
+  const nameDiv = document.createElement('div');
+  nameDiv.className = 'file-name';
+  nameDiv.innerHTML = `<strong>${escHtml(formatFilename(f.name))}</strong><span>${escHtml(f.name)} · ${formatSize(f.size)}</span>`;
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'btn-del';
+  delBtn.title = 'Supprimer';
+  delBtn.innerHTML = `
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <path d="M1 3h12M5 3V2h4v1M2 3l1 9h8l1-9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
+    Supprimer`;
+  delBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showDeleteConfirm(soutenanceNum, f.name, item);
+  });
+
+  item.appendChild(extSpan);
+  item.appendChild(nameDiv);
+  item.appendChild(delBtn);
+  return item;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── DELETE ────────────────────────────────────────────────────────────────
+let confirmBar = null;
+
+function showDeleteConfirm(num, filename, itemEl) {
+  if (confirmBar) confirmBar.remove();
+
+  const bar = document.createElement('div');
+  bar.className = 'del-confirm open';
+  bar.innerHTML = `
+    <span>Supprimer <strong>${escHtml(filename)}</strong> et mettre à jour le tracker ?</span>
+    <button class="btn-del-cancel">Annuler</button>
+    <button class="btn-del-confirm">Supprimer</button>`;
+  bar.querySelector('.btn-del-cancel').addEventListener('click', () => bar.remove());
+  bar.querySelector('.btn-del-confirm').addEventListener('click', () => {
+    bar.remove();
+    doDelete(num, filename, itemEl);
+  });
+
+  itemEl.parentNode.insertBefore(bar, itemEl.nextSibling);
+  confirmBar = bar;
+}
+
+async function doDelete(num, filename, itemEl) {
+  try {
+    const folderName = 'Soutenance ' + num;
+    const dirHandle = await rootHandle.getDirectoryHandle(folderName);
+    await dirHandle.removeEntry(filename);
+    await updateHTMLAfterDelete(num, filename);
+    itemEl.remove();
+    // Update count
+    const card = document.getElementById('card-' + num);
+    if (card) {
+      const files = card.querySelectorAll('.file-item');
+      const meta = card.querySelector('.s-meta');
+      if (meta) meta.textContent = files.length + ' document' + (files.length !== 1 ? 's' : '') + ' · Soutenance ' + num + '/';
+      if (files.length === 0) {
+        const list = card.querySelector('.file-list');
+        list.innerHTML = '<div class="file-empty">Aucun document dans ce dossier.</div>';
+      }
+    }
+    toast('✓ ' + filename + ' supprimé', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('Erreur : ' + e.message, 'error');
+  }
+}
+
+// ── ADD MODAL ─────────────────────────────────────────────────────────────
+function openAddModal(soutenanceNum) {
+  pendingAdd = { soutenanceNum, file: null };
+  document.getElementById('modal-title').textContent = 'Ajouter un document · S' + String(soutenanceNum).padStart(2,'0');
+  document.getElementById('modal-sub').textContent = 'Le fichier sera copié dans Soutenance ' + soutenanceNum + '/';
+  document.getElementById('modal-preview').style.display = 'none';
+  document.getElementById('modal-display').value = '';
+  document.getElementById('modal-confirm').disabled = true;
+  document.getElementById('modal-group').value = 'docs';
+  document.getElementById('modal-bg').classList.add('open');
+
+  // Trigger file picker
+  const input = document.getElementById('file-input');
+  input.value = '';
+  input.onchange = (e) => onFileChosen(e.target.files[0]);
+  input.click();
+}
+
+function onFileChosen(file) {
+  if (!file) { closeModal(); return; }
+  pendingAdd.file = file;
+
+  const ext = getExt(file.name);
+  const preview = document.getElementById('modal-preview');
+  preview.style.display = 'flex';
+  const extEl = document.getElementById('modal-ext');
+  extEl.className = 'fext ' + extClass(ext);
+  extEl.textContent = ext.toUpperCase() || '?';
+  document.getElementById('modal-fname').textContent = file.name;
+  document.getElementById('modal-fsize').textContent = formatSize(file.size);
+
+  const displayInput = document.getElementById('modal-display');
+  displayInput.value = formatFilename(file.name) + (ext === 'html' ? ' ↗' : '');
+  document.getElementById('modal-confirm').disabled = false;
+
+  if (ext === 'html') {
+    document.getElementById('modal-group').value = 'web';
+  }
+}
+
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-bg').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modal-bg')) closeModal();
+});
+
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+  pendingAdd = { soutenanceNum: null, file: null };
+}
+
+document.getElementById('modal-confirm').addEventListener('click', async () => {
+  const { soutenanceNum, file } = pendingAdd;
+  if (!file || !soutenanceNum) return;
+  const displayName = document.getElementById('modal-display').value.trim() || formatFilename(file.name);
+  const group = document.getElementById('modal-group').value;
+  closeModal();
+  await doAdd(soutenanceNum, file, displayName, group);
+});
+
+// ── ADD FILE ──────────────────────────────────────────────────────────────
+async function doAdd(num, file, displayName, group) {
+  try {
+    const folderName = 'Soutenance ' + num;
+    const dirHandle = await rootHandle.getDirectoryHandle(folderName, { create: true });
+
+    // Write file
+    const newHandle = await dirHandle.getFileHandle(file.name, { create: true });
+    const writable = await newHandle.createWritable();
+    await writable.write(file);
+    await writable.close();
+
+    // Update HTML
+    await updateHTMLAfterAdd(num, file.name, displayName, group, file.size);
+
+    // Refresh card
+    const card = document.getElementById('card-' + num);
+    if (card) {
+      const list = card.querySelector('.file-list');
+      const empty = list.querySelector('.file-empty');
+      if (empty) empty.remove();
+      const fileItem = renderFileItem(num, { name: file.name, size: file.size, ext: getExt(file.name) });
+      list.appendChild(fileItem);
+      const items = list.querySelectorAll('.file-item');
+      const meta = card.querySelector('.s-meta');
+      if (meta) meta.textContent = items.length + ' document' + (items.length !== 1 ? 's' : '') + ' · Soutenance ' + num + '/';
+    }
+
+    toast('✓ ' + file.name + ' ajouté', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('Erreur : ' + e.message, 'error');
+  }
+}
+
+// ── HTML UPDATE — ADD ─────────────────────────────────────────────────────
+async function updateHTMLAfterAdd(num, filename, displayName, group, fileSize) {
+  const htmlName = 'soutenance-' + num + '.html';
+  let fileHandle;
+  try { fileHandle = await rootHandle.getFileHandle(htmlName); }
+  catch { return; } // no HTML file yet, skip
+
+  const f = await fileHandle.getFile();
+  const content = await f.text();
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, 'text/html');
+
+  const folderName = 'Soutenance ' + num;
+  const href = encodeURIComponent(folderName) + '/' + encodeURIComponent(filename);
+  const ext = getExt(filename);
+  const isHTML = ext === 'html';
+  const groupLabel = GROUP_LABELS[group] || GROUP_LABELS.docs;
+
+  // Check not already present
+  if (doc.querySelector(`a.file[href="${href}"]`)) return;
+
+  // Create <a class="file"> element
+  const a = doc.createElement('a');
+  a.href = href;
+  a.className = 'file';
+  if (isHTML) a.target = '_blank';
+
+  const extSpan = doc.createElement('span');
+  extSpan.className = 'fext fext-' + ext;
+  extSpan.textContent = ext.toUpperCase();
+
+  const nameSpan = doc.createElement('span');
+  nameSpan.className = 'fname';
+  nameSpan.textContent = displayName;
+
+  const sizeSpan = doc.createElement('span');
+  sizeSpan.className = 'fsize';
+  sizeSpan.textContent = formatSize(fileSize);
+
+  a.append(extSpan, nameSpan, sizeSpan);
+
+  // Find existing .files div with matching head label, or create new one
+  let targetFilesDiv = null;
+  doc.querySelectorAll('.files').forEach(div => {
+    const head = div.querySelector('.files-head');
+    if (head && head.textContent.trim() === groupLabel) targetFilesDiv = div;
+  });
+
+  if (!targetFilesDiv) {
+    targetFilesDiv = doc.createElement('div');
+    targetFilesDiv.className = 'files';
+    const headDiv = doc.createElement('div');
+    headDiv.className = 'files-head';
+    headDiv.textContent = groupLabel;
+    targetFilesDiv.appendChild(headDiv);
+
+    // Insert before .page-nav or at end of .page
+    const pageNav = doc.querySelector('.page-nav');
+    const page = doc.querySelector('.page');
+    if (pageNav && page) page.insertBefore(targetFilesDiv, pageNav);
+    else if (page) page.appendChild(targetFilesDiv);
+  }
+
+  targetFilesDiv.appendChild(a);
+  await writeHTML(fileHandle, doc);
+}
+
+// ── HTML UPDATE — DELETE ──────────────────────────────────────────────────
+async function updateHTMLAfterDelete(num, filename) {
+  const htmlName = 'soutenance-' + num + '.html';
+  let fileHandle;
+  try { fileHandle = await rootHandle.getFileHandle(htmlName); }
+  catch { return; }
+
+  const f = await fileHandle.getFile();
+  const content = await f.text();
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, 'text/html');
+
+  const folderName = 'Soutenance ' + num;
+  const encoded = encodeURIComponent(folderName) + '/' + encodeURIComponent(filename);
+
+  // Try both encoded and raw versions of href
+  const selectors = [
+    `a.file[href="${encoded}"]`,
+    `a.file[href="${folderName.replace(/ /g,'%20')}/${filename.replace(/ /g,'%20')}"]`,
+  ];
+
+  let removed = false;
+  for (const sel of selectors) {
+    const el = doc.querySelector(sel);
+    if (el) {
+      // If parent .files div will be empty after removal, remove the whole div
+      const parent = el.closest('.files');
+      el.remove();
+      if (parent && parent.querySelectorAll('a.file').length === 0) parent.remove();
+      removed = true;
+      break;
+    }
+  }
+
+  if (removed) await writeHTML(fileHandle, doc);
+}
+
+// ── WRITE HTML ────────────────────────────────────────────────────────────
+async function writeHTML(fileHandle, doc) {
+  const html = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+  const writable = await fileHandle.createWritable();
+  await writable.write(html);
+  await writable.close();
+}
+</script>
+</body>
+</html>
