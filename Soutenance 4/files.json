@@ -1,0 +1,26 @@
+{
+  "Cours.docx": {
+    "display": "Cours — Préparer et animer un atelier de co-conception",
+    "group": "docs"
+  },
+  "Scénario+d_usage.docx": {
+    "display": "Scénario d'usage",
+    "group": "docs"
+  },
+  "Canevas+des+7P+pour+l_atelier.pptx": {
+    "display": "Canevas des 7P pour l'atelier",
+    "group": "docs"
+  },
+  "Personas+P4+(1).pdf": {
+    "display": "Personas P4 — Profils utilisateurs pour l'atelier",
+    "group": "docs"
+  },
+  "synthèse+audit.pdf": {
+    "display": "Synthèse d'audit — Input pour l'atelier",
+    "group": "docs"
+  },
+  "ML_P4_preparez-et-animez-un-atelier-de-co-conception-1_2025-10-17T074207.zip": {
+    "display": "Livrable P4 — Canevas 7P, mail, présentation, parcours utilisateur",
+    "group": "res"
+  }
+}

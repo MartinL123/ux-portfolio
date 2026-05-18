@@ -1,0 +1,30 @@
+{
+  "Cours.docx": {
+    "display": "Cours — Se mettre dans la peau d'un développeur",
+    "group": "docs"
+  },
+  "Charte-graphique-Avenirs.pdf": {
+    "display": "Charte graphique — Association Avenirs",
+    "group": "docs"
+  },
+  "Copie+de+Présentation+de+l_association.pdf": {
+    "display": "Présentation de l'association Avenirs",
+    "group": "docs"
+  },
+  "Points+importants+pour+la+présentation+pour+Sabri (1).pptx": {
+    "display": "Points importants — Présentation Sabri (application)",
+    "group": "docs"
+  },
+  "Landing+Page.zip": {
+    "display": "Landing Page — Antennes CSV + maquette + texte (Julia)",
+    "group": "res"
+  },
+  "App.zip": {
+    "display": "Application — CSV enfants, livres, événements, compétences + maquette (Sabri)",
+    "group": "res"
+  },
+  "ML_P7_mettez-vous-dans-la-peau-dun-developpeur_2026-03-03T191603.zip": {
+    "display": "Livrable P7 complet — Présentations Julia & Sabri + Flowchart",
+    "group": "res"
+  }
+}

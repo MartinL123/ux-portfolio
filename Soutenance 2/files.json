@@ -1,0 +1,34 @@
+{
+  "Cours.docx": {
+    "display": "Cours — Mener une étude utilisateurs",
+    "group": "docs"
+  },
+  "Soutenance 2 - SNCF Connect.docx": {
+    "display": "Soutenance 2 — SNCF Connect (présentation complète)",
+    "group": "docs"
+  },
+  "SNCF+Connect...catastrophe+industrielle.pdf": {
+    "display": "SNCF Connect — La catastrophe industrielle (étude de cas)",
+    "group": "docs"
+  },
+  "Exemple+de+biais+cognitifs+UX.pdf": {
+    "display": "Exemples de biais cognitifs en UX",
+    "group": "docs"
+  },
+  "Liste+des+Handicaps+et+troubles+DYS.pdf": {
+    "display": "Liste des handicaps et troubles DYS — Référence accessibilité",
+    "group": "docs"
+  },
+  "Template+de+protocole+de+recherche+.odt": {
+    "display": "Template — Protocole de recherche UX",
+    "group": "docs"
+  },
+  "Template+personas.pptx": {
+    "display": "Template — Personas",
+    "group": "docs"
+  },
+  "ML_P2_menez-une-etude-utilisateurs-1_2025-01-03T121237.zip": {
+    "display": "Livrable complet P2 — Note de recherche, protocole, grille d'observation, guide d'entretien, 3 personas, conclusion",
+    "group": "res"
+  }
+}

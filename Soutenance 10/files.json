@@ -1,0 +1,14 @@
+{
+  "Soutenance 10.docx": {
+    "display": "Soutenance 10 — Document principal (consigne + contexte)",
+    "group": "docs"
+  },
+  "dossier_analyse_seconde_peau.html": {
+    "display": "Dossier d'analyse — Seconde Peau V2 ↗",
+    "group": "web"
+  },
+  "dossier_analyse_seconde_peau_v1.html": {
+    "display": "Dossier d'analyse — Seconde Peau V1 ↗",
+    "group": "web"
+  }
+}

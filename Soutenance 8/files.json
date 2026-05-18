@@ -1,0 +1,34 @@
+{
+  "Cours.docx": {
+    "display": "Cours — Parcours utilisateurs et tri de cartes",
+    "group": "docs"
+  },
+  "Note de synthèse Equi-libre.docx": {
+    "display": "Note de synthèse — Analyse architecture Equi-libre",
+    "group": "docs"
+  },
+  "Methode-du-tri-de-cartes-P8-UX-Designer.pdf": {
+    "display": "Guide — Méthode du tri de cartes (P8 UX Designer)",
+    "group": "docs"
+  },
+  "Modele-Parcours+Utilisateurs...odt": {
+    "display": "Modèle — Carte de parcours utilisateur",
+    "group": "docs"
+  },
+  "Resultat-des-enquetes-preliminaires...pdf": {
+    "display": "Résultats des enquêtes préliminaires",
+    "group": "docs"
+  },
+  "equi-libre-final.html": {
+    "display": "Equi-libre — Présentation finale (13 slides) ↗",
+    "group": "web"
+  },
+  "equi-libre-presentation-complete.html": {
+    "display": "Equi-libre — Présentation complète ↗",
+    "group": "web"
+  },
+  "Présentation Equi-libre.pdf": {
+    "display": "Présentation Equi-libre ↗",
+    "group": "web"
+  }
+}

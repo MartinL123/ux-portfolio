@@ -1,0 +1,18 @@
+{
+  "Cours.docx": {
+    "display": "Cours — Faire évoluer un service existant",
+    "group": "docs"
+  },
+  "Matrice+d_analyse+.xlsx": {
+    "display": "Matrice d'analyse — Template",
+    "group": "docs"
+  },
+  "Retours+parties+prenantes.pdf": {
+    "display": "Retours parties prenantes",
+    "group": "docs"
+  },
+  "ML_P6_faites-evoluer-un-service-existant-1_2025-12-04T180725.zip": {
+    "display": "Livrable P6 — Email, hypothèses, support test, matrice, présentation",
+    "group": "res"
+  }
+}

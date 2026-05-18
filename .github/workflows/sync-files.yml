@@ -1,0 +1,35 @@
+name: Sync file tracker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Soutenance */**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run sync script
+        run: python scripts/sync_files.py
+
+      - name: Commit updated HTML
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add soutenance-*.html
+          git diff --staged --quiet || git commit -m "🤖 Sync trackers depuis les dossiers Soutenance"
+          git push
